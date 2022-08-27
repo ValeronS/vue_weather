@@ -1,12 +1,15 @@
 <template>
   <div class="home">
-    <h1>test</h1>
-    <p>testing font</p>
+    <chosen-location></chosen-location>
+    <app-button @click="$router.push('/location')"
+      ><h3>Выбрать локацию</h3></app-button
+    >
   </div>
 </template>
 
 <script>
-export default {};
+import ChosenLocation from '@/components/ChosenLocation.vue';
+export default { components: { ChosenLocation } };
 </script>
 
 <style>
@@ -14,9 +17,5 @@ export default {};
   background: #47b1e6;
   width: 100%;
   height: 100vh;
-  font-family: 'SF Pro Display';
-}
-p {
-  font-family: 'SF Pro Display';
 }
 </style>

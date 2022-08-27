@@ -5,9 +5,7 @@
 </template>
 
 <script>
-export default {
-  components: {},
-};
+export default {};
 </script>
 
 <style>
@@ -19,5 +17,6 @@ export default {
 
 .app {
   overflow-x: hidden;
+  font-family: 'SF Pro Display';
 }
 </style>

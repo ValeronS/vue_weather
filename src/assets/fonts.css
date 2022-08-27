@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('../../public/fonts/SFProDisplay/SFProDisplay-Regular.eot');
+  src: local('SF Pro Display Regular'), local('SFProDisplay-Regular'),
+    url('../../public/fonts/SFProDisplay/SFProDisplay-Regular.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../public/fonts/SFProDisplay/SFProDisplay-Regular.woff2')
+      format('woff2'),
+    url('../../public/fonts/SFProDisplay/SFProDisplay-Regular.woff')
+      format('woff'),
+    url('../../public/fonts/SFProDisplay/SFProDisplay-Regular.ttf')
+      format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('../../public/fonts/SFProDisplay/SFProDisplay-Semibold.eot');
+  src: local('SF Pro Display Semibold'), local('SFProDisplay-Semibold'),
+    url('../../public/fonts/SFProDisplay/SFProDisplay-Semibold.eot?#iefix')
+      format('embedded-opentype'),
+    url('../../public/fonts/SFProDisplay/SFProDisplay-Semibold.woff2')
+      format('woff2'),
+    url('../../public/fonts/SFProDisplay/SFProDisplay-Semibold.woff')
+      format('woff'),
+    url('../../public/fonts/SFProDisplay/SFProDisplay-Semibold.ttf')
+      format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
