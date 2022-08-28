@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <chosen-location></chosen-location>
+    <the-chosen-location></the-chosen-location>
     <app-button @click="$router.push('/location')"
       ><h3>Выбрать локацию</h3></app-button
     >
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import ChosenLocation from '@/components/ChosenLocation.vue';
-export default { components: { ChosenLocation } };
+import TheChosenLocation from '@/components/TheChosenLocation.vue';
+export default { components: { TheChosenLocation } };
 </script>
 
 <style>
 .home {
-  background: #47b1e6;
+  background: var(--accent-dark-color);
   width: 100%;
   height: 100vh;
 }
