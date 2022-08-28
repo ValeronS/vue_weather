@@ -17,7 +17,7 @@ export default {
   height: 56px;
   left: 89px;
   top: 575px;
-  color: #47b1e6;
+  color: var(--accent-dark-color);
   border-radius: 10px;
   border: none;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);

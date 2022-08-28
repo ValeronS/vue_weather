@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'chosen-location',
+  name: 'the-chosen-location',
 };
 </script>
 

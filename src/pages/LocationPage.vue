@@ -1,7 +1,14 @@
-<template></template>
+<template>
+  <div>
+    <the-search-location-form></the-search-location-form>
+  </div>
+</template>
 
 <script>
-export default {};
+import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
+export default {
+  components: { TheSearchLocationForm },
+};
 </script>
 
 <style></style>
