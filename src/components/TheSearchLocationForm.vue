@@ -1,10 +1,20 @@
 <template>
-  <form action="">
+  <form action="" class="search-container">
+    <img
+      src="@/assets/img/arrow.png"
+      class="img-left"
+      @click="$router.push('/')"
+    />
     <app-input
       v-model="location"
       type="text"
-      class="search__input text"
+      class="text"
       placeholder="Поиск локации"
+    />
+    <img
+      src="@/assets/img/focus.png"
+      class="img-right"
+      @click="$router.push('/')"
     />
   </form>
 </template>
@@ -21,19 +31,36 @@ export default {
 </script>
 
 <style>
-.search__input {
-  position: absolute;
-  width: 343px;
-  height: 48px;
-  left: 16px;
+.search-container {
+  position: relative;
   top: 44px;
+  left: 16px;
+  margin-right: 32px;
+}
+.search-container > .img-left {
+  position: absolute;
+  width: 24px;
+  top: 12px;
+  left: 16px;
+  cursor: pointer;
+}
+.search-container > .img-right {
+  position: absolute;
+  width: 24px;
+  top: 12px;
+  right: 16px;
+  cursor: pointer;
+}
+.search-container > input {
+  width: 100%;
+  padding-left: 56px;
+  height: 48px;
   border: 1px solid var(--secondary-color);
   border-radius: 15px;
-  padding-left: 16px;
   box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: var(--primary-color);
 }
-.search__input::placeholder {
+.search-container > input::placeholder {
   color: var(--secondary-color);
 }
 </style>
