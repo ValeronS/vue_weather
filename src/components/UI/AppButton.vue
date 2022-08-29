@@ -12,12 +12,10 @@ export default {
 
 <style>
 .btn {
-  position: absolute;
   width: 198px;
   height: 56px;
-  left: 89px;
-  top: 575px;
   color: var(--accent-dark-color);
+  background-color: var(--white);
   border-radius: 10px;
   border: none;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);

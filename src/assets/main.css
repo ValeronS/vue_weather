@@ -4,6 +4,7 @@
   --lines-color: #e9e9e9;
   --accent-dark-color: #47b1e6;
   --accent-light-color: #e4f0fa;
+  --white: #ffffff;
 }
 
 * {
@@ -15,6 +16,7 @@
 body {
   overflow-x: hidden;
   font-family: 'SF Pro Display';
+  min-width: 280px;
 }
 
 h1 {
