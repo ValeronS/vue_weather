@@ -1,6 +1,7 @@
 import HomePage from '@/pages/HomePage';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import LocationPage from '@/pages/LocationPage';
+import SearchPage from '@/pages/SearchPage';
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: '/location',
     component: LocationPage,
+  },
+  {
+    path: '/location/search',
+    component: SearchPage,
   },
 ];
 

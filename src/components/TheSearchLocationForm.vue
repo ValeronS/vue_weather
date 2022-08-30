@@ -1,5 +1,11 @@
 <template>
-  <form action="" class="search-container">
+  <form
+    action=""
+    :class="{
+      'search-container': true,
+      'search-container__focused': onFocus,
+    }"
+  >
     <img
       src="@/assets/img/arrow.png"
       class="img-left"
@@ -8,8 +14,13 @@
     <app-input
       v-model="location"
       type="text"
-      class="text"
-      placeholder="Поиск локации"
+      :placeholder="inputPlaceholder"
+      @focus="changeFocus"
+      @blur="changeFocus"
+      :class="{
+        text: true,
+        inputOnFocus: onFocus,
+      }"
     />
     <img
       src="@/assets/img/focus.png"
@@ -20,11 +31,24 @@
 </template>
 
 <script>
+import useChangeFocus from '@/hooks/useChangeFocus';
+import useSearchLocation from '@/hooks/useSearchLocation';
+
 export default {
   name: 'the-search-location-form',
   data() {
     return {
       location: '',
+    };
+  },
+  setup(props) {
+    const { inputPlaceholder, onFocus, changeFocus } = useChangeFocus();
+    const {} = useSearchLocation();
+
+    return {
+      inputPlaceholder,
+      onFocus,
+      changeFocus,
     };
   },
 };
@@ -36,6 +60,10 @@ export default {
   top: 44px;
   left: 16px;
   margin-right: 32px;
+}
+.search-container__focused {
+  left: 0;
+  margin-right: 0;
 }
 .search-container > .img-left {
   position: absolute;
@@ -59,6 +87,13 @@ export default {
   border-radius: 15px;
   box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: var(--primary-color);
+}
+.search-container > input.inputOnFocus {
+  border: none;
+  border-bottom: 1px solid var(--lines-color);
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
 }
 .search-container > input::placeholder {
   color: var(--secondary-color);
