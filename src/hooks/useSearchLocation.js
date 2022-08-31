@@ -7,7 +7,7 @@ export default function useSearchLocation() {
   const favoriteLocations = ref(store.state.favoriteLocations);
   const token = '2a5003ab085c07782a03a08c8ec8b7fad6a5d9fc';
   const query = ref('');
-  const location = ref({});
+  const location = ref(null);
 
   const searchLocation = (event) => {
     console.log(location);

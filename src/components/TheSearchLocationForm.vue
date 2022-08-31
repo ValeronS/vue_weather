@@ -13,6 +13,8 @@
       />
       <vue-dadata
         v-model="query"
+        :suggestion="location"
+        :onChange="searchLocation"
         :token="token"
         :placeholder="inputPlaceholder"
         :class="{
@@ -27,6 +29,7 @@
         @click="$router.push('/')"
       />
     </form>
+    <p>test: {{ location }}</p>
   </div>
 </template>
 
@@ -34,29 +37,24 @@
 import useChangeFocus from '@/hooks/useChangeFocus';
 import useSearchLocation from '@/hooks/useSearchLocation';
 import { VueDadata } from 'vue-dadata';
-import { ref } from 'vue';
 
 export default {
   name: 'the-search-location-form',
   components: {
     VueDadata,
   },
-  data() {
-    return {
-      location: '',
-    };
-  },
   setup(props) {
     const { inputPlaceholder, onFocus, changeFocus } = useChangeFocus();
-    const {} = useSearchLocation();
-    const query = ref('');
+    const { token, query, location, searchLocation } = useSearchLocation();
 
     return {
       inputPlaceholder,
       onFocus,
       changeFocus,
-      token: '2a5003ab085c07782a03a08c8ec8b7fad6a5d9fc',
+      token,
       query,
+      location,
+      searchLocation,
     };
   },
 };
@@ -76,14 +74,14 @@ export default {
   left: 0;
   margin-right: 0;
 }
-.search-container > .img-left {
+.search-container .img-left {
   position: absolute;
   width: 24px;
   top: 12px;
   left: 16px;
   cursor: pointer;
 }
-.search-container > .img-right {
+.search-container .img-right {
   position: absolute;
   width: 24px;
   top: 12px;
@@ -108,5 +106,8 @@ export default {
 }
 .dadata input::placeholder {
   color: var(--secondary-color);
+}
+.background-container p {
+  margin-top: 100px;
 }
 </style>
