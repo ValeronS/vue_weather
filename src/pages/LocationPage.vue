@@ -1,6 +1,7 @@
 <template>
   <div>
     <the-search-location-form></the-search-location-form>
+
     <p
       v-if="favoriteLocations.length === 0 && !$store.state.onFocus"
       class="empty-list text"
@@ -19,7 +20,9 @@ import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import useSearchLocation from '@/hooks/useSearchLocation';
 
 export default {
-  components: { TheSearchLocationForm },
+  components: {
+    TheSearchLocationForm,
+  },
   setup(props) {
     const { favoriteLocations } = useSearchLocation();
 
