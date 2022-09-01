@@ -1,6 +1,7 @@
 <template>
   <div class="background-container" @click="changeFocus">
     <form
+      action=""
       :class="{
         'search-container': true,
         'search-container__focused': onFocus,
@@ -11,16 +12,14 @@
         class="img-left"
         @click="$router.push('/')"
       />
-      <vue-dadata
-        v-model="query"
-        :suggestion="location"
-        :onChange="searchLocation"
-        :token="token"
+      <input
+        v-model="location"
+        @input="searchLocation"
+        type="text"
         :placeholder="inputPlaceholder"
         :class="{
           text: true,
-          dadata: true,
-          'dadata-on-focus': onFocus,
+          inputOnFocus: onFocus,
         }"
       />
       <img
@@ -29,31 +28,25 @@
         @click="$router.push('/')"
       />
     </form>
-    <p>test: {{ location }}</p>
   </div>
 </template>
 
 <script>
 import useChangeFocus from '@/hooks/useChangeFocus';
 import useSearchLocation from '@/hooks/useSearchLocation';
-import { VueDadata } from 'vue-dadata';
 
 export default {
   name: 'the-search-location-form',
-  components: {
-    VueDadata,
-  },
   setup(props) {
     const { inputPlaceholder, onFocus, changeFocus } = useChangeFocus();
-    const { token, query, location, searchLocation } = useSearchLocation();
+    const { location, suggestions, searchLocation } = useSearchLocation();
 
     return {
       inputPlaceholder,
       onFocus,
       changeFocus,
-      token,
-      query,
       location,
+      suggestions,
       searchLocation,
     };
   },
@@ -64,6 +57,7 @@ export default {
 .background-container {
   height: 100vh;
 }
+
 .search-container {
   position: relative;
   top: 44px;
@@ -74,21 +68,21 @@ export default {
   left: 0;
   margin-right: 0;
 }
-.search-container .img-left {
+.search-container > .img-left {
   position: absolute;
   width: 24px;
   top: 12px;
   left: 16px;
   cursor: pointer;
 }
-.search-container .img-right {
+.search-container > .img-right {
   position: absolute;
   width: 24px;
   top: 12px;
   right: 16px;
   cursor: pointer;
 }
-.dadata input {
+.search-container > input {
   width: 100%;
   padding-left: 56px;
   height: 48px;
@@ -97,17 +91,14 @@ export default {
   box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: var(--primary-color);
 }
-.dadata-on-focus input {
+.search-container > input.inputOnFocus {
   border: none;
   border-bottom: 1px solid var(--lines-color);
   border-radius: 0;
   box-shadow: none;
   outline: none;
 }
-.dadata input::placeholder {
+.search-container > input::placeholder {
   color: var(--secondary-color);
-}
-.background-container p {
-  margin-top: 100px;
 }
 </style>
