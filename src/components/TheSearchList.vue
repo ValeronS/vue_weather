@@ -6,6 +6,7 @@
           v-for="searchItem in suggestions"
           :searchItem="searchItem"
           :key="searchItem.data.fias_id"
+          @selectSearchItem="$emit('selectSearchItem', searchItem)"
         />
       </li>
     </ul>

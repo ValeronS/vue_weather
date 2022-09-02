@@ -16,11 +16,11 @@
 
 <script>
 import TheChosenLocation from '@/components/TheChosenLocation.vue';
-import useSearchLocation from '@/hooks/useSearchLocation';
+import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 export default {
   components: { TheChosenLocation },
   setup(props) {
-    const { chosenLocation } = useSearchLocation();
+    const { chosenLocation } = useSelectSearchItem();
 
     return {
       chosenLocation,

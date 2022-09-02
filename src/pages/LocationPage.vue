@@ -3,6 +3,7 @@
     <the-search-location-form></the-search-location-form>
     <the-search-list
       :suggestions="$store.state.suggestions"
+      @selectSearchItem="selectSearchItem"
       class="search-list"
     />
 
@@ -30,6 +31,7 @@
 import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
 import useSearchLocation from '@/hooks/useSearchLocation';
+import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 
 export default {
   components: {
@@ -37,13 +39,14 @@ export default {
     TheSearchList,
   },
   setup(props) {
-    const { favoriteLocations, suggestions, searchLocation } =
-      useSearchLocation();
+    const { favoriteLocations, suggestions } = useSearchLocation();
+    const { selectedItem, selectSearchItem } = useSelectSearchItem();
 
     return {
       favoriteLocations,
       suggestions,
-      searchLocation,
+      selectedItem,
+      selectSearchItem,
     };
   },
 };
@@ -59,6 +62,7 @@ export default {
   transform: translate(-50%, -50%);
 }
 .search-list {
+  width: 100vw;
   position: absolute;
   top: 132px;
 }

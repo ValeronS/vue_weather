@@ -4,7 +4,6 @@ import axios from 'axios';
 
 export default function useSearchLocation() {
   const store = useStore();
-  const chosenLocation = ref(store.state.chosenLocation);
   const favoriteLocations = ref(store.state.favoriteLocations);
   const token = '2a5003ab085c07782a03a08c8ec8b7fad6a5d9fc';
   const location = ref('');
@@ -16,6 +15,7 @@ export default function useSearchLocation() {
         'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
         {
           query: location.value,
+          locations: [{ country: '*' }],
         },
         {
           mode: 'cors',
@@ -23,11 +23,6 @@ export default function useSearchLocation() {
             'Content-Type': 'application/json',
             Accept: 'application/json',
             Authorization: 'Token ' + token,
-          },
-        },
-        {
-          constraints: {
-            locations: { country: '*' },
           },
         }
       );
@@ -40,7 +35,6 @@ export default function useSearchLocation() {
   };
 
   return {
-    chosenLocation,
     favoriteLocations,
     token,
     location,
