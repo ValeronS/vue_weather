@@ -5,7 +5,7 @@
     </p>
     <h3
       class="search-item"
-      @click.prevent="$emit('selectSearchItem', searchItem)"
+      @click.prevent="$emit('selectSearchItem', searchItem), $router.push('/')"
     >
       {{
         searchItem.data.city ||

@@ -16,12 +16,9 @@ export default function useSelectSearchItem() {
     );
     store.commit('setLatitude', event.data.geo_lat);
     store.commit('setLongitude', event.data.geo_lon);
-    console.log(
-      event.data.city ||
-        event.data.city_with_type ||
-        event.data.settlement ||
-        event.value
-    );
+    store.commit('setEmptySuggestions');
+    store.commit('setChosenSuggestion', event);
+    // console.log(event);
   };
 
   return {

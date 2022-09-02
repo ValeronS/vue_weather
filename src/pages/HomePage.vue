@@ -2,11 +2,7 @@
   <div class="home">
     <the-chosen-location :chosenLocation="chosenLocation" />
 
-    <div class="weather__current">
-      <img src="@/assets/img/cloudy.png" />
-      <h1 class="weather__current-temperature">-</h1>
-      <h2 class="weather__current-description">-</h2>
-    </div>
+    <the-current-forecast />
 
     <app-button @click="$router.push('/location')" class="btn-position">
       <h3>Выбрать локацию</h3>
@@ -16,14 +12,24 @@
 
 <script>
 import TheChosenLocation from '@/components/TheChosenLocation.vue';
+import { useFetchWeather } from '@/hooks/useFetchWeather';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
+import TheCurrentForecast from '@/components/TheCurrentForecast.vue';
+import useFirstUpperCase from '@/hooks/useFirstUpperCase';
 export default {
-  components: { TheChosenLocation },
+  components: {
+    TheChosenLocation,
+    TheCurrentForecast,
+  },
   setup(props) {
     const { chosenLocation } = useSelectSearchItem();
+    const { firstUpperCase } = useFirstUpperCase();
+    const { fetchWeater } = useFetchWeather(firstUpperCase);
 
     return {
       chosenLocation,
+      firstUpperCase,
+      fetchWeater,
     };
   },
 };
@@ -34,23 +40,6 @@ export default {
   background: var(--accent-dark-color);
   width: 100%;
   height: 100vh;
-}
-
-.weather__current {
-  position: relative;
-  top: 60px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.weather__current > img {
-  width: 148px;
-}
-.weather__current-temperature {
-  color: var(--white);
-}
-.weather__current-description {
-  color: var(--white);
 }
 
 .btn-position {
