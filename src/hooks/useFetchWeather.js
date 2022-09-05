@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
-export function useFetchWeather(firstUpperCase) {
+export function useFetchWeather() {
   const store = useStore();
   const latitude = store.state.chosenLocationLatitude;
   const longitude = store.state.chosenLocationLongitude;
@@ -31,7 +31,7 @@ export function useFetchWeather(firstUpperCase) {
 
         store.commit(
           'setCurrentDescription',
-          firstUpperCase(forecast[0].weather[0].description)
+          forecast[0].weather[0].description
         );
 
         store.commit('setIconCode', forecast[0].weather[0].icon);

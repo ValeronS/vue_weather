@@ -22,11 +22,10 @@ export default {
   },
 
   setup(props) {
-    const { imgSrc, currentIcon } = useCurrentIcon();
+    const { imgSrc } = useCurrentIcon();
 
     return {
       imgSrc,
-      currentIcon,
     };
   },
 };
@@ -48,5 +47,6 @@ export default {
 }
 .forecast__current-description {
   color: var(--white);
+  text-transform: capitalize;
 }
 </style>

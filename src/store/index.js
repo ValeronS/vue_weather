@@ -7,103 +7,85 @@ export default createStore({
     chosenLocationLongitude: 0,
     currentTemperature: '-',
     currentDescription: '-',
-    iconCode: '',
+    iconCode: '03d',
     imgSrcIdx: 4,
     favoriteLocations: [],
     onFocus: false,
     suggestions: [],
-    weatherIcons: [
-      {
-        icon: '01d',
-        description: 'clear_sky',
+    IconsWeather: {
+      '01d': {
+        label: 'clear_sky',
         src: require('@/assets/img/sun.png'),
       },
-      {
-        icon: '01n',
-        description: 'clear_sky',
+      '01n': {
+        label: 'clear_sky',
         src: require('@/assets/img/sun.png'),
       },
-      {
-        icon: '02d',
-        description: 'few_clouds',
+      '02d': {
+        label: 'few_clouds',
         src: require('@/assets/img/sun_cloudy.png'),
       },
-      {
-        icon: '02n',
-        description: 'few_clouds',
+      '02n': {
+        label: 'few_clouds',
         src: require('@/assets/img/night.png'),
       },
-      {
-        icon: '03d',
-        description: 'scattered_clouds',
+      '03d': {
+        label: 'scattered_clouds',
         src: require('@/assets/img/cloudy.png'),
       },
-      {
-        icon: '03n',
-        description: 'scattered_clouds',
+      '03n': {
+        label: 'scattered_clouds',
         src: require('@/assets/img/cloudy.png'),
       },
-      {
-        icon: '04d',
-        description: 'broken_clouds',
+      '04d': {
+        label: 'broken_clouds',
         src: require('@/assets/img/cloudy.png'),
       },
-      {
-        icon: '04n',
-        description: 'broken_clouds',
+      '04n': {
+        label: 'broken_clouds',
         src: require('@/assets/img/cloudy.png'),
       },
-      {
-        icon: '09d',
-        description: 'shower_rain',
+      '09d': {
+        label: 'shower_rain',
         src: require('@/assets/img/rain.png'),
       },
-      {
-        icon: '09n',
-        description: 'shower_rain',
+      '09n': {
+        label: 'shower_rain',
         src: require('@/assets/img/rain.png'),
       },
-      {
-        icon: '10d',
-        description: 'rain',
+      '10d': {
+        label: 'rain',
         src: require('@/assets/img/rain.png'),
       },
-      {
-        icon: '10n',
-        description: 'rain',
+      '10n': {
+        label: 'rain',
         src: require('@/assets/img/rain.png'),
       },
-      {
-        icon: '11d',
-        description: 'thunderstorm',
+      '11d': {
+        label: 'thunderstorm',
         src: require('@/assets/img/thunder.png'),
       },
-      {
-        icon: '11n',
-        description: 'thunderstorm',
+      '11n': {
+        label: 'thunderstorm',
         src: require('@/assets/img/thunder.png'),
       },
-      {
-        icon: '13d',
-        description: 'snow',
+      '13d': {
+        label: 'snow',
         src: require('@/assets/img/snowy.png'),
       },
-      {
-        icon: '13n',
-        description: 'snow',
+      '13n': {
+        label: 'snow',
         src: require('@/assets/img/snowy.png'),
       },
-      {
-        icon: '50d',
-        description: 'mist',
+      '50d': {
+        label: 'mist',
         src: require('@/assets/img/cloudy.png'),
       },
-      {
-        icon: '50n',
-        description: 'mist',
+      '50n': {
+        label: 'mist',
         src: require('@/assets/img/cloudy.png'),
       },
-    ],
+    },
   }),
 
   mutations: {

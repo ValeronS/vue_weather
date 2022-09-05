@@ -15,7 +15,6 @@ import TheChosenLocation from '@/components/TheChosenLocation.vue';
 import { useFetchWeather } from '@/hooks/useFetchWeather';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheCurrentForecast from '@/components/TheCurrentForecast.vue';
-import useFirstUpperCase from '@/hooks/useFirstUpperCase';
 export default {
   components: {
     TheChosenLocation,
@@ -23,12 +22,10 @@ export default {
   },
   setup(props) {
     const { chosenLocation } = useSelectSearchItem();
-    const { firstUpperCase } = useFirstUpperCase();
-    const { fetchWeater } = useFetchWeather(firstUpperCase);
+    const { fetchWeater } = useFetchWeather();
 
     return {
       chosenLocation,
-      firstUpperCase,
       fetchWeater,
     };
   },
