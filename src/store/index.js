@@ -7,6 +7,8 @@ export default createStore({
     chosenLocationLongitude: 0,
     currentTemperature: '-',
     currentDescription: '-',
+    currentWind: '',
+    currentHumidity: '',
     iconCode: '03d',
     imgSrcIdx: 4,
     favoriteLocations: [],
@@ -121,6 +123,12 @@ export default createStore({
     },
     setImgSrcIdx(state, idx) {
       state.imgSrcIdx = idx;
+    },
+    setWind(state, wind) {
+      state.currentWind = wind;
+    },
+    setHumidity(state, humidity) {
+      state.currentHumidity = humidity;
     },
   },
 });
