@@ -4,7 +4,6 @@ import axios from 'axios';
 
 export default function useSearchLocation() {
   const store = useStore();
-  const favoriteLocations = ref(store.state.favoriteLocations);
   const token = '2a5003ab085c07782a03a08c8ec8b7fad6a5d9fc';
   const location = ref('');
   const suggestions = ref([]);
@@ -37,7 +36,6 @@ export default function useSearchLocation() {
   };
 
   return {
-    favoriteLocations,
     token,
     location,
     suggestions,

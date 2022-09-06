@@ -6,11 +6,7 @@
     </div>
 
     <div class="star" @click="addToFavorite">
-      <img
-        v-if="!$store.state.favoriteLocation"
-        src="@/assets/img/star-line.png"
-        alt=""
-      />
+      <img v-if="!isStarFilled" src="@/assets/img/star-line.png" alt="" />
       <img v-else src="@/assets/img/star-fill.png" alt="" />
     </div>
   </div>
@@ -19,8 +15,8 @@
 <script>
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import { useFillStar } from '@/hooks/useFillStar';
-// import { ref, watch } from 'vue';
-// import { useStore } from 'vuex';
+import { ref, watch } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'the-chosen-location',
@@ -32,14 +28,15 @@ export default {
   },
   setup(props) {
     const { favoriteLocation, addToFavorite } = useFavoriteLocation();
-    const { fillStar } = useFillStar();
-    // const store = useStore();
-    // const chosenLocation = ref(store.state.chosenLocation);
-    // watch(chosenLocation, () => fillStar);
+    const { isStarFilled, fillStar } = useFillStar();
+    const store = useStore();
+    const chosenLocation = ref(store.state.chosenLocation);
+    watch(chosenLocation, () => fillStar);
 
     return {
       favoriteLocation,
       addToFavorite,
+      isStarFilled,
       fillStar,
     };
   },

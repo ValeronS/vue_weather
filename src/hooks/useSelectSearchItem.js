@@ -17,7 +17,8 @@ export default function useSelectSearchItem() {
     store.commit('setLatitude', event.data.geo_lat);
     store.commit('setLongitude', event.data.geo_lon);
     store.commit('setEmptySuggestions');
-    store.commit('setChosenSuggestion', event);
+    store.commit('setFocus', false);
+    // store.commit('setChosenSuggestion', event);
     // console.log(event);
   };
 

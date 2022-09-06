@@ -1,8 +1,9 @@
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default function useFavoriteLocation() {
   const store = useStore();
+  const favoriteLocations = ref(store.state.favoriteLocations);
   const favoriteLocation = { name: '', latitude: 0, longitude: 0 };
   const favoriteLocationsLength = Object.keys(
     store.state.favoriteLocations
@@ -29,5 +30,6 @@ export default function useFavoriteLocation() {
   return {
     favoriteLocation,
     addToFavorite,
+    favoriteLocations,
   };
 }

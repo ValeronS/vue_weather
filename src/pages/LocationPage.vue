@@ -7,11 +7,17 @@
       class="search-list"
     />
 
+    <the-favorite-locations-list
+      v-if="!$store.state.suggestions.length"
+      :favoriteLocations="$store.state.favoriteLocations"
+      class="favorite-locations-list"
+    />
+
     <p
       v-if="
-        favoriteLocations.length === 0 &&
+        !$store.state.favoriteLocationsLength &&
         !$store.state.onFocus &&
-        !$store.state.suggestions
+        !$store.state.suggestions.length
       "
       class="empty-list text"
     >
@@ -30,22 +36,27 @@
 <script>
 import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
-import useSearchLocation from '@/hooks/useSearchLocation';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
+import TheFavoriteLocationsList from '@/components/TheFavoriteLocationsList.vue';
+
+// import useSearchLocation from '@/hooks/useSearchLocation';
+// import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 
 export default {
   components: {
     TheSearchLocationForm,
     TheSearchList,
+    TheFavoriteLocationsList,
   },
   setup(props) {
-    const { favoriteLocations, suggestions } = useSearchLocation();
-    const { selectedItem, selectSearchItem } = useSelectSearchItem();
+    // const { suggestions } = useSearchLocation();
+    const { selectSearchItem } = useSelectSearchItem();
+    // const { favoriteLocations } = useFavoriteLocation();
 
     return {
-      favoriteLocations,
-      suggestions,
-      selectedItem,
+      // favoriteLocations,
+      // suggestions,
+      // selectedItem,
       selectSearchItem,
     };
   },
@@ -62,8 +73,13 @@ export default {
   transform: translate(-50%, -50%);
 }
 .search-list {
-  width: 100vw;
   position: absolute;
   top: 132px;
+  width: 100vw;
+}
+.favorite-locations-list {
+  position: absolute;
+  top: 108px;
+  width: 100vw;
 }
 </style>

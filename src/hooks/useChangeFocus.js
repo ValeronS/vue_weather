@@ -7,6 +7,7 @@ export default function useChangeFocus() {
   const inputPlaceholder = ref('Поиск локации');
 
   const changeFocus = (event) => {
+    console.log(event);
     if (event.target.tagName === 'INPUT') {
       store.commit('setFocus', true);
       onFocus.value = true;
