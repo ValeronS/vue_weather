@@ -12,7 +12,7 @@
       </h2>
     </div>
 
-    <div class="forecast__conditions">
+    <div v-if="$store.state.currentWind" class="forecast__conditions">
       <div class="wind">
         <img src="@/assets/img/windy.png" alt="" />
         {{ $store.state.currentWind }}

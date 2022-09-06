@@ -16,6 +16,8 @@ export default function useSearchLocation() {
         {
           query: location.value,
           locations: [{ country: '*' }],
+          from_bound: { value: 'city' },
+          to_bound: { value: 'settlement' },
         },
         {
           mode: 'cors',
@@ -28,7 +30,7 @@ export default function useSearchLocation() {
       );
       suggestions.value = response.data.suggestions;
       store.commit('setSuggestions', response.data.suggestions);
-      console.log(suggestions.value);
+      // console.log(suggestions.value);
     } catch (error) {
       console.log(error);
     }

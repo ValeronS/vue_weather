@@ -11,9 +11,11 @@ export default createStore({
     currentHumidity: '',
     iconCode: '03d',
     imgSrcIdx: 4,
-    favoriteLocations: [],
     onFocus: false,
     suggestions: [],
+    favoriteLocationsLength: 0,
+    favoriteLocations: {},
+    isCityFavorite: false,
     IconsWeather: {
       '01d': {
         label: 'clear_sky',
@@ -129,6 +131,18 @@ export default createStore({
     },
     setHumidity(state, humidity) {
       state.currentHumidity = humidity;
+    },
+    setFavoriteLocationsLength(state, favoriteLocationsLength) {
+      state.favoriteLocationsLength = favoriteLocationsLength;
+    },
+    setNewFavoriteLocation(state, favoriteLocationsLength) {
+      state.favoriteLocations[favoriteLocationsLength] = {};
+    },
+    setFavoriteLocation(state, location) {
+      state.favoriteLocations[state.favoriteLocationsLength] = location;
+    },
+    setCityFavorite(state, bool) {
+      state.isCityFavorite = bool;
     },
   },
 });

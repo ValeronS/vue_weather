@@ -1,11 +1,27 @@
 <template>
   <div class="location-field">
-    <img src="@/assets/img/map.png" class="img__map" />
-    <h3>{{ chosenLocation }}</h3>
+    <div class="location">
+      <img src="@/assets/img/map.png" />
+      <h3>{{ chosenLocation }}</h3>
+    </div>
+
+    <div class="star" @click="addToFavorite">
+      <img
+        v-if="!$store.state.favoriteLocation"
+        src="@/assets/img/star-line.png"
+        alt=""
+      />
+      <img v-else src="@/assets/img/star-fill.png" alt="" />
+    </div>
   </div>
 </template>
 
 <script>
+import useFavoriteLocation from '@/hooks/useFavoriteLocation';
+import { useFillStar } from '@/hooks/useFillStar';
+// import { ref, watch } from 'vue';
+// import { useStore } from 'vuex';
+
 export default {
   name: 'the-chosen-location',
   props: {
@@ -13,6 +29,19 @@ export default {
       type: String,
       required: true,
     },
+  },
+  setup(props) {
+    const { favoriteLocation, addToFavorite } = useFavoriteLocation();
+    const { fillStar } = useFillStar();
+    // const store = useStore();
+    // const chosenLocation = ref(store.state.chosenLocation);
+    // watch(chosenLocation, () => fillStar);
+
+    return {
+      favoriteLocation,
+      addToFavorite,
+      fillStar,
+    };
   },
 };
 </script>
@@ -25,14 +54,24 @@ export default {
   margin-right: 32px;
   height: 48px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
-.img__map {
+.location {
+  display: flex;
+  align-items: center;
+}
+.location-field h3 {
+  padding-left: 8px;
+  color: var(--white);
+  display: inline;
+}
+.location-field img {
   width: 24px;
   height: 24px;
 }
-.location-field > h3 {
-  padding-left: 8px;
-  color: var(--white);
+.star {
+  display: flex;
+  align-items: center;
 }
 </style>
