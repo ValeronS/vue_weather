@@ -14,8 +14,11 @@
   transition: all 500ms;
 }
 
+html {
+  overflow: hidden;
+}
+
 body {
-  overflow-x: hidden;
   font-family: 'SF Pro Display';
   min-width: 280px;
 }

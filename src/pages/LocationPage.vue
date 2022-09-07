@@ -31,6 +31,10 @@
     >
       Введите название города
     </p>
+
+    <app-modal @cancel="cancelRemoveCity" class="app-modal"
+      >Локация удалена</app-modal
+    >
   </div>
 </template>
 
@@ -39,26 +43,23 @@ import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheFavoriteList from '@/components/TheFavoriteList.vue';
-
-// import useSearchLocation from '@/hooks/useSearchLocation';
-// import useFavoriteLocation from '@/hooks/useFavoriteLocation';
+import AppModal from '@/components/UI/AppModal.vue';
+import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 
 export default {
   components: {
     TheSearchLocationForm,
     TheSearchList,
     TheFavoriteList,
+    AppModal,
   },
   setup(props) {
-    // const { suggestions } = useSearchLocation();
     const { selectItem } = useSelectSearchItem();
-    // const { favoriteLocations } = useFavoriteLocation();
+    const { cancelRemoveCity } = useFavoriteLocation();
 
     return {
-      // favoriteLocations,
-      // suggestions,
-      // selectedItem,
       selectItem,
+      cancelRemoveCity,
     };
   },
 };

@@ -15,6 +15,7 @@ export default createStore({
     suggestions: [],
     favoriteLocationsLength: 0,
     favoriteLocations: {},
+    deletedFavoriteCity: {},
     isCityFavorite: false,
     IconsWeather: {
       '01d': {
@@ -146,6 +147,9 @@ export default createStore({
     },
     setCityFavorite(state, bool) {
       state.isCityFavorite = bool;
+    },
+    setDeletedFavoriteCity(state, favoriteCity) {
+      state.deletedFavoriteCity = favoriteCity;
     },
   },
 });
