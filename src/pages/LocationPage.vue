@@ -3,14 +3,15 @@
     <the-search-location-form></the-search-location-form>
     <the-search-list
       :suggestions="$store.state.suggestions"
-      @selectSearchItem="selectSearchItem"
+      @selectSearchItem="selectItem"
       class="search-list"
     />
 
-    <the-favorite-locations-list
+    <the-favorite-list
       v-if="!$store.state.suggestions.length"
       :favoriteLocations="$store.state.favoriteLocations"
       class="favorite-locations-list"
+      @selectFavoriteCity="selectItem"
     />
 
     <p
@@ -37,7 +38,7 @@
 import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
-import TheFavoriteLocationsList from '@/components/TheFavoriteLocationsList.vue';
+import TheFavoriteList from '@/components/TheFavoriteList.vue';
 
 // import useSearchLocation from '@/hooks/useSearchLocation';
 // import useFavoriteLocation from '@/hooks/useFavoriteLocation';
@@ -46,18 +47,18 @@ export default {
   components: {
     TheSearchLocationForm,
     TheSearchList,
-    TheFavoriteLocationsList,
+    TheFavoriteList,
   },
   setup(props) {
     // const { suggestions } = useSearchLocation();
-    const { selectSearchItem } = useSelectSearchItem();
+    const { selectItem } = useSelectSearchItem();
     // const { favoriteLocations } = useFavoriteLocation();
 
     return {
       // favoriteLocations,
       // suggestions,
       // selectedItem,
-      selectSearchItem,
+      selectItem,
     };
   },
 };

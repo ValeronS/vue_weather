@@ -1,7 +1,8 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
+import { useFillStar } from './useFillStar';
 
-export default function useFavoriteLocation() {
+export default function useFavoriteLocation(fillStar) {
   const store = useStore();
   const favoriteLocations = ref(store.state.favoriteLocations);
   const favoriteLocation = { name: '', latitude: 0, longitude: 0 };
@@ -9,23 +10,22 @@ export default function useFavoriteLocation() {
     store.state.favoriteLocations
   ).length;
 
-  const addToFavorite = computed(() => {
-    if (store.state.chosenLocationLatitude) {
-      favoriteLocation.name = store.state.chosenLocation;
-      favoriteLocation.latitude = store.state.chosenLocationLatitude;
-      favoriteLocation.longitude = store.state.chosenLocationLongitude;
+  const addToFavorite = () => {
+    favoriteLocation.name = store.state.chosenLocation;
+    favoriteLocation.latitude = store.state.chosenLocationLatitude;
+    favoriteLocation.longitude = store.state.chosenLocationLongitude;
 
-      store.commit('setFavoriteLocation', favoriteLocation);
-      store.commit('setFavoriteLocationsLength', favoriteLocationsLength + 1);
+    store.commit('setFavoriteLocation', favoriteLocation);
+    store.commit('setFavoriteLocationsLength', favoriteLocationsLength + 1);
 
-      console.log(
-        favoriteLocation.name,
-        favoriteLocation.latitude,
-        favoriteLocation.longitude,
-        favoriteLocationsLength
-      );
-    }
-  });
+    fillStar();
+    console.log(
+      favoriteLocation.name,
+      favoriteLocation.latitude,
+      favoriteLocation.longitude,
+      favoriteLocationsLength
+    );
+  };
 
   return {
     favoriteLocation,

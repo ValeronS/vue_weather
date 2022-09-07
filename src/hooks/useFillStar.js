@@ -14,10 +14,12 @@ export function useFillStar() {
         store.commit('setCityFavorite', true);
         isStarFilled.value = true;
         console.log(true);
+        return true;
       } else {
         store.commit('setCityFavorite', false);
         isStarFilled.value = false;
         console.log(false);
+        return false;
       }
     }
   };

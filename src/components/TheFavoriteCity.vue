@@ -1,5 +1,8 @@
 <template>
-  <div class="favorite-city__container">
+  <div
+    @click="$emit('selectFavoriteCity', favoriteCity), $router.push('/')"
+    class="favorite-city__container"
+  >
     <div class="favorite-city">
       <div class="favorite-city__img">
         <img :src="imgSrc" alt="" />
@@ -18,6 +21,7 @@
         src="@/assets/img/star-fill-blue.png"
         alt=""
         class="star-fill-blue"
+        @click.stop="removeCity(favoriteCity)"
       />
     </div>
 
@@ -30,6 +34,7 @@
 <script>
 import useFirstUpperCase from '@/hooks/useFirstUpperCase';
 import useFetchCityWeather from '@/hooks/useFetchCityWeather';
+import useRemoveCity from '@/hooks/useRemoveCity';
 
 export default {
   name: 'the-favorite-city',
@@ -43,6 +48,7 @@ export default {
     const { firstUpperCase } = useFirstUpperCase();
     const { imgSrc, temperature, description, fetchCityWeather } =
       useFetchCityWeather(firstUpperCase);
+    const { removeCity } = useRemoveCity();
 
     return {
       firstUpperCase,
@@ -50,6 +56,7 @@ export default {
       temperature,
       description,
       fetchCityWeather,
+      removeCity,
     };
   },
 };

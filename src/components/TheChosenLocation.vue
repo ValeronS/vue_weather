@@ -27,11 +27,14 @@ export default {
     },
   },
   setup(props) {
-    const { favoriteLocation, addToFavorite } = useFavoriteLocation();
     const { isStarFilled, fillStar } = useFillStar();
+    const { favoriteLocation, addToFavorite } = useFavoriteLocation(fillStar);
     const store = useStore();
     const chosenLocation = ref(store.state.chosenLocation);
-    watch(chosenLocation, () => fillStar);
+    watch(
+      () => chosenLocation,
+      async () => fillStar
+    );
 
     return {
       favoriteLocation,

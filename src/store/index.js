@@ -132,6 +132,9 @@ export default createStore({
     setHumidity(state, humidity) {
       state.currentHumidity = humidity;
     },
+    setFavoriteLocations(state, favoriteLocations) {
+      state.favoriteLocations = favoriteLocations;
+    },
     setFavoriteLocationsLength(state, favoriteLocationsLength) {
       state.favoriteLocationsLength = favoriteLocationsLength;
     },
