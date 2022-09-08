@@ -5,6 +5,11 @@ export default createStore({
     chosenLocation: 'Город не определен',
     chosenLocationLatitude: 0,
     chosenLocationLongitude: 0,
+    chosenCity: {
+      name: '',
+      latitude: 0,
+      longitude: 0,
+    },
     currentTemperature: '-',
     currentDescription: '-',
     currentWind: '',
@@ -102,12 +107,15 @@ export default createStore({
     },
     setChosenLocation(state, location) {
       state.chosenLocation = location;
+      state.chosenCity.name = location;
     },
     setLatitude(state, latitude) {
       state.chosenLocationLatitude = latitude;
+      state.chosenCity.latitude = latitude;
     },
     setLongitude(state, longitude) {
       state.chosenLocationLongitude = longitude;
+      state.chosenCity.longitude = longitude;
     },
     setEmptySuggestions(state) {
       state.suggestions = [];

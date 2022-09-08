@@ -15,9 +15,10 @@ export function useFillStar() {
       favoriteLocations.value
     ).length;
     console.log('length', favoriteLocationsLength.value);
+
     if (favoriteLocationsLength.value) {
       let obj = [];
-      for (let i = 0; i <= favoriteLocationsLength.value; i++) {
+      for (let i = 0; i < favoriteLocationsLength.value; i++) {
         obj = Object.values(favoriteLocations.value)[i];
         console.log('obj', obj?.name);
         if (obj?.name === chosenLocation.value) {

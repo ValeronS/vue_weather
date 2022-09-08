@@ -6,7 +6,11 @@
     </div>
 
     <div class="star" @click="addToFavorite">
-      <img v-if="!isStarFilled" src="@/assets/img/star-line.png" alt="" />
+      <img
+        v-if="!$store.state.isCityFavorite"
+        src="@/assets/img/star-line.png"
+        alt=""
+      />
       <img v-else src="@/assets/img/star-fill.png" alt="" />
     </div>
   </div>

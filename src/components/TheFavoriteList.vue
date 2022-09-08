@@ -1,16 +1,12 @@
 <template>
-  <div>
-    <ul>
-      <li>
-        <the-favorite-city
-          v-for="favoriteCity in favoriteLocations"
-          :key="favoriteCity.name"
-          :favoriteCity="favoriteCity"
-          @selectFavoriteCity="$emit('selectFavoriteCity', favoriteCity)"
-        />
-      </li>
-    </ul>
-  </div>
+  <TransitionGroup name="list" tag="ul">
+    <the-favorite-city
+      v-for="favoriteCity in favoriteLocations"
+      :key="favoriteCity.name"
+      :favoriteCity="favoriteCity"
+      @selectFavoriteCity="$emit('selectFavoriteCity', favoriteCity)"
+    />
+  </TransitionGroup>
 </template>
 
 <script>
@@ -30,4 +26,14 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+</style>

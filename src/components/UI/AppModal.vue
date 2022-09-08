@@ -30,6 +30,7 @@ export default {
   border: 1px solid var(--lines-color);
   border-radius: 5px;
   box-shadow: 2px 2px 4px 0 rgba(11, 26, 34, 0.12);
+  background-color: var(--white);
   display: flex;
   justify-content: space-between;
   align-items: center;
