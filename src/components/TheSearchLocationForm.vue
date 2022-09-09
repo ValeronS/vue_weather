@@ -63,6 +63,7 @@ export default {
   top: 44px;
   left: 16px;
   margin-right: 32px;
+  transition: all 500ms;
 }
 .search-container__focused {
   left: 0;

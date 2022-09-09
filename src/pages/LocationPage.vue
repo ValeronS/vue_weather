@@ -14,27 +14,35 @@
       @selectFavoriteCity="selectItem"
     />
 
-    <p
-      v-if="
-        !$store.state.favoriteLocationsLength &&
-        !$store.state.onFocus &&
-        !$store.state.suggestions.length
-      "
-      class="empty-list text"
-    >
-      У вас пока нет избранных локаций
-    </p>
+    <transition name="fade">
+      <p
+        v-if="
+          !Object.keys($store.state.favoriteLocations).length &&
+          !$store.state.onFocus &&
+          !$store.state.suggestions.length
+        "
+        class="empty-list text"
+      >
+        У вас пока нет избранных локаций
+      </p>
+    </transition>
 
-    <p
-      v-if="$store.state.onFocus && !$store.state.suggestions"
-      class="empty-list text"
-    >
-      Введите название города
-    </p>
+    <transition name="fade">
+      <p
+        v-if="$store.state.onFocus && !$store.state.suggestions.length"
+        class="empty-list text"
+      >
+        Введите название города
+      </p>
+    </transition>
 
-    <app-modal @cancel="cancelRemoveCity" class="app-modal"
-      >Локация удалена</app-modal
-    >
+    <transition name="fade">
+      <app-modal
+        v-if="$store.state.deletedFavoriteCity.name"
+        @cancel="cancelRemoveCity"
+        >Локация удалена</app-modal
+      >
+    </transition>
   </div>
 </template>
 
@@ -83,5 +91,14 @@ export default {
   position: absolute;
   top: 108px;
   width: 100vw;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

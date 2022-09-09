@@ -4,6 +4,8 @@
 
     <the-current-forecast />
 
+    <the-forecast :forecast="forecast" />
+
     <app-button @click="$router.push('/location')" class="btn-position">
       <h3>Выбрать локацию</h3>
     </app-button>
@@ -15,21 +17,24 @@ import TheChosenLocation from '@/components/TheChosenLocation.vue';
 import { useFetchWeather } from '@/hooks/useFetchWeather';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheCurrentForecast from '@/components/TheCurrentForecast.vue';
+import TheForecast from '@/components/TheForecats.vue';
 import useFirstUpperCase from '@/hooks/useFirstUpperCase';
 
 export default {
   components: {
     TheChosenLocation,
     TheCurrentForecast,
+    TheForecast,
   },
   setup(props) {
     const { chosenLocation } = useSelectSearchItem();
     const { firstUpperCase } = useFirstUpperCase();
-    const { fetchWeater } = useFetchWeather(firstUpperCase);
+    const { forecast, fetchWeater } = useFetchWeather(firstUpperCase);
 
     return {
       chosenLocation,
       firstUpperCase,
+      forecast,
       fetchWeater,
     };
   },

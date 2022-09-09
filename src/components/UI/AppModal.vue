@@ -51,7 +51,7 @@ export default {
 }
 .modal-cancel {
   color: var(--accent-dark-color);
-  padding-right: 8px;
+  padding-right: 16px;
   cursor: pointer;
 }
 </style>

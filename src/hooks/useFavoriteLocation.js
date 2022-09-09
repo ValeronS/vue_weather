@@ -80,6 +80,9 @@ export default function useFavoriteLocation(fillStar) {
       delete favoriteLocations.value[objKey.value];
       store.commit('setFavoriteLocations', favoriteLocations.value);
       store.commit('setDeletedFavoriteCity', favoriteCity);
+      setTimeout(() => {
+        store.commit('setDeletedFavoriteCity', '');
+      }, 2000);
       console.log(favoriteLocations.value);
       if (chosenLocation.value === favoriteCity.name) {
         store.commit('setCityFavorite', false);
