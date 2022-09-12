@@ -1,9 +1,9 @@
 <template>
-  <div :forecast="forecast" class="forecast-container">
+  <div class="forecast-container">
     {{}}
     <div class="forecast-header">
       <h3>Сегодня {{ day + ' ' + month }}</h3>
-      <p class="text">temp</p>
+      <p class="text">{{ forecast[0].main.temp }}</p>
     </div>
     <div class="forecast-slider">
       <div class="forecast-item">
@@ -17,6 +17,8 @@
 
 <script>
 import useGetDate from '@/hooks/useGetDate';
+import useForecastRender from '@/hooks/useForecastRender';
+import { ref } from '@vue/reactivity';
 
 export default {
   name: 'the-forecast',
@@ -28,11 +30,16 @@ export default {
   },
 
   setup(props) {
+    // const receivedForecast = this.forecast;
     const { day, month } = useGetDate();
+    const { tempMin } = useForecastRender(this.forecast);
 
     return {
       day,
       month,
+      tempMin,
+      // tempMax,
+      // forecastRender,
     };
   },
 };
