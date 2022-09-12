@@ -3,50 +3,71 @@
     <the-search-location-form></the-search-location-form>
     <the-search-list
       :suggestions="$store.state.suggestions"
-      @selectSearchItem="selectSearchItem"
+      @selectSearchItem="selectItem"
       class="search-list"
     />
 
-    <p
-      v-if="
-        favoriteLocations.length === 0 &&
-        !$store.state.onFocus &&
-        !$store.state.suggestions
-      "
-      class="empty-list text"
-    >
-      У вас пока нет избранных локаций
-    </p>
+    <the-favorite-list
+      v-if="!$store.state.suggestions.length"
+      :favoriteLocations="$store.state.favoriteLocations"
+      class="favorite-locations-list"
+      @selectFavoriteCity="selectItem"
+    />
 
-    <p
-      v-if="$store.state.onFocus && !$store.state.suggestions"
-      class="empty-list text"
-    >
-      Введите название города
-    </p>
+    <transition name="fade">
+      <p
+        v-if="
+          !Object.keys($store.state.favoriteLocations).length &&
+          !$store.state.onFocus &&
+          !$store.state.suggestions.length
+        "
+        class="empty-list text"
+      >
+        У вас пока нет избранных локаций
+      </p>
+    </transition>
+
+    <transition name="fade">
+      <p
+        v-if="$store.state.onFocus && !$store.state.suggestions.length"
+        class="empty-list text"
+      >
+        Введите название города
+      </p>
+    </transition>
+
+    <transition name="fade">
+      <app-modal
+        v-if="$store.state.deletedFavoriteCity.name"
+        @cancel="cancelRemoveCity"
+        >Локация удалена</app-modal
+      >
+    </transition>
   </div>
 </template>
 
 <script>
 import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
-import useSearchLocation from '@/hooks/useSearchLocation';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
+import TheFavoriteList from '@/components/TheFavoriteList.vue';
+import AppModal from '@/components/UI/AppModal.vue';
+import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 
 export default {
   components: {
     TheSearchLocationForm,
     TheSearchList,
+    TheFavoriteList,
+    AppModal,
   },
   setup(props) {
-    const { favoriteLocations, suggestions } = useSearchLocation();
-    const { selectedItem, selectSearchItem } = useSelectSearchItem();
+    const { selectItem } = useSelectSearchItem();
+    const { cancelRemoveCity } = useFavoriteLocation();
 
     return {
-      favoriteLocations,
-      suggestions,
-      selectedItem,
-      selectSearchItem,
+      selectItem,
+      cancelRemoveCity,
     };
   },
 };
@@ -62,8 +83,22 @@ export default {
   transform: translate(-50%, -50%);
 }
 .search-list {
-  width: 100vw;
   position: absolute;
   top: 132px;
+  width: 100vw;
+}
+.favorite-locations-list {
+  position: absolute;
+  top: 108px;
+  width: 100vw;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

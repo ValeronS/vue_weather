@@ -7,6 +7,7 @@ export function useFetchWeather(firstUpperCase) {
   const latitude = store.state.chosenLocationLatitude;
   const longitude = store.state.chosenLocationLongitude;
   const apiKey = 'a722624eaa524af8342f7a194cffad4d';
+  const forecast = ref([]);
 
   const fetchWeather = async () => {
     if (latitude) {
@@ -14,36 +15,46 @@ export function useFetchWeather(firstUpperCase) {
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=ru`
         );
-        const forecast = response.data.list;
-        console.log(forecast);
+        forecast.value = response.data?.list ?? 0;
+        console.log(forecast.value);
 
-        if (forecast[0].main.temp.toFixed() > 0) {
+        if (forecast.value[0]?.main?.temp?.toFixed() > 0) {
           store.commit(
             'setCurrentTemperature',
-            '+' + forecast[0].main.temp.toFixed()
+            '+' + forecast.value[0].main.temp.toFixed() ?? 0
           );
         } else {
           store.commit(
             'setCurrentTemperature',
-            forecast[0].main.temp.toFixed()
+            forecast.value[0].main.temp.toFixed()
           );
         }
 
         store.commit(
           'setCurrentDescription',
-          firstUpperCase(forecast[0].weather[0].description)
+          firstUpperCase(forecast.value[0].weather[0]?.description ?? 0)
         );
 
-        store.commit('setIconCode', forecast[0].weather[0].icon);
+        store.commit('setIconCode', forecast.value[0].weather[0].icon ?? 0);
+
+        store.commit(
+          'setWind',
+          (forecast.value[0].wind?.speed * 3.6).toFixed() + ' км/ч'
+        );
+
+        store.commit('setHumidity', forecast.value[0].main.humidity + '%');
       } catch (error) {
         console.log(error);
       }
+    } else {
+      console.log('Нет данных для выполнения запроса');
     }
   };
 
   onMounted(fetchWeather);
 
   return {
+    forecast,
     fetchWeather,
   };
 }
