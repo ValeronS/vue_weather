@@ -2,7 +2,7 @@
   <div class="location-field">
     <div class="location">
       <img src="@/assets/img/map.png" />
-      <h3>{{ chosenLocation }}</h3>
+      <h3 @click="$router.push('/location')">{{ chosenLocation }}</h3>
     </div>
 
     <div class="star" @click="addToFavorite">
@@ -69,10 +69,12 @@ export default {
   padding-left: 8px;
   color: var(--white);
   display: inline;
+  cursor: pointer;
 }
 .location-field img {
   width: 24px;
   height: 24px;
+  cursor: pointer;
 }
 .star {
   display: flex;

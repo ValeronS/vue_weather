@@ -1,15 +1,18 @@
 <template>
-  <div class="forecast-container">
-    {{}}
+  <div class="forecast-container" v-if="forecast.length">
     <div class="forecast-header">
       <h3>Сегодня {{ day + ' ' + month }}</h3>
       <p class="text">{{ tempMax + ' / ' + tempMin + ' °C' }}</p>
     </div>
     <div class="forecast-slider">
-      <div class="forecast-item">
-        <h3>{{ temp }}</h3>
-        <img :src="imgSrc" alt="" />
-        <p>{{ time }}</p>
+      <div
+        v-for="(forecastItem, index) in dayForecast"
+        :key="index"
+        class="forecast-item"
+      >
+        <h3>{{ temp(index) }}</h3>
+        <img :src="imgSrc(index)" alt="" />
+        <p>{{ time(index) }}</p>
       </div>
     </div>
   </div>
@@ -28,7 +31,8 @@ const props = defineProps({
 });
 const { forecast } = toRefs(props);
 const { day, month } = useGetDate();
-const { tempMin, tempMax, temp, time, imgSrc } = useForecastRender(forecast);
+const { dayForecast, tempMin, tempMax, temp, time, imgSrc } =
+  useForecastRender(forecast);
 </script>
 
 <style>
@@ -49,20 +53,30 @@ const { tempMin, tempMax, temp, time, imgSrc } = useForecastRender(forecast);
 .forecast-slider {
   display: flex;
   margin-top: 12px;
+  width: 100%;
+  overflow-x: auto;
+}
+.forecast-slider::-webkit-scrollbar {
+  display: none;
 }
 .forecast-item {
-  width: 64px;
+  min-width: 64px;
   height: 136px;
   margin-left: 16px;
-  background-color: var(--accent-light-color);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
 }
+.forecast-item:hover {
+  background-color: var(--accent-light-color);
+}
 .forecast-item img {
   width: 40px;
   height: 40px;
+}
+[v-cloak] {
+  display: none;
 }
 </style>

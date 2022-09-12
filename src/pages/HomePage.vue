@@ -6,7 +6,11 @@
 
     <the-forecast :forecast="forecast" />
 
-    <app-button @click="$router.push('/location')" class="btn-position">
+    <app-button
+      @click="$router.push('/location')"
+      class="btn-position"
+      v-if="!forecast.length"
+    >
       <h3>Выбрать локацию</h3>
     </app-button>
   </div>
