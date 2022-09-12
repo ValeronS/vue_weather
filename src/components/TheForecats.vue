@@ -3,46 +3,32 @@
     {{}}
     <div class="forecast-header">
       <h3>Сегодня {{ day + ' ' + month }}</h3>
-      <p class="text">{{ forecast[0].main.temp }}</p>
+      <p class="text">{{ tempMax + ' / ' + tempMin + ' °C' }}</p>
     </div>
     <div class="forecast-slider">
       <div class="forecast-item">
-        <h3>temp</h3>
-        <img src="@/assets/img/cloudy.png" alt="" />
-        <p>time</p>
+        <h3>{{ temp }}</h3>
+        <img :src="imgSrc" alt="" />
+        <p>{{ time }}</p>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import useGetDate from '@/hooks/useGetDate';
 import useForecastRender from '@/hooks/useForecastRender';
-import { ref } from '@vue/reactivity';
+import { toRefs } from 'vue';
 
-export default {
-  name: 'the-forecast',
-  props: {
-    forecast: {
-      type: Array,
-      required: true,
-    },
+const props = defineProps({
+  forecast: {
+    type: Array,
+    required: true,
   },
-
-  setup(props) {
-    // const receivedForecast = this.forecast;
-    const { day, month } = useGetDate();
-    const { tempMin } = useForecastRender(this.forecast);
-
-    return {
-      day,
-      month,
-      tempMin,
-      // tempMax,
-      // forecastRender,
-    };
-  },
-};
+});
+const { forecast } = toRefs(props);
+const { day, month } = useGetDate();
+const { tempMin, tempMax, temp, time, imgSrc } = useForecastRender(forecast);
 </script>
 
 <style>
