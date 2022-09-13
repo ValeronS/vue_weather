@@ -10,6 +10,7 @@ export default function useGeolocation(fetchWeather) {
 
   const getLocation = async () => {
     if (isSupported) {
+      store.commit('setLoading', true);
       const options = {
         enableHighAccuracy: false,
         timeout: 5000,

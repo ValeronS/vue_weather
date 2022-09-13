@@ -10,6 +10,7 @@ export default createStore({
       latitude: 0,
       longitude: 0,
     },
+    isLoading: false,
     currentTemperature: '-',
     currentDescription: '-',
     currentWind: '',
@@ -108,6 +109,9 @@ export default createStore({
     setChosenLocation(state, location) {
       state.chosenLocation = location;
       state.chosenCity.name = location;
+    },
+    setLoading(state, bool) {
+      state.isLoading = bool;
     },
     setLatitude(state, latitude) {
       state.chosenLocationLatitude = latitude;

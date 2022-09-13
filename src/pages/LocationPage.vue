@@ -3,6 +3,7 @@
     <the-search-location-form
       @getLocation="getLocation"
     ></the-search-location-form>
+
     <the-search-list
       :suggestions="$store.state.suggestions"
       @selectSearchItem="selectItem"
@@ -37,6 +38,10 @@
         Введите название города
       </p>
     </transition>
+
+    <div v-if="$store.state.isLoading" class="spinner">
+      <img src="@/assets/img/circles-loader.png" alt="" class="spinner-img" />
+    </div>
 
     <transition name="fade">
       <app-modal
@@ -105,5 +110,29 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  display: flex;
+}
+.spinner-img {
+  width: 36px;
+  height: 36px;
+  margin: auto;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
 }
 </style>

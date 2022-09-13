@@ -8,6 +8,7 @@ export function useFetchWeather(firstUpperCase) {
   const longitude = ref('');
   const apiKey = 'a722624eaa524af8342f7a194cffad4d';
   const forecast = ref([]);
+  const isLoading = ref(false);
 
   const fetchWeather = async () => {
     latitude.value = store.state.chosenLocationLatitude;
@@ -15,6 +16,7 @@ export function useFetchWeather(firstUpperCase) {
     console.log(longitude.value);
     if (latitude.value) {
       try {
+        store.commit('setLoading', true);
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude.value}&lon=${longitude.value}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
         );
@@ -52,6 +54,8 @@ export function useFetchWeather(firstUpperCase) {
         store.commit('setHumidity', forecast.value[0].main.humidity + '%');
       } catch (error) {
         console.log(error);
+      } finally {
+        store.commit('setLoading', false);
       }
     } else {
       console.log('Нет данных для выполнения запроса');
