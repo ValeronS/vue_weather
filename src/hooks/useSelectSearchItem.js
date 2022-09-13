@@ -4,7 +4,7 @@ import { useStore } from 'vuex';
 export default function useSelectSearchItem() {
   const store = useStore();
   const selectedItem = ref();
-  const chosenLocation = ref(store.state.chosenLocation);
+  // const chosenLocation = ref(store.state.chosenLocation);
 
   const selectItem = (event) => {
     // console.log(event);
@@ -33,6 +33,6 @@ export default function useSelectSearchItem() {
   return {
     selectedItem,
     selectItem,
-    chosenLocation,
+    // chosenLocation,
   };
 }

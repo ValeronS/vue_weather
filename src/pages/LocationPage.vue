@@ -1,6 +1,8 @@
 <template>
   <div>
-    <the-search-location-form></the-search-location-form>
+    <the-search-location-form
+      @getLocation="getLocation"
+    ></the-search-location-form>
     <the-search-list
       :suggestions="$store.state.suggestions"
       @selectSearchItem="selectItem"
@@ -53,6 +55,7 @@ import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheFavoriteList from '@/components/TheFavoriteList.vue';
 import AppModal from '@/components/UI/AppModal.vue';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
+import useGeolocation from '@/hooks/useGeolocation';
 
 export default {
   components: {
@@ -64,10 +67,12 @@ export default {
   setup(props) {
     const { selectItem } = useSelectSearchItem();
     const { cancelRemoveCity } = useFavoriteLocation();
+    const { getLocation } = useGeolocation();
 
     return {
       selectItem,
       cancelRemoveCity,
+      getLocation,
     };
   },
 };

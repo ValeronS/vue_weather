@@ -16,38 +16,28 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import useChosenLocation from '@/hooks/useChosenLocation';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import { useFillStar } from '@/hooks/useFillStar';
-import { ref, watch } from 'vue';
-import { useStore } from 'vuex';
+import { watch, toRefs } from 'vue';
 
-export default {
-  name: 'the-chosen-location',
-  props: {
-    chosenLocation: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
-    const { isStarFilled, fillStar } = useFillStar();
-    const { favoriteLocation, addToFavorite } = useFavoriteLocation(fillStar);
-    const store = useStore();
-    const chosenLocation = ref(store.state.chosenLocation);
-    watch(
-      () => chosenLocation,
-      async () => fillStar
-    );
+// const props = defineProps({
+//   chosenLocation: {
+//     type: String,
+//     required: true,
+//   },
+// });
+// const { chosenLocation } = toRefs(props);
 
-    return {
-      favoriteLocation,
-      addToFavorite,
-      isStarFilled,
-      fillStar,
-    };
-  },
-};
+const { chosenLocation } = useChosenLocation();
+const { isStarFilled, fillStar } = useFillStar();
+const { favoriteLocation, addToFavorite } = useFavoriteLocation(fillStar);
+
+// watch(
+//   () => chosenLocation,
+//   async () => fillStar
+// );
 </script>
 
 <style>

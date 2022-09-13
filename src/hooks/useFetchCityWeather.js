@@ -12,14 +12,12 @@ export default function useFetchCityWeather(firstUpperCase) {
   const description = ref('');
 
   const fetchCityWeather = async (favoriteCity) => {
-    console.log(favoriteCity);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${favoriteCity.latitude}&lon=${favoriteCity.longitude}&appid=${apiKey}&units=metric&lang=ru`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${favoriteCity.latitude}&lon=${favoriteCity.longitude}&cnt=1&appid=${apiKey}&units=metric&lang=ru`
       );
       const forecast = response.data?.list ?? 0;
       console.log(forecast);
-
       iconCode.value = forecast[0].weather[0].icon ?? 0;
       imgSrc.value =
         IconsWeather[iconCode.value]?.src ??

@@ -4,19 +4,26 @@ import { useStore } from 'vuex';
 
 export function useFetchWeather(firstUpperCase) {
   const store = useStore();
-  const latitude = store.state.chosenLocationLatitude;
-  const longitude = store.state.chosenLocationLongitude;
+  const latitude = ref('');
+  const longitude = ref('');
   const apiKey = 'a722624eaa524af8342f7a194cffad4d';
   const forecast = ref([]);
 
   const fetchWeather = async () => {
-    if (latitude) {
+    latitude.value = store.state.chosenLocationLatitude;
+    longitude.value = store.state.chosenLocationLongitude;
+    console.log(longitude.value);
+    if (latitude.value) {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude.value}&lon=${longitude.value}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
         );
         forecast.value = response.data?.list ?? 0;
-        console.log(forecast.value);
+        console.log(response);
+
+        if (store.state.chosenLocation === '') {
+          store.commit('setChosenLocation', response.data.city.name);
+        }
 
         if (forecast.value[0]?.main?.temp?.toFixed() > 0) {
           store.commit(

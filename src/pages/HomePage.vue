@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <the-chosen-location :chosenLocation="chosenLocation" />
+    <the-chosen-location />
 
     <the-current-forecast />
 
@@ -16,33 +16,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import TheChosenLocation from '@/components/TheChosenLocation.vue';
 import { useFetchWeather } from '@/hooks/useFetchWeather';
-import useSelectSearchItem from '@/hooks/useSelectSearchItem';
+// import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheCurrentForecast from '@/components/TheCurrentForecast.vue';
 import TheForecast from '@/components/TheForecats.vue';
 import useFirstUpperCase from '@/hooks/useFirstUpperCase';
 
-export default {
-  components: {
-    TheChosenLocation,
-    TheCurrentForecast,
-    TheForecast,
-  },
-  setup(props) {
-    const { chosenLocation } = useSelectSearchItem();
-    const { firstUpperCase } = useFirstUpperCase();
-    const { forecast, fetchWeater } = useFetchWeather(firstUpperCase);
-
-    return {
-      chosenLocation,
-      firstUpperCase,
-      forecast,
-      fetchWeater,
-    };
-  },
-};
+// const { chosenLocation } = useSelectSearchItem();
+const { firstUpperCase } = useFirstUpperCase();
+const { forecast, fetchWeather } = useFetchWeather(firstUpperCase);
 </script>
 
 <style>

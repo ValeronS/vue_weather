@@ -25,7 +25,7 @@
       <img
         src="@/assets/img/focus.png"
         class="img-right"
-        @click="$router.push('/')"
+        @click="$emit('getLocation')"
       />
     </form>
   </div>
