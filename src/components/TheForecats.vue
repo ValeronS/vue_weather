@@ -6,7 +6,7 @@
     </div>
     <div class="forecast-slider">
       <div
-        v-for="(forecastItem, index) in dayForecast"
+        v-for="(forecastItem, index) in forecast"
         :key="index"
         class="forecast-item"
       >
@@ -31,8 +31,7 @@ const props = defineProps({
 });
 const { forecast } = toRefs(props);
 const { day, month } = useGetDate();
-const { dayForecast, tempMin, tempMax, temp, time, imgSrc } =
-  useForecastRender(forecast);
+const { tempMin, tempMax, temp, time, imgSrc } = useForecastRender(forecast);
 </script>
 
 <style>

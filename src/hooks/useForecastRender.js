@@ -3,31 +3,36 @@ import { useStore } from 'vuex';
 
 export default function useForecastRender(forecast) {
   const store = useStore();
-  const dayForecast = computed(() => {
-    let newArray = [];
-    for (let i = 0; i < 8; i++) {
-      newArray[i] = forecast[i];
-    }
-    return newArray;
-  });
 
   const tempMin = computed(() => {
     console.log(forecast.value);
     if (forecast.value.length) {
-      if (forecast.value?.[0]?.main.temp_min.toFixed() > 0) {
-        return '+' + forecast.value?.[0]?.main.temp_min.toFixed();
+      let min = forecast.value?.[0]?.main.temp;
+      for (let i = 1; i < forecast.value.length; i++) {
+        if (min > forecast.value?.[i]?.main.temp) {
+          min = forecast.value?.[i]?.main.temp;
+        }
+      }
+      if (min > 0) {
+        return '+' + min.toFixed();
       } else {
-        return forecast.value?.[0]?.main.temp_min.toFixed();
+        return min.toFixed();
       }
     }
   });
 
   const tempMax = computed(() => {
     if (forecast.value.length) {
-      if (forecast.value?.[0]?.main.temp_max.toFixed() > 0) {
-        return '+' + forecast.value?.[0]?.main.temp_max.toFixed();
+      let max = forecast.value?.[0]?.main.temp;
+      for (let i = 1; i < forecast.value.length; i++) {
+        if (max < forecast.value?.[i]?.main.temp) {
+          max = forecast.value?.[i]?.main.temp;
+        }
+      }
+      if (max > 0) {
+        return '+' + max.toFixed();
       } else {
-        return forecast.value?.[0]?.main.temp_max.toFixed();
+        return max.toFixed();
       }
     }
   });
@@ -57,7 +62,6 @@ export default function useForecastRender(forecast) {
   };
 
   return {
-    dayForecast,
     tempMin,
     tempMax,
     temp,

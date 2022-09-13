@@ -13,7 +13,7 @@ export function useFetchWeather(firstUpperCase) {
     if (latitude) {
       try {
         const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=ru`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
         );
         forecast.value = response.data?.list ?? 0;
         console.log(forecast.value);
