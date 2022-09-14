@@ -55,6 +55,11 @@ const { tempMin, tempMax, temp, time, imgSrc } = useForecastRender(forecast);
   width: 100%;
   overflow-x: auto;
 }
+@media screen and (min-width: 640px) {
+  .forecast-slider {
+    justify-content: center;
+  }
+}
 .forecast-slider::-webkit-scrollbar {
   display: none;
 }

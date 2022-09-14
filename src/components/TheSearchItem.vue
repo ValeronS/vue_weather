@@ -1,6 +1,6 @@
 <template>
   <div class="search-item__container">
-    <p v-if="searchItem.data.country != 'Россия'" class="search-item__country">
+    <p class="search-item__country">
       {{ searchItem.data.country }}
     </p>
     <h3

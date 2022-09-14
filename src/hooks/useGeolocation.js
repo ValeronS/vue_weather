@@ -23,6 +23,9 @@ export default function useGeolocation(fetchWeather) {
         store.commit('setLatitude', pos.coords.latitude);
         store.commit('setLongitude', pos.coords.longitude);
         store.commit('setChosenLocation', '');
+        localStorage.latitude = pos.coords.latitude;
+        localStorage.longitude = pos.coords.longitude;
+        localStorage.chosenLocation = '';
         router.push('/');
       };
 

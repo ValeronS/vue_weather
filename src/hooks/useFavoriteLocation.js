@@ -21,10 +21,7 @@ export default function useFavoriteLocation(fillStar) {
         favoriteLocation.name = store.state.chosenLocation;
         favoriteLocation.latitude = store.state.chosenLocationLatitude;
         favoriteLocation.longitude = store.state.chosenLocationLongitude;
-        store.commit(
-          'setFavoriteLocationsLength',
-          favoriteLocationsLength.value + 1
-        );
+        store.commit('setFavoriteLocationsLength', 1);
         store.commit('setFavoriteLocation', favoriteLocation);
 
         fillStar();
@@ -46,6 +43,13 @@ export default function useFavoriteLocation(fillStar) {
           fillStar();
         }
       }
+      console.log('localStorage');
+      localStorage.favoriteLocationsLength =
+        store.state.favoriteLocationsLength;
+      localStorage.setItem(
+        'favoriteLocations',
+        JSON.stringify(store.state.favoriteLocations)
+      );
     }
   };
 
@@ -87,6 +91,13 @@ export default function useFavoriteLocation(fillStar) {
       if (chosenLocation.value === favoriteCity.name) {
         store.commit('setCityFavorite', false);
       }
+      console.log('localStorage2');
+      localStorage.favoriteLocationsLength =
+        store.state.favoriteLocationsLength;
+      localStorage.setItem(
+        'favoriteLocations',
+        JSON.stringify(store.state.favoriteLocations)
+      );
     }
   };
 

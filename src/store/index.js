@@ -2,9 +2,9 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: () => ({
-    chosenLocation: 'Город не определен',
-    chosenLocationLatitude: 0,
-    chosenLocationLongitude: 0,
+    chosenLocation: localStorage.chosenLocation || 'Город не определен',
+    chosenLocationLatitude: localStorage.latitude || 0,
+    chosenLocationLongitude: localStorage.longitude || 0,
     chosenCity: {
       name: '',
       latitude: 0,
@@ -19,8 +19,9 @@ export default createStore({
     imgSrcIdx: 4,
     onFocus: false,
     suggestions: [],
-    favoriteLocationsLength: 0,
-    favoriteLocations: {},
+    favoriteLocationsLength: +localStorage.favoriteLocationsLength || 0,
+    favoriteLocations:
+      JSON.parse(localStorage.getItem('favoriteLocations')) || {},
     deletedFavoriteCity: {},
     isCityFavorite: false,
     IconsWeather: {

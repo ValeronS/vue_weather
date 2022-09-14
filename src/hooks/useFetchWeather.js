@@ -25,6 +25,7 @@ export function useFetchWeather(firstUpperCase) {
 
         if (store.state.chosenLocation === '') {
           store.commit('setChosenLocation', response.data.city.name);
+          localStorage.chosenLocation = response.data.city.name;
         }
 
         if (forecast.value[0]?.main?.temp?.toFixed() > 0) {
