@@ -113,11 +113,20 @@ export default function useFavoriteLocation(fillStar) {
     }
   };
 
+  const showModal = () => {
+    console.log('showModal');
+    store.commit('setShowModal', true);
+    setTimeout(() => {
+      store.commit('setShowModal', false);
+    }, 1500);
+  };
+
   return {
     favoriteLocation,
     favoriteLocations,
     addToFavorite,
     removeCity,
     cancelRemoveCity,
+    showModal,
   };
 }

@@ -26,6 +26,7 @@ export default createStore({
     //   Object.keys(favoriteLocations).length || 0,
     deletedFavoriteCity: {},
     isCityFavorite: false,
+    showModal: false,
     IconsWeather: {
       '01d': {
         label: 'clear_sky',
@@ -154,9 +155,6 @@ export default createStore({
     setFavoriteLocationsLength(state, favoriteLocationsLength) {
       state.favoriteLocationsLength = favoriteLocationsLength;
     },
-    setNewFavoriteLocation(state, favoriteLocationsLength) {
-      state.favoriteLocations[favoriteLocationsLength] = {};
-    },
     setFavoriteLocation(state, location) {
       state.favoriteLocations[Date.now()] = location;
     },
@@ -165,6 +163,9 @@ export default createStore({
     },
     setDeletedFavoriteCity(state, favoriteCity) {
       state.deletedFavoriteCity = favoriteCity;
+    },
+    setShowModal(state, bool) {
+      state.showModal = bool;
     },
   },
 });

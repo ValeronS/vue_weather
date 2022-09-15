@@ -13,18 +13,22 @@
     >
       <h3>Выбрать локацию</h3>
     </app-button>
+
+    <transition name="fade">
+      <app-modal v-if="$store.state.showModal" class="app-modal"
+        >Локация добалена в избранное</app-modal
+      >
+    </transition>
   </div>
 </template>
 
 <script setup>
 import TheChosenLocation from '@/components/TheChosenLocation.vue';
 import { useFetchWeather } from '@/hooks/useFetchWeather';
-// import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheCurrentForecast from '@/components/TheCurrentForecast.vue';
 import TheForecast from '@/components/TheForecats.vue';
 import useFirstUpperCase from '@/hooks/useFirstUpperCase';
 
-// const { chosenLocation } = useSelectSearchItem();
 const { firstUpperCase } = useFirstUpperCase();
 const { forecast, fetchWeather } = useFetchWeather(firstUpperCase);
 </script>
@@ -41,5 +45,20 @@ const { forecast, fetchWeather } = useFetchWeather(firstUpperCase);
   bottom: 36px;
   left: 50%;
   transform: translate(-50%, 0);
+}
+.app-modal {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

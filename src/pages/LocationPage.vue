@@ -48,11 +48,10 @@
     </div>
 
     <transition name="fade">
-      <app-modal
-        v-if="$store.state.deletedFavoriteCity.name"
-        @cancel="cancelRemoveCity"
-        >Локация удалена</app-modal
-      >
+      <app-modal v-if="$store.state.deletedFavoriteCity.name"
+        >Локация удалена
+        <div @click="cancelRemoveCity" class="modal-cancel">Отменить</div>
+      </app-modal>
     </transition>
   </div>
 </template>
@@ -62,7 +61,6 @@ import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheFavoriteList from '@/components/TheFavoriteList.vue';
-import AppModal from '@/components/UI/AppModal.vue';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import useGeolocation from '@/hooks/useGeolocation';
 
@@ -71,7 +69,6 @@ export default {
     TheSearchLocationForm,
     TheSearchList,
     TheFavoriteList,
-    AppModal,
   },
   setup(props) {
     const { selectItem } = useSelectSearchItem();
@@ -138,5 +135,10 @@ export default {
   to {
     transform: rotate(0deg);
   }
+}
+.modal-cancel {
+  color: var(--accent-dark-color);
+  padding-left: 16px;
+  cursor: pointer;
 }
 </style>

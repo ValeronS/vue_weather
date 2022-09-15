@@ -10,6 +10,7 @@
         v-if="!$store.state.isCityFavorite"
         src="@/assets/img/star-line.png"
         alt=""
+        @click="showModal"
       />
       <img v-else src="@/assets/img/star-fill.png" alt="" />
     </div>
@@ -32,7 +33,8 @@ import { watch, toRefs } from 'vue';
 
 const { chosenLocation } = useChosenLocation();
 const { isStarFilled, fillStar } = useFillStar();
-const { favoriteLocation, addToFavorite } = useFavoriteLocation(fillStar);
+const { favoriteLocation, addToFavorite, showModal } =
+  useFavoriteLocation(fillStar);
 
 // watch(
 //   () => chosenLocation,
