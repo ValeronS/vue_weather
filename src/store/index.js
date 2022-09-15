@@ -21,12 +21,10 @@ export default createStore({
     suggestions: [],
     favoriteLocations:
       JSON.parse(localStorage.getItem('favoriteLocations')) || {},
-    // favoriteLocationsLength:
-    //   // +localStorage.favoriteLocationsLength ||
-    //   Object.keys(favoriteLocations).length || 0,
     deletedFavoriteCity: {},
     isCityFavorite: false,
     showModal: false,
+    searchHistory: {},
     IconsWeather: {
       '01d': {
         label: 'clear_sky',
@@ -166,6 +164,12 @@ export default createStore({
     },
     setShowModal(state, bool) {
       state.showModal = bool;
+    },
+    setHistoryItem(state, historyItem) {
+      state.searchHistory[Date.now()] = historyItem;
+    },
+    setSearchHistoryEmpty(state) {
+      state.searchHistory = {};
     },
   },
 });

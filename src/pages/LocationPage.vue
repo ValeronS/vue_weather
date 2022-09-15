@@ -4,6 +4,11 @@
       @getLocation="getLocation"
     ></the-search-location-form>
 
+    <the-search-history
+      :searchHistory="$store.state.searchHistory"
+      class="the-search-history"
+    />
+
     <the-search-list
       :suggestions="$store.state.suggestions"
       @selectSearchItem="selectItem"
@@ -22,7 +27,8 @@
         v-if="
           !Object.keys($store.state.favoriteLocations).length &&
           !$store.state.onFocus &&
-          !$store.state.suggestions.length
+          !$store.state.suggestions.length &&
+          !Object.keys($store.state.searchHistory).length
         "
         class="empty-list text"
       >
@@ -59,8 +65,9 @@
 <script>
 import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
-import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheFavoriteList from '@/components/TheFavoriteList.vue';
+import TheSearchHistory from '@/components/TheSearchHistory.vue';
+import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import useGeolocation from '@/hooks/useGeolocation';
 
@@ -69,13 +76,15 @@ export default {
     TheSearchLocationForm,
     TheSearchList,
     TheFavoriteList,
+    TheSearchHistory,
   },
   setup(props) {
-    const { selectItem } = useSelectSearchItem();
+    const { historyItem, selectItem } = useSelectSearchItem();
     const { cancelRemoveCity } = useFavoriteLocation();
     const { getLocation } = useGeolocation();
 
     return {
+      historyItem,
       selectItem,
       cancelRemoveCity,
       getLocation,
@@ -85,6 +94,11 @@ export default {
 </script>
 
 <style>
+.the-search-history {
+  position: absolute;
+  top: 92px;
+  width: 100vw;
+}
 .empty-list {
   color: var(--secondary-color);
   position: absolute;

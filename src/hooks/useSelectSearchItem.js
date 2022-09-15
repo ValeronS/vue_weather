@@ -4,7 +4,7 @@ import { useStore } from 'vuex';
 export default function useSelectSearchItem() {
   const store = useStore();
   const selectedItem = ref();
-  // const chosenLocation = ref(store.state.chosenLocation);
+  const historyItem = { name: '', latitude: 0, longitude: 0 };
 
   const selectItem = (event) => {
     // console.log(event);
@@ -18,6 +18,17 @@ export default function useSelectSearchItem() {
       );
       store.commit('setLatitude', event.data.geo_lat);
       store.commit('setLongitude', event.data.geo_lon);
+
+      historyItem.name =
+        event.data.city ||
+        event.data.city_with_type ||
+        event.data.settlement ||
+        event.value;
+      historyItem.latitude = event.data.geo_lat;
+      historyItem.longitude = event.data.geo_lon;
+      store.commit('setHistoryItem', historyItem);
+      console.log('historyItem', historyItem);
+
       localStorage.chosenLocation =
         event.data.city ||
         event.data.city_with_type ||
@@ -42,7 +53,7 @@ export default function useSelectSearchItem() {
 
   return {
     selectedItem,
+    historyItem,
     selectItem,
-    // chosenLocation,
   };
 }
