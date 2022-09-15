@@ -2,12 +2,7 @@
   <div>
     <div class="history__header">
       <p class="history__secondary text">История поиска</p>
-      <p
-        class="history__accent-dark"
-        @click="$store.commit('setSearchHistoryEmpty')"
-      >
-        Очистить
-      </p>
+      <p class="history__accent-dark" @click="clearSearchHistory">Очистить</p>
     </div>
 
     <the-search-history-item
@@ -20,6 +15,7 @@
 
 <script setup>
 import TheSearchHistoryItem from '@/components/TheSearchHistoryItem.vue';
+import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import { toRefs } from 'vue';
 
 const props = defineProps({
@@ -29,6 +25,7 @@ const props = defineProps({
   },
 });
 const { searchHistory } = toRefs(props);
+const { clearSearchHistory } = useSelectSearchItem();
 </script>
 
 <style>

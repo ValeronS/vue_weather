@@ -27,7 +27,10 @@ export default function useSelectSearchItem() {
       historyItem.latitude = event.data.geo_lat;
       historyItem.longitude = event.data.geo_lon;
       store.commit('setHistoryItem', historyItem);
-      console.log('historyItem', historyItem);
+      localStorage.setItem(
+        'searchHistory',
+        JSON.stringify(store.state.searchHistory)
+      );
 
       localStorage.chosenLocation =
         event.data.city ||
@@ -51,9 +54,15 @@ export default function useSelectSearchItem() {
     }
   };
 
+  const clearSearchHistory = () => {
+    store.commit('setSearchHistoryEmpty');
+    localStorage.removeItem('searchHistory', '');
+  };
+
   return {
     selectedItem,
     historyItem,
     selectItem,
+    clearSearchHistory,
   };
 }

@@ -24,7 +24,7 @@ export default createStore({
     deletedFavoriteCity: {},
     isCityFavorite: false,
     showModal: false,
-    searchHistory: {},
+    searchHistory: JSON.parse(localStorage.getItem('searchHistory')) || {},
     IconsWeather: {
       '01d': {
         label: 'clear_sky',
