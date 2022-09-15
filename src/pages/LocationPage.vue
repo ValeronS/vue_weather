@@ -5,6 +5,7 @@
     ></the-search-location-form>
 
     <the-search-history
+      v-if="Object.keys($store.state.searchHistory).length"
       :searchHistory="$store.state.searchHistory"
       class="the-search-history"
     />
