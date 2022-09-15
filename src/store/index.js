@@ -19,9 +19,11 @@ export default createStore({
     imgSrcIdx: 4,
     onFocus: false,
     suggestions: [],
-    favoriteLocationsLength: +localStorage.favoriteLocationsLength || 0,
     favoriteLocations:
       JSON.parse(localStorage.getItem('favoriteLocations')) || {},
+    // favoriteLocationsLength:
+    //   // +localStorage.favoriteLocationsLength ||
+    //   Object.keys(favoriteLocations).length || 0,
     deletedFavoriteCity: {},
     isCityFavorite: false,
     IconsWeather: {
@@ -156,7 +158,7 @@ export default createStore({
       state.favoriteLocations[favoriteLocationsLength] = {};
     },
     setFavoriteLocation(state, location) {
-      state.favoriteLocations[state.favoriteLocationsLength] = location;
+      state.favoriteLocations[Date.now()] = location;
     },
     setCityFavorite(state, bool) {
       state.isCityFavorite = bool;

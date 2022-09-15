@@ -32,7 +32,11 @@
 
     <transition name="fade">
       <p
-        v-if="$store.state.onFocus && !$store.state.suggestions.length"
+        v-if="
+          $store.state.onFocus &&
+          !$store.state.suggestions.length &&
+          !Object.keys($store.state.favoriteLocations).length
+        "
         class="empty-list text"
       >
         Введите название города

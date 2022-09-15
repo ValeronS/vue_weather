@@ -23,9 +23,17 @@
         }"
       />
       <img
+        v-if="!location"
         src="@/assets/img/focus.png"
-        class="img-right"
+        class="img-location"
         @click="$emit('getLocation')"
+      />
+      <img
+        v-else
+        src="@/assets/img/dismiss.png"
+        alt=""
+        class="img-dismiss"
+        @click="dismiss"
       />
     </form>
   </div>
@@ -38,8 +46,9 @@ import useSearchLocation from '@/hooks/useSearchLocation';
 export default {
   name: 'the-search-location-form',
   setup(props) {
-    const { inputPlaceholder, onFocus, changeFocus } = useChangeFocus();
     const { location, suggestions, searchLocation } = useSearchLocation();
+    const { inputPlaceholder, onFocus, changeFocus, dismiss } =
+      useChangeFocus(location);
 
     return {
       inputPlaceholder,
@@ -48,6 +57,7 @@ export default {
       location,
       suggestions,
       searchLocation,
+      dismiss,
     };
   },
 };
@@ -72,16 +82,26 @@ export default {
 .search-container > .img-left {
   position: absolute;
   width: 24px;
+  height: 24px;
   top: 12px;
   left: 16px;
   cursor: pointer;
 }
-.search-container > .img-right {
+.img-location {
   position: absolute;
   width: 24px;
+  height: 24px;
   top: 12px;
   right: 16px;
   cursor: pointer;
+}
+.img-dismiss {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
 }
 .search-container > input {
   width: 100%;
@@ -98,6 +118,7 @@ export default {
   border-radius: 0;
   box-shadow: none;
   outline: none;
+  caret-color: var(--accent-dark-color);
 }
 .search-container > input::placeholder {
   color: var(--secondary-color);

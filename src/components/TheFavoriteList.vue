@@ -1,8 +1,8 @@
 <template>
   <TransitionGroup name="list" tag="ul">
     <the-favorite-city
-      v-for="favoriteCity in favoriteLocations"
-      :key="favoriteCity.name"
+      v-for="(favoriteCity, idx) in favoriteLocations"
+      :key="idx"
       :favoriteCity="favoriteCity"
       @selectFavoriteCity="$emit('selectFavoriteCity', favoriteCity)"
     />
