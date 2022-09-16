@@ -20,6 +20,8 @@
         :class="{
           text: true,
           inputOnFocus: onFocus,
+          'none-box-shadow': Object.keys($store.state.favoriteLocations)
+            .length,
         }"
       />
       <img
@@ -119,6 +121,9 @@ export default {
   box-shadow: none;
   outline: none;
   caret-color: var(--accent-dark-color);
+}
+.search-container > input.none-box-shadow {
+  box-shadow: none;
 }
 .search-container > input::placeholder {
   color: var(--secondary-color);

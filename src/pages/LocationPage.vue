@@ -6,7 +6,9 @@
 
     <the-search-history
       v-if="
-        !$store.state.onFocus && Object.keys($store.state.searchHistory).length
+        !$store.state.onFocus &&
+        Object.keys($store.state.searchHistory).length &&
+        !Object.keys($store.state.favoriteLocations).length
       "
       :searchHistory="$store.state.searchHistory"
       class="the-search-history"
