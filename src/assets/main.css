@@ -14,12 +14,20 @@
 }
 
 html {
-  overflow: hidden;
+  /* overflow: hidden; */
+  /* width: 100%;
+  height: 100%; */
 }
 
 body {
   font-family: 'SF Pro Display';
   min-width: 280px;
+  /* width: 100%;
+  height: 100%; */
+}
+
+[v-cloak] {
+  display: none;
 }
 
 h1 {

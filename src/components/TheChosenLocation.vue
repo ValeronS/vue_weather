@@ -1,6 +1,6 @@
 <template>
   <div class="location-field">
-    <div class="location">
+    <div @click="$router.push('/location')" class="location">
       <img src="@/assets/img/map.png" />
       <h3>{{ chosenLocation }}</h3>
     </div>
@@ -10,44 +10,36 @@
         v-if="!$store.state.isCityFavorite"
         src="@/assets/img/star-line.png"
         alt=""
+        @click="showModal"
       />
       <img v-else src="@/assets/img/star-fill.png" alt="" />
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import useChosenLocation from '@/hooks/useChosenLocation';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import { useFillStar } from '@/hooks/useFillStar';
-import { ref, watch } from 'vue';
-import { useStore } from 'vuex';
+import { watch, toRefs } from 'vue';
 
-export default {
-  name: 'the-chosen-location',
-  props: {
-    chosenLocation: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
-    const { isStarFilled, fillStar } = useFillStar();
-    const { favoriteLocation, addToFavorite } = useFavoriteLocation(fillStar);
-    const store = useStore();
-    const chosenLocation = ref(store.state.chosenLocation);
-    watch(
-      () => chosenLocation,
-      async () => fillStar
-    );
+// const props = defineProps({
+//   chosenLocation: {
+//     type: String,
+//     required: true,
+//   },
+// });
+// const { chosenLocation } = toRefs(props);
 
-    return {
-      favoriteLocation,
-      addToFavorite,
-      isStarFilled,
-      fillStar,
-    };
-  },
-};
+const { chosenLocation } = useChosenLocation();
+const { isStarFilled, fillStar } = useFillStar();
+const { favoriteLocation, addToFavorite, showModal } =
+  useFavoriteLocation(fillStar);
+
+// watch(
+//   () => chosenLocation,
+//   async () => fillStar
+// );
 </script>
 
 <style>
@@ -69,10 +61,12 @@ export default {
   padding-left: 8px;
   color: var(--white);
   display: inline;
+  cursor: pointer;
 }
 .location-field img {
   width: 24px;
   height: 24px;
+  cursor: pointer;
 }
 .star {
   display: flex;

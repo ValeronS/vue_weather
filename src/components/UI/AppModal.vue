@@ -5,8 +5,6 @@
         <img src="@/assets/img/checkbox-circle-line.png" alt="" />
         <slot class="modal-slot text"></slot>
       </div>
-
-      <div @click="$emit('cancel')" class="modal-cancel">Отменить</div>
     </div>
   </div>
 </template>
@@ -48,10 +46,5 @@ export default {
 }
 .modal-slot {
   color: var(--color-primary);
-}
-.modal-cancel {
-  color: var(--accent-dark-color);
-  padding-right: 16px;
-  cursor: pointer;
 }
 </style>

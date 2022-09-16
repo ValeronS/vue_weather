@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 
-export default function useChangeFocus() {
+export default function useChangeFocus(location) {
   const store = useStore();
   const onFocus = ref(store.state.onFocus);
   const inputPlaceholder = ref('Поиск локации');
@@ -9,6 +9,7 @@ export default function useChangeFocus() {
   const changeFocus = (event) => {
     // console.log(event);
     if (event.target.tagName === 'INPUT') {
+      console.log(event.target.tagName);
       store.commit('setFocus', true);
       onFocus.value = true;
       inputPlaceholder.value = 'Поиск города';
@@ -19,9 +20,15 @@ export default function useChangeFocus() {
     }
   };
 
+  const dismiss = () => {
+    location.value = '';
+    store.commit('setSuggestions', []);
+  };
+
   return {
     inputPlaceholder,
     onFocus,
     changeFocus,
+    dismiss,
   };
 }

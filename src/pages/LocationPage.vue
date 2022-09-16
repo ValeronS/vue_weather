@@ -1,6 +1,19 @@
 <template>
   <div>
-    <the-search-location-form></the-search-location-form>
+    <the-search-location-form
+      @getLocation="getLocation"
+    ></the-search-location-form>
+
+    <the-search-history
+      v-if="
+        !$store.state.onFocus &&
+        Object.keys($store.state.searchHistory).length &&
+        !Object.keys($store.state.favoriteLocations).length
+      "
+      :searchHistory="$store.state.searchHistory"
+      class="the-search-history"
+    />
+
     <the-search-list
       :suggestions="$store.state.suggestions"
       @selectSearchItem="selectItem"
@@ -19,7 +32,8 @@
         v-if="
           !Object.keys($store.state.favoriteLocations).length &&
           !$store.state.onFocus &&
-          !$store.state.suggestions.length
+          !$store.state.suggestions.length &&
+          !Object.keys($store.state.searchHistory).length
         "
         class="empty-list text"
       >
@@ -29,19 +43,26 @@
 
     <transition name="fade">
       <p
-        v-if="$store.state.onFocus && !$store.state.suggestions.length"
+        v-if="
+          $store.state.onFocus &&
+          !$store.state.suggestions.length &&
+          !Object.keys($store.state.favoriteLocations).length
+        "
         class="empty-list text"
       >
         Введите название города
       </p>
     </transition>
 
+    <div v-if="$store.state.isLoading" class="spinner">
+      <img src="@/assets/img/circles-loader.png" alt="" class="spinner-img" />
+    </div>
+
     <transition name="fade">
-      <app-modal
-        v-if="$store.state.deletedFavoriteCity.name"
-        @cancel="cancelRemoveCity"
-        >Локация удалена</app-modal
-      >
+      <app-modal v-if="$store.state.deletedFavoriteCity.name"
+        >Локация удалена
+        <div @click="cancelRemoveCity" class="modal-cancel">Отменить</div>
+      </app-modal>
     </transition>
   </div>
 </template>
@@ -49,31 +70,40 @@
 <script>
 import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
-import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import TheFavoriteList from '@/components/TheFavoriteList.vue';
-import AppModal from '@/components/UI/AppModal.vue';
+import TheSearchHistory from '@/components/TheSearchHistory.vue';
+import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
+import useGeolocation from '@/hooks/useGeolocation';
 
 export default {
   components: {
     TheSearchLocationForm,
     TheSearchList,
     TheFavoriteList,
-    AppModal,
+    TheSearchHistory,
   },
   setup(props) {
-    const { selectItem } = useSelectSearchItem();
+    const { historyItem, selectItem } = useSelectSearchItem();
     const { cancelRemoveCity } = useFavoriteLocation();
+    const { getLocation } = useGeolocation();
 
     return {
+      historyItem,
       selectItem,
       cancelRemoveCity,
+      getLocation,
     };
   },
 };
 </script>
 
 <style>
+.the-search-history {
+  position: absolute;
+  top: 92px;
+  width: 100vw;
+}
 .empty-list {
   color: var(--secondary-color);
   position: absolute;
@@ -100,5 +130,34 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.spinner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  display: flex;
+}
+.spinner-img {
+  width: 36px;
+  height: 36px;
+  margin: auto;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.modal-cancel {
+  color: var(--accent-dark-color);
+  padding-left: 16px;
+  cursor: pointer;
 }
 </style>

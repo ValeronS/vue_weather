@@ -12,7 +12,15 @@ export default function useFavoriteLocation(fillStar) {
   const objKey = ref(0);
 
   const addToFavorite = () => {
-    favoriteLocationsLength.value = store.state.favoriteLocationsLength;
+    favoriteLocationsLength.value = Object.keys(
+      store.state.favoriteLocations
+    ).length;
+
+    console.log(
+      'favoriteLocationsLength.value',
+      favoriteLocationsLength.value
+    );
+
     chosenLocation.value = store.state.chosenLocation;
     favoriteLocations.value = store.state.favoriteLocations;
     let obj = {};
@@ -21,24 +29,14 @@ export default function useFavoriteLocation(fillStar) {
         favoriteLocation.name = store.state.chosenLocation;
         favoriteLocation.latitude = store.state.chosenLocationLatitude;
         favoriteLocation.longitude = store.state.chosenLocationLongitude;
-        store.commit(
-          'setFavoriteLocationsLength',
-          favoriteLocationsLength.value + 1
-        );
         store.commit('setFavoriteLocation', favoriteLocation);
-
         fillStar();
       } else {
         if (!checkFavoriteCity(chosenLocation.value)) {
           favoriteLocation.name = store.state.chosenLocation;
           favoriteLocation.latitude = store.state.chosenLocationLatitude;
           favoriteLocation.longitude = store.state.chosenLocationLongitude;
-          store.commit(
-            'setFavoriteLocationsLength',
-            favoriteLocationsLength.value + 1
-          );
           store.commit('setFavoriteLocation', favoriteLocation);
-
           fillStar();
         } else {
           removeCity(store.state.chosenCity);
@@ -46,22 +44,26 @@ export default function useFavoriteLocation(fillStar) {
           fillStar();
         }
       }
+      console.log('localStorage');
+      localStorage.setItem(
+        'favoriteLocations',
+        JSON.stringify(store.state.favoriteLocations)
+      );
     }
   };
 
   const checkFavoriteCity = (city) => {
-    favoriteLocationsLength.value = store.state.favoriteLocationsLength;
+    favoriteLocationsLength.value = Object.keys(
+      store.state.favoriteLocations
+    ).length;
     favoriteLocations.value = store.state.favoriteLocations;
-    // chosenLocation.value = store.state.chosenLocation;
     console.log('city', city);
     for (let i = 0; i < favoriteLocationsLength.value; i++) {
       let obj = Object.values(favoriteLocations.value)[i];
       console.log('obj.name', obj?.name);
-      // console.log('chosen', chosenLocation.value);
-      // console.log(obj?.name !== chosenLocation.value);
       objKey.value = Object.keys(favoriteLocations.value)[i];
-      console.log('objKey', objKey);
       if (obj?.name === city) {
+        console.log('objKey.value', objKey.value);
         console.log('obj?.name !== city', true);
         return true;
       }
@@ -72,9 +74,8 @@ export default function useFavoriteLocation(fillStar) {
 
   const removeCity = (favoriteCity) => {
     favoriteLocations.value = store.state.favoriteLocations;
-    console.log('removeCity');
-    console.log('favoriteCity', favoriteCity);
     chosenLocation.value = store.state.chosenLocation;
+    console.log('removeCity');
 
     if (checkFavoriteCity(favoriteCity.name)) {
       delete favoriteLocations.value[objKey.value];
@@ -83,28 +84,41 @@ export default function useFavoriteLocation(fillStar) {
       setTimeout(() => {
         store.commit('setDeletedFavoriteCity', '');
       }, 2000);
-      console.log(favoriteLocations.value);
       if (chosenLocation.value === favoriteCity.name) {
         store.commit('setCityFavorite', false);
       }
+      console.log('localStorage2');
+      localStorage.setItem(
+        'favoriteLocations',
+        JSON.stringify(store.state.favoriteLocations)
+      );
     }
   };
 
   const cancelRemoveCity = () => {
     if (store.state.deletedFavoriteCity) {
-      favoriteLocationsLength.value = store.state.favoriteLocationsLength;
       deletedFavoriteCity.value = store.state.deletedFavoriteCity;
       favoriteLocation.name = deletedFavoriteCity.value.name;
       favoriteLocation.latitude = deletedFavoriteCity.value.latitude;
       favoriteLocation.longitude = deletedFavoriteCity.value.longitude;
-      store.commit(
-        'setFavoriteLocationsLength',
-        favoriteLocationsLength.value + 1
-      );
+      console.log('favoriteLocation', favoriteLocation);
       store.commit('setFavoriteLocation', favoriteLocation);
-      console.log(favoriteLocation);
+
+      console.log('localStorage3');
+      localStorage.setItem(
+        'favoriteLocations',
+        JSON.stringify(store.state.favoriteLocations)
+      );
       store.commit('setDeletedFavoriteCity', '');
     }
+  };
+
+  const showModal = () => {
+    console.log('showModal');
+    store.commit('setShowModal', true);
+    setTimeout(() => {
+      store.commit('setShowModal', false);
+    }, 1500);
   };
 
   return {
@@ -113,5 +127,6 @@ export default function useFavoriteLocation(fillStar) {
     addToFavorite,
     removeCity,
     cancelRemoveCity,
+    showModal,
   };
 }

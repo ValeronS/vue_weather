@@ -5,51 +5,61 @@ export default function useForecastRender(forecast) {
   const store = useStore();
 
   const tempMin = computed(() => {
+    console.log(forecast.value);
     if (forecast.value.length) {
-      console.log('forecast', forecast.value);
-      if (forecast.value?.[0]?.main.temp_min.toFixed() > 0) {
-        return '+' + forecast.value?.[0]?.main.temp_min.toFixed();
+      let min = forecast.value?.[0]?.main.temp;
+      for (let i = 1; i < forecast.value.length; i++) {
+        if (min > forecast.value?.[i]?.main.temp) {
+          min = forecast.value?.[i]?.main.temp;
+        }
+      }
+      if (min > 0) {
+        return '+' + min.toFixed();
       } else {
-        return forecast.value?.[0]?.main.temp_min.toFixed();
+        return min.toFixed();
       }
     }
   });
 
   const tempMax = computed(() => {
     if (forecast.value.length) {
-      if (forecast.value?.[0]?.main.temp_max.toFixed() > 0) {
-        return '+' + forecast.value?.[0]?.main.temp_max.toFixed();
+      let max = forecast.value?.[0]?.main.temp;
+      for (let i = 1; i < forecast.value.length; i++) {
+        if (max < forecast.value?.[i]?.main.temp) {
+          max = forecast.value?.[i]?.main.temp;
+        }
+      }
+      if (max > 0) {
+        return '+' + max.toFixed();
       } else {
-        return forecast.value?.[0]?.main.temp_max.toFixed();
+        return max.toFixed();
       }
     }
   });
 
-  const temp = computed(() => {
+  const temp = (index) => {
     if (forecast.value.length) {
-      if (forecast.value?.[0]?.main.temp.toFixed() > 0) {
-        return '+' + forecast.value?.[0]?.main.temp.toFixed();
+      if (forecast.value?.[index]?.main.temp.toFixed() > 0) {
+        return '+' + forecast.value?.[index]?.main.temp.toFixed();
       } else {
-        return forecast.value?.[0]?.main.temp.toFixed();
+        return forecast.value?.[index]?.main.temp.toFixed();
       }
     }
-  });
+  };
 
-  const time = computed(() => {
+  const time = (index) => {
     if (forecast.value.length) {
-      let date = new Date(forecast.value?.[0].dt * 1000);
-      console.log(date.getHours());
+      let date = new Date(forecast.value?.[index].dt * 1000);
       return date.getHours() + ':00';
     }
-  });
+  };
 
-  const imgSrc = computed(() => {
+  const imgSrc = (index) => {
     if (forecast.value.length) {
-      console.log(forecast.value?.[0]?.weather[0].icon);
-      return store.state.IconsWeather[forecast.value?.[0]?.weather[0].icon]
+      return store.state.IconsWeather[forecast.value?.[index]?.weather[0].icon]
         .src;
     }
-  });
+  };
 
   return {
     tempMin,

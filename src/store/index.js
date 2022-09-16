@@ -2,14 +2,15 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: () => ({
-    chosenLocation: 'Город не определен',
-    chosenLocationLatitude: 0,
-    chosenLocationLongitude: 0,
+    chosenLocation: localStorage.chosenLocation || 'Город не определен',
+    chosenLocationLatitude: localStorage.latitude || 0,
+    chosenLocationLongitude: localStorage.longitude || 0,
     chosenCity: {
       name: '',
       latitude: 0,
       longitude: 0,
     },
+    isLoading: false,
     currentTemperature: '-',
     currentDescription: '-',
     currentWind: '',
@@ -18,10 +19,12 @@ export default createStore({
     imgSrcIdx: 4,
     onFocus: false,
     suggestions: [],
-    favoriteLocationsLength: 0,
-    favoriteLocations: {},
+    favoriteLocations:
+      JSON.parse(localStorage.getItem('favoriteLocations')) || {},
     deletedFavoriteCity: {},
     isCityFavorite: false,
+    showModal: false,
+    searchHistory: JSON.parse(localStorage.getItem('searchHistory')) || {},
     IconsWeather: {
       '01d': {
         label: 'clear_sky',
@@ -109,6 +112,9 @@ export default createStore({
       state.chosenLocation = location;
       state.chosenCity.name = location;
     },
+    setLoading(state, bool) {
+      state.isLoading = bool;
+    },
     setLatitude(state, latitude) {
       state.chosenLocationLatitude = latitude;
       state.chosenCity.latitude = latitude;
@@ -147,17 +153,23 @@ export default createStore({
     setFavoriteLocationsLength(state, favoriteLocationsLength) {
       state.favoriteLocationsLength = favoriteLocationsLength;
     },
-    setNewFavoriteLocation(state, favoriteLocationsLength) {
-      state.favoriteLocations[favoriteLocationsLength] = {};
-    },
     setFavoriteLocation(state, location) {
-      state.favoriteLocations[state.favoriteLocationsLength] = location;
+      state.favoriteLocations[Date.now()] = location;
     },
     setCityFavorite(state, bool) {
       state.isCityFavorite = bool;
     },
     setDeletedFavoriteCity(state, favoriteCity) {
       state.deletedFavoriteCity = favoriteCity;
+    },
+    setShowModal(state, bool) {
+      state.showModal = bool;
+    },
+    setHistoryItem(state, historyItem) {
+      state.searchHistory[Date.now()] = historyItem;
+    },
+    setSearchHistoryEmpty(state) {
+      state.searchHistory = {};
     },
   },
 });

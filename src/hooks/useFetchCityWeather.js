@@ -10,16 +10,16 @@ export default function useFetchCityWeather(firstUpperCase) {
   const iconCode = ref('');
   const temperature = ref(0);
   const description = ref('');
+  const tempMin = ref(0);
+  const tempMax = ref(0);
 
   const fetchCityWeather = async (favoriteCity) => {
-    console.log(favoriteCity);
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${favoriteCity.latitude}&lon=${favoriteCity.longitude}&appid=${apiKey}&units=metric&lang=ru`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${favoriteCity.latitude}&lon=${favoriteCity.longitude}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
       );
       const forecast = response.data?.list ?? 0;
       console.log(forecast);
-
       iconCode.value = forecast[0].weather[0].icon ?? 0;
       imgSrc.value =
         IconsWeather[iconCode.value]?.src ??
@@ -34,6 +34,31 @@ export default function useFetchCityWeather(firstUpperCase) {
       description.value = firstUpperCase(
         forecast[0].weather[0]?.description ?? 0
       );
+      console.log('forecast', response.data);
+
+      let min = forecast?.[0]?.main.temp;
+      for (let i = 1; i < forecast.length; i++) {
+        if (min > forecast?.[i]?.main.temp) {
+          min = forecast?.[i]?.main.temp;
+        }
+      }
+      if (min > 0) {
+        tempMin.value = '+' + min.toFixed();
+      } else {
+        tempMin.value = min.toFixed();
+      }
+
+      let max = forecast?.[0]?.main.temp;
+      for (let i = 1; i < forecast.length; i++) {
+        if (max < forecast?.[i]?.main.temp) {
+          max = forecast?.[i]?.main.temp;
+        }
+      }
+      if (max > 0) {
+        tempMax.value = '+' + max.toFixed();
+      } else {
+        tempMax.value = max.toFixed();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -43,6 +68,8 @@ export default function useFetchCityWeather(firstUpperCase) {
     imgSrc,
     temperature,
     description,
+    tempMin,
+    tempMax,
     fetchCityWeather,
   };
 }
