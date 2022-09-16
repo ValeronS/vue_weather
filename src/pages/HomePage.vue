@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div class="cloud"></div>
+    <div class="cloud_2"></div>
     <the-chosen-location />
 
     <the-current-forecast />
@@ -54,6 +55,34 @@ const { forecast, fetchWeather } = useFetchWeather(firstUpperCase);
   height: 60px;
   border-left: 1px dashed var(--accent-light-color);
   border-top-left-radius: 50px;
+}
+.cloud_2 {
+  position: absolute;
+  right: 40px;
+  width: 50px;
+  height: 65px;
+  border-left: 1px dashed var(--accent-light-color);
+  border-top-left-radius: 50px;
+}
+.cloud_2::before {
+  position: absolute;
+  content: '';
+  top: 65px;
+  right: -1px;
+  height: 50px;
+  width: 50px;
+  border-left: 1px dashed var(--accent-light-color);
+  border-bottom-left-radius: 50px;
+}
+.cloud_2::after {
+  position: absolute;
+  content: '';
+  top: 115px;
+  right: -40px;
+  height: 50px;
+  width: 50px;
+  border-right: 1px dashed var(--accent-light-color);
+  border-top-right-radius: 50px;
 }
 .home {
   background: var(--accent-dark-color);
