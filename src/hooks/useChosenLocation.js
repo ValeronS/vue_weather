@@ -5,7 +5,7 @@ export default function useChosenLocation() {
   const store = useStore();
 
   const chosenLocation = computed(() => {
-    return store.state.chosenLocation;
+    return store.state.chosenCity.name;
   });
 
   return {

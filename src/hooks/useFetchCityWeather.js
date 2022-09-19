@@ -19,7 +19,12 @@ export default function useFetchCityWeather(firstUpperCase) {
         `https://api.openweathermap.org/data/2.5/forecast?lat=${favoriteCity.latitude}&lon=${favoriteCity.longitude}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
       );
       const forecast = response.data?.list ?? 0;
+      localStorage.setItem(
+        'forecastResponse',
+        JSON.stringify(response.data?.list)
+      );
       console.log(forecast);
+
       iconCode.value = forecast[0].weather[0].icon ?? 0;
       imgSrc.value =
         IconsWeather[iconCode.value]?.src ??

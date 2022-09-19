@@ -22,6 +22,8 @@ export function useFetchWeather(firstUpperCase) {
         );
         forecast.value = response.data?.list ?? 0;
         console.log(response);
+        store.commit('setWeatherResponse', response.data.list);
+        store.commit('setWeatherResponseTime', Date.now());
 
         if (store.state.chosenLocation === '') {
           store.commit('setChosenLocation', response.data.city.name);

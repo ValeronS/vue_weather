@@ -2,15 +2,14 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: () => ({
-    chosenLocation: localStorage.chosenLocation || 'Город не определен',
-    chosenLocationLatitude: localStorage.latitude || 0,
-    chosenLocationLongitude: localStorage.longitude || 0,
+    isLoading: false,
     chosenCity: {
-      name: '',
+      name: 'Город не определен',
       latitude: 0,
       longitude: 0,
+      weatherResponse: [],
+      weatherResponseTime: 0,
     },
-    isLoading: false,
     currentTemperature: '-',
     currentDescription: '-',
     currentWind: '',
@@ -122,6 +121,12 @@ export default createStore({
     setLongitude(state, longitude) {
       state.chosenLocationLongitude = longitude;
       state.chosenCity.longitude = longitude;
+    },
+    setWeatherResponseTime(state, response) {
+      state.chosenCity.weatherResponseTime = response;
+    },
+    setWeatherResponse(state, response) {
+      state.chosenCity.weatherResponse = response;
     },
     setEmptySuggestions(state) {
       state.suggestions = [];

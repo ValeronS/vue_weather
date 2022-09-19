@@ -21,28 +21,24 @@ export default function useFavoriteLocation(fillStar) {
       favoriteLocationsLength.value
     );
 
-    chosenLocation.value = store.state.chosenLocation;
+    chosenLocation.value = store.state.chosenCity.name;
     favoriteLocations.value = store.state.favoriteLocations;
     let obj = {};
     if (chosenLocation.value !== 'Город не определен') {
-      if (favoriteLocationsLength.value === 0) {
-        favoriteLocation.name = store.state.chosenLocation;
-        favoriteLocation.latitude = store.state.chosenLocationLatitude;
-        favoriteLocation.longitude = store.state.chosenLocationLongitude;
+      if (!checkFavoriteCity(chosenLocation.value)) {
+        favoriteLocation.name = store.state.chosenCity.name;
+        favoriteLocation.latitude = store.state.chosenCity.latitude;
+        favoriteLocation.longitude = store.state.chosenCity.longitude;
+        favoriteLocation.weatherResponse =
+          store.state.chosenCity.weatherResponse;
+        favoriteLocation.weatherResponseTime =
+          store.state.chosenCity.weatherResponseTime;
         store.commit('setFavoriteLocation', favoriteLocation);
         fillStar();
       } else {
-        if (!checkFavoriteCity(chosenLocation.value)) {
-          favoriteLocation.name = store.state.chosenLocation;
-          favoriteLocation.latitude = store.state.chosenLocationLatitude;
-          favoriteLocation.longitude = store.state.chosenLocationLongitude;
-          store.commit('setFavoriteLocation', favoriteLocation);
-          fillStar();
-        } else {
-          removeCity(store.state.chosenCity);
-          store.commit('setCityFavorite', false);
-          fillStar();
-        }
+        removeCity(store.state.chosenCity);
+        store.commit('setCityFavorite', false);
+        fillStar();
       }
       console.log('localStorage');
       localStorage.setItem(
@@ -74,7 +70,7 @@ export default function useFavoriteLocation(fillStar) {
 
   const removeCity = (favoriteCity) => {
     favoriteLocations.value = store.state.favoriteLocations;
-    chosenLocation.value = store.state.chosenLocation;
+    chosenLocation.value = store.state.chosenCity.name;
     console.log('removeCity');
 
     if (checkFavoriteCity(favoriteCity.name)) {
@@ -98,9 +94,13 @@ export default function useFavoriteLocation(fillStar) {
   const cancelRemoveCity = () => {
     if (store.state.deletedFavoriteCity) {
       deletedFavoriteCity.value = store.state.deletedFavoriteCity;
-      favoriteLocation.name = deletedFavoriteCity.value.name;
-      favoriteLocation.latitude = deletedFavoriteCity.value.latitude;
-      favoriteLocation.longitude = deletedFavoriteCity.value.longitude;
+      favoriteLocation.name = store.state.chosenCity.name;
+      favoriteLocation.latitude = store.state.chosenCity.latitude;
+      favoriteLocation.longitude = store.state.chosenCity.longitude;
+      favoriteLocation.weatherResponse =
+        store.state.chosenCity.weatherResponse;
+      favoriteLocation.weatherResponseTime =
+        store.state.chosenCity.weatherResponseTime;
       console.log('favoriteLocation', favoriteLocation);
       store.commit('setFavoriteLocation', favoriteLocation);
 
