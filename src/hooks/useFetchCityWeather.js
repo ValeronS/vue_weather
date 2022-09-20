@@ -1,3 +1,4 @@
+import { IconsWeather } from '@/utils/constants';
 import axios from 'axios';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
@@ -5,7 +6,6 @@ import { useStore } from 'vuex';
 export default function useFetchCityWeather(firstUpperCase) {
   const store = useStore();
   const apiKey = 'a722624eaa524af8342f7a194cffad4d';
-  const IconsWeather = store.state.IconsWeather;
   const imgSrc = ref('');
   const iconCode = ref('');
   const temperature = ref(0);

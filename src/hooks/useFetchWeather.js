@@ -1,3 +1,4 @@
+import { MILLISECONDS_PER_HOUR } from '@/utils/constants';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
@@ -7,14 +8,20 @@ export function useFetchWeather(firstUpperCase) {
   const latitude = ref('');
   const longitude = ref('');
   const apiKey = 'a722624eaa524af8342f7a194cffad4d';
+  const responseTime = ref(0);
   const forecast = ref([]);
   const isLoading = ref(false);
 
   const fetchWeather = async () => {
-    latitude.value = store.state.chosenLocationLatitude;
-    longitude.value = store.state.chosenLocationLongitude;
+    latitude.value = store.state.chosenCity.latitude;
+    longitude.value = store.state.chosenCity.longitude;
+    responseTime.value = store.state.chosenCity.weatherResponseTime;
     console.log(longitude.value);
-    if (latitude.value) {
+    if (
+      latitude.value &&
+      (responseTime.value === 0 ||
+        responseTime.value > responseTime.value + MILLISECONDS_PER_HOUR)
+    ) {
       try {
         store.commit('setLoading', true);
         const response = await axios.get(
@@ -25,7 +32,7 @@ export function useFetchWeather(firstUpperCase) {
         store.commit('setWeatherResponse', response.data.list);
         store.commit('setWeatherResponseTime', Date.now());
 
-        if (store.state.chosenLocation === '') {
+        if (store.state.chosenCity.name === '') {
           store.commit('setChosenLocation', response.data.city.name);
           localStorage.chosenLocation = response.data.city.name;
         }
@@ -61,6 +68,7 @@ export function useFetchWeather(firstUpperCase) {
         store.commit('setLoading', false);
       }
     } else {
+      forecast.value = store.state.chosenCity.weatherResponse;
       console.log('Нет данных для выполнения запроса');
     }
   };

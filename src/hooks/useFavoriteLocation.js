@@ -1,6 +1,5 @@
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import { useFillStar } from './useFillStar';
 
 export default function useFavoriteLocation(fillStar) {
   const store = useStore();
@@ -8,7 +7,7 @@ export default function useFavoriteLocation(fillStar) {
   const favoriteLocationsLength = ref(0);
   const chosenLocation = ref('');
   const deletedFavoriteCity = ref({});
-  const favoriteLocation = { name: '', latitude: 0, longitude: 0 };
+  const favoriteLocation = ref({});
   const objKey = ref(0);
 
   const addToFavorite = () => {
@@ -24,16 +23,11 @@ export default function useFavoriteLocation(fillStar) {
     chosenLocation.value = store.state.chosenCity.name;
     favoriteLocations.value = store.state.favoriteLocations;
     let obj = {};
+
     if (chosenLocation.value !== 'Город не определен') {
       if (!checkFavoriteCity(chosenLocation.value)) {
-        favoriteLocation.name = store.state.chosenCity.name;
-        favoriteLocation.latitude = store.state.chosenCity.latitude;
-        favoriteLocation.longitude = store.state.chosenCity.longitude;
-        favoriteLocation.weatherResponse =
-          store.state.chosenCity.weatherResponse;
-        favoriteLocation.weatherResponseTime =
-          store.state.chosenCity.weatherResponseTime;
-        store.commit('setFavoriteLocation', favoriteLocation);
+        favoriteLocation.value = store.state.chosenCity;
+        store.commit('setFavoriteLocation', favoriteLocation.value);
         fillStar();
       } else {
         removeCity(store.state.chosenCity);
@@ -94,13 +88,7 @@ export default function useFavoriteLocation(fillStar) {
   const cancelRemoveCity = () => {
     if (store.state.deletedFavoriteCity) {
       deletedFavoriteCity.value = store.state.deletedFavoriteCity;
-      favoriteLocation.name = store.state.chosenCity.name;
-      favoriteLocation.latitude = store.state.chosenCity.latitude;
-      favoriteLocation.longitude = store.state.chosenCity.longitude;
-      favoriteLocation.weatherResponse =
-        store.state.chosenCity.weatherResponse;
-      favoriteLocation.weatherResponseTime =
-        store.state.chosenCity.weatherResponseTime;
+      favoriteLocation.value = store.state.chosenCity;
       console.log('favoriteLocation', favoriteLocation);
       store.commit('setFavoriteLocation', favoriteLocation);
 

@@ -10,7 +10,7 @@ export function useFillStar() {
 
   const fillStar = () => {
     favoriteLocations.value = store.state.favoriteLocations;
-    chosenLocation.value = store.state.chosenLocation;
+    chosenLocation.value = store.state.chosenCity.name;
     favoriteLocationsLength.value = Object.keys(
       favoriteLocations.value
     ).length;
