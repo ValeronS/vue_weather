@@ -34,18 +34,15 @@ export default createStore({
       state.suggestions = array;
     },
     setChosenLocation(state, location) {
-      state.chosenLocation = location;
       state.chosenCity.name = location;
     },
     setLoading(state, bool) {
       state.isLoading = bool;
     },
     setLatitude(state, latitude) {
-      state.chosenLocationLatitude = latitude;
       state.chosenCity.latitude = latitude;
     },
     setLongitude(state, longitude) {
-      state.chosenLocationLongitude = longitude;
       state.chosenCity.longitude = longitude;
     },
     setWeatherResponseTime(state, response) {
