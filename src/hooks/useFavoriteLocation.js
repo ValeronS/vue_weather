@@ -52,7 +52,6 @@ export default function useFavoriteLocation(fillStar) {
         return true;
       }
     }
-    console.log('obj?.name !== city', false);
     return false;
   };
 
