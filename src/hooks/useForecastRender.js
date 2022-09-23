@@ -1,3 +1,4 @@
+import { IconsWeather } from '@/utils/constants';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
@@ -56,8 +57,7 @@ export default function useForecastRender(forecast) {
 
   const imgSrc = (index) => {
     if (forecast.value.length) {
-      return store.state.IconsWeather[forecast.value?.[index]?.weather[0].icon]
-        .src;
+      return IconsWeather[forecast.value?.[index]?.weather[0].icon].src;
     }
   };
 

@@ -6,7 +6,7 @@
 
     <the-search-history
       v-if="
-        !$store.state.onFocus &&
+        !$store.state.isSearchInputFocused &&
         Object.keys($store.state.searchHistory).length &&
         !Object.keys($store.state.favoriteLocations).length
       "
@@ -31,7 +31,7 @@
       <p
         v-if="
           !Object.keys($store.state.favoriteLocations).length &&
-          !$store.state.onFocus &&
+          !$store.state.isSearchInputFocused &&
           !$store.state.suggestions.length &&
           !Object.keys($store.state.searchHistory).length
         "
@@ -44,7 +44,7 @@
     <transition name="fade">
       <p
         v-if="
-          $store.state.onFocus &&
+          $store.state.isSearchInputFocused &&
           !$store.state.suggestions.length &&
           !Object.keys($store.state.favoriteLocations).length
         "

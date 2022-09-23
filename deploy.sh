@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# остановить публикацию при ошибках test 3
+# остановить публикацию при ошибках
 set -e
 
 # сборка
@@ -20,6 +20,6 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # если вы публикуете по адресу https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:ValeronS/vue_weather.git master:gh-pages
+git push -f git@github.com:ValeronS/vue_weather.git main:gh-pages
 
 cd -
