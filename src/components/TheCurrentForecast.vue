@@ -33,7 +33,7 @@ export default {
   name: 'the-current-forecast',
   data() {
     return {
-      iconCode: '',
+      currentWeatherType: '',
     };
   },
 

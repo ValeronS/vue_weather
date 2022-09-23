@@ -7,8 +7,9 @@ export function useCurrentIcon() {
   // const IconsWeather = store.state.IconsWeather;
   const imgSrc = computed(
     () =>
-      IconsWeather[store.state.iconCode]?.src ??
-      console.log('IconsWeatherUnknown')
+      (IconsWeather[store.state.currentWeatherType]?.src ??
+        console.log('IconsWeatherUnknown')) ||
+      IconsWeather['03d'].src
   );
 
   return {

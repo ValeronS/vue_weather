@@ -15,15 +15,13 @@ export default function useFavoriteLocation(fillStar) {
       store.state.favoriteLocations
     ).length;
 
-    console.log('addToFavorite');
-
     chosenLocation.value = store.state.chosenCity.name;
     favoriteLocations.value = store.state.favoriteLocations;
     let obj = {};
-
     if (chosenLocation.value !== 'Город не определен') {
       if (!checkFavoriteCity(chosenLocation.value)) {
-        store.commit('setFavoriteLocation', store.state.chosenCity);
+        favoriteLocation.value = { ...store.state.chosenCity };
+        store.commit('setFavoriteLocation', favoriteLocation.value);
         fillStar();
       } else {
         removeCity(store.state.chosenCity);
@@ -62,6 +60,7 @@ export default function useFavoriteLocation(fillStar) {
     favoriteLocations.value = store.state.favoriteLocations;
     chosenLocation.value = store.state.chosenCity.name;
     console.log('removeCity');
+
     if (checkFavoriteCity(favoriteCity.name)) {
       delete favoriteLocations.value[objKey.value];
       store.commit('setFavoriteLocations', favoriteLocations.value);
@@ -82,8 +81,7 @@ export default function useFavoriteLocation(fillStar) {
 
   const cancelRemoveCity = () => {
     if (store.state.deletedFavoriteCity) {
-      deletedFavoriteCity.value = store.state.deletedFavoriteCity;
-      store.commit('setFavoriteLocation', store.state.chosenCity);
+      store.commit('setFavoriteLocation', store.state.deletedFavoriteCity);
 
       console.log('localStorage3');
       localStorage.setItem(

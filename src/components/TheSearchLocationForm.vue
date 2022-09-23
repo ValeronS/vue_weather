@@ -4,7 +4,7 @@
       action=""
       :class="{
         'search-container': true,
-        'search-container__focused': onFocus,
+        'search-container__focused': isSearchInputFocused,
       }"
     >
       <img
@@ -19,7 +19,7 @@
         :placeholder="inputPlaceholder"
         :class="{
           text: true,
-          inputOnFocus: onFocus,
+          searchInputFocused: isSearchInputFocused,
           'none-box-shadow': Object.keys($store.state.favoriteLocations)
             .length,
         }"
@@ -49,12 +49,12 @@ export default {
   name: 'the-search-location-form',
   setup(props) {
     const { location, suggestions, searchLocation } = useSearchLocation();
-    const { inputPlaceholder, onFocus, changeFocus, dismiss } =
+    const { inputPlaceholder, isSearchInputFocused, changeFocus, dismiss } =
       useChangeFocus(location);
 
     return {
       inputPlaceholder,
-      onFocus,
+      isSearchInputFocused,
       changeFocus,
       location,
       suggestions,
@@ -114,7 +114,7 @@ export default {
   box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
   color: var(--primary-color);
 }
-.search-container > input.inputOnFocus {
+.search-container > input.searchInputFocused {
   border: none;
   border-bottom: 1px solid var(--lines-color);
   border-radius: 0;

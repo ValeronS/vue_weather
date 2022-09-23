@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import { IconsWeather } from '@/utils/constants';
 
 export default createStore({
   state: () => ({
@@ -14,12 +15,10 @@ export default createStore({
     currentDescription: '-',
     currentWind: '',
     currentHumidity: '',
-    iconCode: '03d',
-    imgSrcIdx: 4,
-    onFocus: false,
+    currentWeatherType: '',
+    isSearchInputFocused: false,
     suggestions: [],
-    favoriteLocations:
-      JSON.parse(localStorage.getItem('favoriteLocations')) || {},
+    favoriteLocations: {},
     deletedFavoriteCity: {},
     isCityFavorite: false,
     showModal: false,
@@ -27,8 +26,8 @@ export default createStore({
   }),
 
   mutations: {
-    setFocus(state, bool) {
-      state.onFocus = bool;
+    setSearchInputFocused(state, bool) {
+      state.isSearchInputFocused = bool;
     },
     setSuggestions(state, array) {
       state.suggestions = array;
@@ -63,11 +62,8 @@ export default createStore({
     setCurrentDescription(state, description) {
       state.currentDescription = description;
     },
-    setIconCode(state, code) {
-      state.iconCode = code;
-    },
-    setImgSrcIdx(state, idx) {
-      state.imgSrcIdx = idx;
+    setCurrentWeatherType(state, code) {
+      state.currentWeatherType = code;
     },
     setWind(state, wind) {
       state.currentWind = wind;

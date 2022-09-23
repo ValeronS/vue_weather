@@ -3,7 +3,7 @@ import { useStore } from 'vuex';
 
 export default function useChangeFocus(location) {
   const store = useStore();
-  const onFocus = ref(store.state.onFocus);
+  const isSearchInputFocused = ref(store.state.isSearchInputFocused);
   const inputPlaceholder = ref('Поиск локации');
 
   const changeFocus = (event) => {
@@ -11,11 +11,11 @@ export default function useChangeFocus(location) {
     if (event.target.tagName === 'INPUT') {
       console.log(event.target.tagName);
       store.commit('setFocus', true);
-      onFocus.value = true;
+      isSearchInputFocused.value = true;
       inputPlaceholder.value = 'Поиск города';
     } else {
       store.commit('setFocus', false);
-      onFocus.value = false;
+      isSearchInputFocused.value = false;
       inputPlaceholder.value = 'Поиск локации';
     }
   };
@@ -27,7 +27,7 @@ export default function useChangeFocus(location) {
 
   return {
     inputPlaceholder,
-    onFocus,
+    isSearchInputFocused,
     changeFocus,
     dismiss,
   };

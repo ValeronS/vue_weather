@@ -54,7 +54,10 @@ export function useFetchWeather(firstUpperCase) {
           firstUpperCase(forecast.value[0].weather[0]?.description ?? 0)
         );
 
-        store.commit('setIconCode', forecast.value[0].weather[0].icon ?? 0);
+        store.commit(
+          'setCurrentWeatherType',
+          forecast.value[0].weather[0].icon ?? 0
+        );
 
         store.commit(
           'setWind',
