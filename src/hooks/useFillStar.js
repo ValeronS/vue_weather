@@ -9,8 +9,8 @@ export function useFillStar() {
   const favoriteLocationsLength = ref(0);
 
   const fillStar = () => {
-    favoriteLocations.value = store.state.favoriteLocations;
-    chosenLocation.value = store.state.chosenCity.name;
+    favoriteLocations.value = store.state.favoriteCity.favoriteLocations;
+    chosenLocation.value = store.state.selectedCity.chosenCity.name;
     favoriteLocationsLength.value = Object.keys(
       favoriteLocations.value
     ).length;
@@ -22,11 +22,11 @@ export function useFillStar() {
         obj = Object.values(favoriteLocations.value)[i];
         console.log('obj', obj?.name);
         if (obj?.name === chosenLocation.value) {
-          store.commit('setCityFavorite', true);
+          store.commit('favoriteCity/setCityFavorite', true);
           isStarFilled.value = true;
           return;
         } else {
-          store.commit('setCityFavorite', false);
+          store.commit('favoriteCity/setCityFavorite', false);
           isStarFilled.value = false;
         }
       }

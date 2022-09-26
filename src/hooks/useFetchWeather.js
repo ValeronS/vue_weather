@@ -13,9 +13,10 @@ export function useFetchWeather(firstUpperCase) {
   const isLoading = ref(false);
 
   const fetchWeather = async () => {
-    latitude.value = store.state.chosenCity.latitude;
-    longitude.value = store.state.chosenCity.longitude;
-    responseTime.value = store.state.chosenCity.weatherResponseTime;
+    latitude.value = store.state.selectedCity.chosenCity.latitude;
+    longitude.value = store.state.selectedCity.chosenCity.longitude;
+    responseTime.value =
+      store.state.selectedCity.chosenCity.weatherResponseTime;
     console.log(longitude.value);
     if (
       latitude.value &&
@@ -23,55 +24,61 @@ export function useFetchWeather(firstUpperCase) {
         responseTime.value > responseTime.value + MILLISECONDS_PER_HOUR)
     ) {
       try {
-        store.commit('setLoading', true);
+        store.commit('selectedCity/setLoading', true);
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude.value}&lon=${longitude.value}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
         );
         forecast.value = response.data?.list ?? 0;
         console.log(response);
-        store.commit('setWeatherResponse', response.data.list);
-        store.commit('setWeatherResponseTime', Date.now());
+        store.commit('selectedCity/setWeatherResponse', response.data.list);
+        store.commit('selectedCity/setWeatherResponseTime', Date.now());
 
-        if (store.state.chosenCity.name === '') {
-          store.commit('setChosenLocation', response.data.city.name);
+        if (store.state.selectedCity.chosenCity.name === '') {
+          store.commit(
+            'selectedCity/setChosenLocation',
+            response.data.city.name
+          );
           localStorage.chosenLocation = response.data.city.name;
         }
 
         if (forecast.value[0]?.main?.temp?.toFixed() > 0) {
           store.commit(
-            'setCurrentTemperature',
+            'selectedCity/setCurrentTemperature',
             '+' + forecast.value[0].main.temp.toFixed() ?? 0
           );
         } else {
           store.commit(
-            'setCurrentTemperature',
+            'selectedCity/setCurrentTemperature',
             forecast.value[0].main.temp.toFixed()
           );
         }
 
         store.commit(
-          'setCurrentDescription',
+          'selectedCity/setCurrentDescription',
           firstUpperCase(forecast.value[0].weather[0]?.description ?? 0)
         );
 
         store.commit(
-          'setCurrentWeatherType',
+          'selectedCity/setCurrentWeatherType',
           forecast.value[0].weather[0].icon ?? 0
         );
 
         store.commit(
-          'setWind',
+          'selectedCity/setWind',
           (forecast.value[0].wind?.speed * 3.6).toFixed() + ' км/ч'
         );
 
-        store.commit('setHumidity', forecast.value[0].main.humidity + '%');
+        store.commit(
+          'selectedCity/setHumidity',
+          forecast.value[0].main.humidity + '%'
+        );
       } catch (error) {
         console.log(error);
       } finally {
-        store.commit('setLoading', false);
+        store.commit('selectedCity/setLoading', false);
       }
     } else {
-      forecast.value = store.state.chosenCity.weatherResponse;
+      forecast.value = store.state.selectedCity.chosenCity.weatherResponse;
       console.log('Нет данных для выполнения запроса');
     }
   };

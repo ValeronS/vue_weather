@@ -12,35 +12,38 @@ export default function useFavoriteLocation(fillStar) {
 
   const addToFavorite = () => {
     favoriteLocationsLength.value = Object.keys(
-      store.state.favoriteLocations
+      store.state.favoriteCity.favoriteLocations
     ).length;
 
-    chosenLocation.value = store.state.chosenCity.name;
-    favoriteLocations.value = store.state.favoriteLocations;
+    chosenLocation.value = store.state.selectedCity.chosenCity.name;
+    favoriteLocations.value = store.state.favoriteCity.favoriteLocations;
     let obj = {};
     if (chosenLocation.value !== 'Город не определен') {
       if (!checkFavoriteCity(chosenLocation.value)) {
-        favoriteLocation.value = { ...store.state.chosenCity };
-        store.commit('setFavoriteLocation', favoriteLocation.value);
+        favoriteLocation.value = { ...store.state.selectedCity.chosenCity };
+        store.commit(
+          'favoriteCity/setFavoriteLocation',
+          favoriteLocation.value
+        );
         fillStar();
       } else {
-        removeCity(store.state.chosenCity);
-        store.commit('setCityFavorite', false);
+        removeCity(store.state.selectedCity.chosenCity);
+        store.commit('favoriteCity/setCityFavorite', false);
         fillStar();
       }
       console.log('localStorage');
       localStorage.setItem(
         'favoriteLocations',
-        JSON.stringify(store.state.favoriteLocations)
+        JSON.stringify(store.state.favoriteCity.favoriteLocations)
       );
     }
   };
 
   const checkFavoriteCity = (city) => {
     favoriteLocationsLength.value = Object.keys(
-      store.state.favoriteLocations
+      store.state.favoriteCity.favoriteLocations
     ).length;
-    favoriteLocations.value = store.state.favoriteLocations;
+    favoriteLocations.value = store.state.favoriteCity.favoriteLocations;
     console.log('city', city);
     for (let i = 0; i < favoriteLocationsLength.value; i++) {
       let obj = Object.values(favoriteLocations.value)[i];
@@ -56,46 +59,49 @@ export default function useFavoriteLocation(fillStar) {
   };
 
   const removeCity = (favoriteCity) => {
-    favoriteLocations.value = store.state.favoriteLocations;
-    chosenLocation.value = store.state.chosenCity.name;
+    favoriteLocations.value = store.state.favoriteCity.favoriteLocations;
+    chosenLocation.value = store.state.selectedCity.chosenCity.name;
     console.log('removeCity');
 
     if (checkFavoriteCity(favoriteCity.name)) {
       delete favoriteLocations.value[objKey.value];
-      store.commit('setFavoriteLocations', favoriteLocations.value);
-      store.commit('setDeletedFavoriteCity', favoriteCity);
+      store.commit('favoriteCity/setShowModal', favoriteLocations.value);
+      store.commit('favoriteCity/setDeletedFavoriteCity', favoriteCity);
       setTimeout(() => {
-        store.commit('setDeletedFavoriteCity', '');
+        store.commit('favoriteCity/setDeletedFavoriteCity', '');
       }, 2000);
       if (chosenLocation.value === favoriteCity.name) {
-        store.commit('setCityFavorite', false);
+        store.commit('favoriteCity/setCityFavorite', false);
       }
       console.log('localStorage2');
       localStorage.setItem(
         'favoriteLocations',
-        JSON.stringify(store.state.favoriteLocations)
+        JSON.stringify(store.state.favoriteCity.favoriteLocations)
       );
     }
   };
 
   const cancelRemoveCity = () => {
-    if (store.state.deletedFavoriteCity) {
-      store.commit('setFavoriteLocation', store.state.deletedFavoriteCity);
+    if (store.state.favoriteCity.deletedFavoriteCity) {
+      store.commit(
+        'favoriteCity/setFavoriteLocation',
+        store.state.favoriteCity.deletedFavoriteCity
+      );
 
       console.log('localStorage3');
       localStorage.setItem(
         'favoriteLocations',
-        JSON.stringify(store.state.favoriteLocations)
+        JSON.stringify(store.state.favoriteCity.favoriteLocations)
       );
-      store.commit('setDeletedFavoriteCity', '');
+      store.commit('favoriteCity/setDeletedFavoriteCity', '');
     }
   };
 
   const showModal = () => {
     console.log('showModal');
-    store.commit('setShowModal', true);
+    store.commit('favoriteCity/setShowModal', true);
     setTimeout(() => {
-      store.commit('setShowModal', false);
+      store.commit('favoriteCity/setShowModal', false);
     }, 1500);
   };
 

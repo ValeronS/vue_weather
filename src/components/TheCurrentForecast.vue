@@ -4,23 +4,26 @@
       <img :src="imgSrc" />
 
       <h1 class="forecast__current-temperature">
-        {{ $store.state.currentTemperature }}
+        {{ $store.state.selectedCity.currentTemperature }}
       </h1>
 
       <h2 class="forecast__current-description">
-        {{ $store.state.currentDescription }}
+        {{ $store.state.selectedCity.currentDescription }}
       </h2>
     </div>
 
-    <div v-if="$store.state.currentWind" class="forecast__conditions">
+    <div
+      v-if="$store.state.selectedCity.currentWind"
+      class="forecast__conditions"
+    >
       <div class="wind">
         <img src="@/assets/img/windy.png" alt="" />
-        {{ $store.state.currentWind }}
+        {{ $store.state.selectedCity.currentWind }}
       </div>
 
       <div class="humidity">
         <img src="@/assets/img/hum.png" alt="" />
-        {{ $store.state.currentHumidity }}
+        {{ $store.state.selectedCity.currentHumidity }}
       </div>
     </div>
   </div>

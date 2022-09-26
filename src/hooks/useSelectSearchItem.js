@@ -10,14 +10,14 @@ export default function useSelectSearchItem() {
     // console.log(event);
     if (event.data) {
       store.commit(
-        'setChosenLocation',
+        'selectedCity/setChosenLocation',
         event.data.city ||
           event.data.city_with_type ||
           event.data.settlement ||
           event.value
       );
-      store.commit('setLatitude', event.data.geo_lat);
-      store.commit('setLongitude', event.data.geo_lon);
+      store.commit('selectedCity/setLatitude', event.data.geo_lat);
+      store.commit('selectedCity/setLongitude', event.data.geo_lon);
 
       historyItem.name =
         event.data.city ||
@@ -26,10 +26,10 @@ export default function useSelectSearchItem() {
         event.value;
       historyItem.latitude = event.data.geo_lat;
       historyItem.longitude = event.data.geo_lon;
-      store.commit('setHistoryItem', historyItem);
+      store.commit('searchCity/setHistoryItem', historyItem);
       localStorage.setItem(
         'searchHistory',
-        JSON.stringify(store.state.searchHistory)
+        JSON.stringify(store.state.searchCity.searchHistory)
       );
 
       localStorage.chosenLocation =
@@ -39,23 +39,23 @@ export default function useSelectSearchItem() {
         event.value;
       localStorage.latitude = event.data.geo_lat;
       localStorage.longitude = event.data.geo_lon;
-      store.commit('setEmptySuggestions');
-      store.commit('setFocus', false);
+      store.commit('searchCity/setEmptySuggestions');
+      store.commit('searchCity/setSearchInputFocused', false);
     } else if (event.name) {
-      store.commit('setChosenLocation', event.name);
-      store.commit('setLatitude', event.latitude);
-      store.commit('setLongitude', event.longitude);
+      store.commit('selectedCity/setChosenLocation', event.name);
+      store.commit('selectedCity/setLatitude', event.latitude);
+      store.commit('selectedCity/setLongitude', event.longitude);
       localStorage.chosenLocation = event.name;
       localStorage.latitude = event.latitude;
       localStorage.longitude = event.longitude;
-      store.commit('setFocus', false);
+      store.commit('searchCity/setSearchInputFocused', false);
     } else {
       console.log('event error');
     }
   };
 
   const clearSearchHistory = () => {
-    store.commit('setSearchHistoryEmpty');
+    store.commit('searchCity/setSearchHistoryEmpty');
     localStorage.removeItem('searchHistory', '');
   };
 

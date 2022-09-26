@@ -6,23 +6,23 @@
 
     <the-search-history
       v-if="
-        !$store.state.isSearchInputFocused &&
-        Object.keys($store.state.searchHistory).length &&
-        !Object.keys($store.state.favoriteLocations).length
+        !$store.state.searchCity.isSearchInputFocused &&
+        Object.keys($store.state.searchCity.searchHistory).length &&
+        !Object.keys($store.state.favoriteCity.favoriteLocations).length
       "
-      :searchHistory="$store.state.searchHistory"
+      :searchHistory="$store.state.searchCity.searchHistory"
       class="the-search-history"
     />
 
     <the-search-list
-      :suggestions="$store.state.suggestions"
+      :suggestions="$store.state.searchCity.suggestions"
       @selectSearchItem="selectItem"
       class="search-list"
     />
 
     <the-favorite-list
-      v-if="!$store.state.suggestions.length"
-      :favoriteLocations="$store.state.favoriteLocations"
+      v-if="!$store.state.searchCity.suggestions.length"
+      :favoriteLocations="$store.state.favoriteCity.favoriteLocations"
       class="favorite-locations-list"
       @selectFavoriteCity="selectItem"
     />
@@ -30,10 +30,10 @@
     <transition name="fade">
       <p
         v-if="
-          !Object.keys($store.state.favoriteLocations).length &&
-          !$store.state.isSearchInputFocused &&
-          !$store.state.suggestions.length &&
-          !Object.keys($store.state.searchHistory).length
+          !Object.keys($store.state.favoriteCity.favoriteLocations).length &&
+          !$store.state.searchCity.isSearchInputFocused &&
+          !$store.state.searchCity.suggestions.length &&
+          !Object.keys($store.state.searchCity.searchHistory).length
         "
         class="empty-list text"
       >
@@ -44,9 +44,9 @@
     <transition name="fade">
       <p
         v-if="
-          $store.state.isSearchInputFocused &&
-          !$store.state.suggestions.length &&
-          !Object.keys($store.state.favoriteLocations).length
+          $store.state.searchCity.isSearchInputFocused &&
+          !$store.state.searchCity.suggestions.length &&
+          !Object.keys($store.state.favoriteCity.favoriteLocations).length
         "
         class="empty-list text"
       >
@@ -54,12 +54,12 @@
       </p>
     </transition>
 
-    <div v-if="$store.state.isLoading" class="spinner">
+    <div v-if="$store.state.selectedCity.isLoading" class="spinner">
       <img src="@/assets/img/circles-loader.png" alt="" class="spinner-img" />
     </div>
 
     <transition name="fade">
-      <app-modal v-if="$store.state.deletedFavoriteCity.name"
+      <app-modal v-if="$store.state.favoriteCity.deletedFavoriteCity.name"
         >Локация удалена
         <div @click="cancelRemoveCity" class="modal-cancel">Отменить</div>
       </app-modal>
