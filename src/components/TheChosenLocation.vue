@@ -7,7 +7,7 @@
 
     <div class="star" @click="addToFavorite">
       <img
-        v-if="!$store.state.isCityFavorite"
+        v-if="!$store.state.favoriteCity.isCityFavorite"
         src="@/assets/img/star-line.png"
         alt=""
         @click="showModal"

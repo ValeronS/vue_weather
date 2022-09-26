@@ -28,7 +28,7 @@ export default function useSearchLocation() {
         }
       );
       suggestions.value = response.data.suggestions;
-      store.commit('setSuggestions', response.data.suggestions);
+      store.commit('searchCity/setSuggestions', response.data.suggestions);
       // console.log(suggestions.value);
     } catch (error) {
       console.log(error);

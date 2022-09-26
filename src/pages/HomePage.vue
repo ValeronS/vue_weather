@@ -17,7 +17,7 @@
     </app-button>
 
     <transition name="fade">
-      <app-modal v-if="$store.state.showModal" class="app-modal"
+      <app-modal v-if="$store.state.favoriteCity.showModal" class="app-modal"
         >Локация добалена в избранное</app-modal
       >
     </transition>

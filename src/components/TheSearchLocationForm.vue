@@ -20,8 +20,9 @@
         :class="{
           text: true,
           searchInputFocused: isSearchInputFocused,
-          'none-box-shadow': Object.keys($store.state.favoriteLocations)
-            .length,
+          'none-box-shadow': Object.keys(
+            $store.state.favoriteCity.favoriteLocations
+          ).length,
         }"
       />
       <img
