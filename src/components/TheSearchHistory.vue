@@ -9,6 +9,7 @@
       v-for="historyItem in searchHistory"
       :key="historyItem.name"
       :historyItem="historyItem"
+      @selectedHistoryItem="selectItem"
     />
   </div>
 </template>
@@ -25,7 +26,7 @@ const props = defineProps({
   },
 });
 const { searchHistory } = toRefs(props);
-const { clearSearchHistory } = useSelectSearchItem();
+const { selectItem, clearSearchHistory } = useSelectSearchItem();
 </script>
 
 <style>

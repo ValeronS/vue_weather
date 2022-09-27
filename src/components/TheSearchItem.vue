@@ -1,12 +1,12 @@
 <template>
-  <div class="search-item__container">
+  <div
+    class="search-item__container"
+    @click.prevent="$emit('selectSearchItem', searchItem), $router.push('/')"
+  >
     <p class="search-item__country">
       {{ searchItem.data.country }}
     </p>
-    <h3
-      class="search-item"
-      @click.prevent="$emit('selectSearchItem', searchItem), $router.push('/')"
-    >
+    <h3 class="search-item">
       {{
         searchItem.data.city ||
         searchItem.data.city_with_type ||
@@ -31,6 +31,9 @@ export default {
 </script>
 
 <style>
+.search-item__container {
+  cursor: pointer;
+}
 .search-item__country {
   height: 24px;
   margin-left: 16px;
