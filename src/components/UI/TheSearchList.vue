@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import TheSearchItem from '@/components/TheSearchItem.vue';
+import TheSearchItem from '@/components/UI/TheSearchItem.vue';
 
 export default {
   name: 'the-search-list',

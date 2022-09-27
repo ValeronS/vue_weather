@@ -51,9 +51,9 @@
 
 <script>
 import TheSearchForm from '@/components/UI/TheSearchForm.vue';
-import TheSearchList from '@/components/TheSearchList.vue';
-import TheFavoriteList from '@/components/TheFavoriteList.vue';
-import TheSearchHistory from '@/components/TheSearchHistory.vue';
+import TheSearchList from '@/components/UI/TheSearchList.vue';
+import TheFavoriteList from '@/components/UI/TheFavoriteList.vue';
+import TheSearchHistory from '@/components/UI/TheSearchHistory.vue';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import useGeolocation from '@/hooks/useGeolocation';

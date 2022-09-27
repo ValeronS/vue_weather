@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import TheFavoriteCity from './TheFavoriteCity.vue';
+import TheFavoriteCity from '@/components/UI/TheFavoriteCity.vue';
 
 export default {
   name: 'the-favorite-list',

@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import TheSearchHistoryItem from '@/components/TheSearchHistoryItem.vue';
+import TheSearchHistoryItem from '@/components/UI/TheSearchHistoryItem.vue';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import { toRefs } from 'vue';
 
