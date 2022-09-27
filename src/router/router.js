@@ -1,6 +1,7 @@
 import HomePage from '@/pages/HomePage';
 import { createRouter, createWebHashHistory } from 'vue-router';
-import LocationPage from '@/pages/LocationPage';
+import FavoritePage from '@/pages/FavoritePage';
+import SearchPage from '@/pages/SearchPage';
 
 const routes = [
   {
@@ -8,8 +9,12 @@ const routes = [
     component: HomePage,
   },
   {
-    path: '/location',
-    component: LocationPage,
+    path: '/favorite',
+    component: FavoritePage,
+  },
+  {
+    path: '/search',
+    component: SearchPage,
   },
 ];
 

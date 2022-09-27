@@ -9,7 +9,7 @@
     <the-forecast :forecast="forecast" />
 
     <app-button
-      @click="$router.push('/location')"
+      @click="$router.push('/favorite')"
       class="btn-position"
       v-if="!forecast.length"
     >
