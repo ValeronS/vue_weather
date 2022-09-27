@@ -1,14 +1,25 @@
 <template>
   <div>
-    <the-search-location-form
-      @getLocation="getLocation"
-    ></the-search-location-form>
+    <the-search-form @getLocation="getLocation" @click="changeFocus">
+      <input
+        v-model="location"
+        @input="searchLocation"
+        type="text"
+        placeholder="Поиск города"
+        autofocus
+        :class="{
+          text: true,
+          input__search: true,
+          'none-box-shadow': Object.keys(
+            $store.state.favoriteCity.favoriteLocations
+          ).length,
+        }"
+      />
+    </the-search-form>
 
     <the-search-history
       v-if="
-        !$store.state.searchCity.isSearchInputFocused &&
-        Object.keys($store.state.searchCity.searchHistory).length &&
-        !Object.keys($store.state.favoriteCity.favoriteLocations).length
+        !location && Object.keys($store.state.searchCity.searchHistory).length
       "
       :searchHistory="$store.state.searchCity.searchHistory"
       class="the-search-history"
@@ -20,33 +31,11 @@
       class="search-list"
     />
 
-    <the-favorite-list
-      v-if="!$store.state.searchCity.suggestions.length"
-      :favoriteLocations="$store.state.favoriteCity.favoriteLocations"
-      class="favorite-locations-list"
-      @selectFavoriteCity="selectItem"
-    />
-
-    <transition name="fade">
-      <p
-        v-if="
-          !Object.keys($store.state.favoriteCity.favoriteLocations).length &&
-          !$store.state.searchCity.isSearchInputFocused &&
-          !$store.state.searchCity.suggestions.length &&
-          !Object.keys($store.state.searchCity.searchHistory).length
-        "
-        class="empty-list text"
-      >
-        У вас пока нет избранных локаций
-      </p>
-    </transition>
-
     <transition name="fade">
       <p
         v-if="
           $store.state.searchCity.isSearchInputFocused &&
-          !$store.state.searchCity.suggestions.length &&
-          !Object.keys($store.state.favoriteCity.favoriteLocations).length
+          !$store.state.searchCity.suggestions.length
         "
         class="empty-list text"
       >
@@ -57,28 +46,23 @@
     <div v-if="$store.state.selectedCity.isLoading" class="spinner">
       <img src="@/assets/img/circles-loader.png" alt="" class="spinner-img" />
     </div>
-
-    <transition name="fade">
-      <app-modal v-if="$store.state.favoriteCity.deletedFavoriteCity.name"
-        >Локация удалена
-        <div @click="cancelRemoveCity" class="modal-cancel">Отменить</div>
-      </app-modal>
-    </transition>
   </div>
 </template>
 
 <script>
-import TheSearchLocationForm from '@/components/TheSearchLocationForm.vue';
+import TheSearchForm from '@/components/UI/TheSearchForm.vue';
 import TheSearchList from '@/components/TheSearchList.vue';
 import TheFavoriteList from '@/components/TheFavoriteList.vue';
 import TheSearchHistory from '@/components/TheSearchHistory.vue';
 import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import useGeolocation from '@/hooks/useGeolocation';
+import useChangeFocus from '@/hooks/useChangeFocus';
+import useSearchLocation from '@/hooks/useSearchLocation';
 
 export default {
   components: {
-    TheSearchLocationForm,
+    TheSearchForm,
     TheSearchList,
     TheFavoriteList,
     TheSearchHistory,
@@ -87,18 +71,39 @@ export default {
     const { historyItem, selectItem } = useSelectSearchItem();
     const { cancelRemoveCity } = useFavoriteLocation();
     const { getLocation } = useGeolocation();
+    const { location, suggestions, searchLocation } = useSearchLocation();
+    const { inputPlaceholder, isSearchInputFocused, changeFocus, dismiss } =
+      useChangeFocus(location);
 
     return {
       historyItem,
       selectItem,
       cancelRemoveCity,
       getLocation,
+      inputPlaceholder,
+      isSearchInputFocused,
+      changeFocus,
+      location,
+      suggestions,
+      searchLocation,
+      dismiss,
     };
   },
 };
 </script>
 
 <style>
+.input__search {
+  border: none;
+  border-bottom: 1px solid var(--lines-color);
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  caret-color: var(--accent-dark-color);
+  width: 100%;
+  height: 48px;
+  padding-left: 56px;
+}
 .the-search-history {
   position: absolute;
   top: 92px;
@@ -117,11 +122,7 @@ export default {
   top: 132px;
   width: 100vw;
 }
-.favorite-locations-list {
-  position: absolute;
-  top: 108px;
-  width: 100vw;
-}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -154,10 +155,5 @@ export default {
   to {
     transform: rotate(0deg);
   }
-}
-.modal-cancel {
-  color: var(--accent-dark-color);
-  padding-left: 16px;
-  cursor: pointer;
 }
 </style>

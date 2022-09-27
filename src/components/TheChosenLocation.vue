@@ -1,6 +1,6 @@
 <template>
   <div class="location-field">
-    <div @click="$router.push('/location')" class="location">
+    <div @click="$router.push('/favorite')" class="location">
       <img src="@/assets/img/map.png" />
       <h3>{{ chosenLocation }}</h3>
     </div>
