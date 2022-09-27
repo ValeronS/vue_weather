@@ -1,5 +1,8 @@
 <template>
-  <div class="history-item__container">
+  <div
+    class="history-item__container"
+    @click="$emit('selectedHistoryItem', historyItem), $router.push('/')"
+  >
     <div class="history-item" :historyItem="fetchCityWeather(historyItem)">
       <div class="history-item__city">
         <img :src="imgSrc" alt="" />
@@ -30,6 +33,9 @@ const { imgSrc, tempMin, tempMax, fetchCityWeather } =
 </script>
 
 <style>
+.history-item__container {
+  cursor: pointer;
+}
 .history-item {
   height: 56px;
   position: relative;

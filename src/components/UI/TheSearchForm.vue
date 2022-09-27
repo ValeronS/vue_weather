@@ -78,26 +78,6 @@ export default {
   width: 16px;
   height: 16px;
 }
-/* .search-container > input {
-  width: 100%;
-  padding-left: 56px;
-  height: 48px;
-  border: 1px solid var(--secondary-color);
-  border-radius: 15px;
-  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
-  color: var(--primary-color);
-} */
-/* .search-container > input.searchInputFocused {
-  border: none;
-  border-bottom: 1px solid var(--lines-color);
-  border-radius: 0;
-  box-shadow: none;
-  outline: none;
-  caret-color: var(--accent-dark-color);
-} */
-/* .search-container > input.none-box-shadow {
-  box-shadow: none;
-} */
 .search-container > input::placeholder {
   color: var(--secondary-color);
 }

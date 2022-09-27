@@ -1,15 +1,11 @@
 <template>
   <div>
-    <ul>
-      <li>
-        <the-search-item
-          v-for="searchItem in suggestions"
-          :searchItem="searchItem"
-          :key="searchItem.data.fias_id"
-          @selectSearchItem="$emit('selectSearchItem', searchItem)"
-        />
-      </li>
-    </ul>
+    <the-search-item
+      v-for="searchItem in suggestions"
+      :searchItem="searchItem"
+      :key="searchItem.data.fias_id"
+      @selectSearchItem="$emit('selectSearchItem', searchItem)"
+    />
   </div>
 </template>
 
