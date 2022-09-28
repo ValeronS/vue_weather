@@ -3,7 +3,7 @@
     <the-search-form @getLocation="getLocation" @click="changeFocus">
       <input
         v-model="location"
-        @input="searchLocation"
+        @input="searchLocation(location)"
         type="text"
         placeholder="Поиск города"
         autofocus
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import suggestionsApi from '@/services/suggestionsApi';
 import TheSearchForm from '@/components/UI/TheSearchForm.vue';
 import TheSearchList from '@/components/UI/TheSearchList.vue';
 import TheFavoriteList from '@/components/UI/TheFavoriteList.vue';
@@ -71,7 +72,7 @@ export default {
     const { historyItem, selectItem } = useSelectSearchItem();
     const { cancelRemoveCity } = useFavoriteLocation();
     const { getLocation } = useGeolocation();
-    const { location, suggestions, searchLocation } = useSearchLocation();
+    const { location } = useSearchLocation();
     const { inputPlaceholder, isSearchInputFocused, changeFocus, dismiss } =
       useChangeFocus(location);
 
@@ -84,9 +85,8 @@ export default {
       isSearchInputFocused,
       changeFocus,
       location,
-      suggestions,
-      searchLocation,
       dismiss,
+      ...suggestionsApi(),
     };
   },
 };
