@@ -1,6 +1,6 @@
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
-import suggestionsApi from '@/services/suggestionsApi';
+import suggestionsApi from '@/services/suggestions/index';
 
 export default function useSearchLocation() {
   const store = useStore();

@@ -2,6 +2,7 @@ import { MILLISECONDS_PER_HOUR } from '@/utils/constants';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
+import apiWeather from '@/services/weather/index';
 
 export function useFetchWeather(firstUpperCase) {
   const store = useStore();
@@ -25,8 +26,9 @@ export function useFetchWeather(firstUpperCase) {
     ) {
       try {
         store.commit('selectedCity/setLoading', true);
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude.value}&lon=${longitude.value}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
+        const response = await apiWeather.getWeather(
+          latitude.value,
+          longitude.value
         );
         forecast.value = response.data?.list ?? 0;
         console.log(response);

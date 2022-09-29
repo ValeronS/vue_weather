@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import suggestionsApi from '@/services/suggestionsApi';
 import TheSearchForm from '@/components/UI/TheSearchForm.vue';
 import TheSearchList from '@/components/UI/TheSearchList.vue';
 import TheFavoriteList from '@/components/UI/TheFavoriteList.vue';
