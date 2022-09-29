@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiKey = 'a722624eaa524af8342f7a194cffad4d';
 
-const apiWeather = axios.create({
+const weatherService = axios.create({
   baseURL: 'https://api.openweathermap.org/data/2.5/forecast',
   params: {
     appid: apiKey,
@@ -14,7 +14,7 @@ const apiWeather = axios.create({
 
 export default {
   getWeather(latitude, longitude) {
-    return apiWeather.post('', '', {
+    return weatherService.post('', '', {
       params: {
         lat: latitude,
         lon: longitude,

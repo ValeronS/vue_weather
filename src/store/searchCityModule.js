@@ -1,4 +1,4 @@
-import suggestionsApi from '@/services/suggestions/index';
+import suggestionsService from '@/services/suggestions/index';
 
 export const searchCityModule = {
   state: () => ({
@@ -29,7 +29,7 @@ export const searchCityModule = {
   },
   actions: {
     fetchSuggestions({ state }, location) {
-      return suggestionsApi.getSuggestion(location);
+      return suggestionsService.getSuggestions(location);
     },
   },
   namespaced: true,

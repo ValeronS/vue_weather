@@ -1,4 +1,4 @@
-import apiWeather from '@/services/weather/index';
+import weatherService from '@/services/weather/index';
 
 export const selectedCityModule = {
   state: () => ({
@@ -53,7 +53,7 @@ export const selectedCityModule = {
   },
   actions: {
     fetchWeather({ commit, state }, city) {
-      return apiWeather.getWeather(city.latitude, city.longitude);
+      return weatherService.getWeather(city.latitude, city.longitude);
     },
   },
   namespaced: true,

@@ -2,7 +2,7 @@ import { IconsWeather } from '@/utils/constants';
 import axios from 'axios';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
-import apiWeather from '@/services/weather/index';
+import weatherService from '@/services/weather/index';
 
 export default function useFetchCityWeather(firstUpperCase) {
   const store = useStore();
