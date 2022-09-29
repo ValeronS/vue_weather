@@ -16,7 +16,7 @@
 
 <script setup>
 import { toRefs } from 'vue';
-import useFetchCityWeather from '@/hooks/useFetchCityWeather';
+import useFetchWeather from '@/hooks/useFetchWeather';
 import useFirstUpperCase from '@/hooks/useFirstUpperCase';
 
 const props = defineProps({
@@ -29,7 +29,7 @@ const props = defineProps({
 const { historyItem } = toRefs(props);
 const { firstUpperCase } = useFirstUpperCase();
 const { imgSrc, tempMin, tempMax, fetchCityWeather } =
-  useFetchCityWeather(firstUpperCase);
+  useFetchWeather(firstUpperCase);
 </script>
 
 <style>

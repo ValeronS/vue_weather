@@ -33,7 +33,7 @@
 
 <script>
 import useFirstUpperCase from '@/hooks/useFirstUpperCase';
-import useFetchCityWeather from '@/hooks/useFetchCityWeather';
+import useFetchWeather from '@/hooks/useFetchWeather';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 
 export default {
@@ -47,7 +47,7 @@ export default {
   setup(props) {
     const { firstUpperCase } = useFirstUpperCase();
     const { imgSrc, temperature, description, fetchCityWeather } =
-      useFetchCityWeather(firstUpperCase);
+      useFetchWeather(firstUpperCase);
     const { removeCity } = useFavoriteLocation();
 
     return {
