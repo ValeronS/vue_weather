@@ -29,10 +29,8 @@ import TheChosenLocation from '@/components/TheChosenLocation.vue';
 import useFetchWeather from '@/hooks/useFetchWeather';
 import TheCurrentForecast from '@/components/TheCurrentForecast.vue';
 import TheForecast from '@/components/TheForecats.vue';
-import useFirstUpperCase from '@/hooks/useFirstUpperCase';
 
-const { firstUpperCase } = useFirstUpperCase();
-const { forecast, fetchWeather } = useFetchWeather(firstUpperCase);
+const { forecast, fetchWeather } = useFetchWeather();
 </script>
 
 <style>

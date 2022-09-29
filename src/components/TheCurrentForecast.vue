@@ -29,25 +29,18 @@
   </div>
 </template>
 
-<script>
-import { useCurrentIcon } from '@/hooks/useCurrentIcon';
+<script setup>
+import { IconsWeather } from '@/utils/constants';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
-export default {
-  name: 'the-current-forecast',
-  data() {
-    return {
-      currentWeatherType: '',
-    };
-  },
-
-  setup(props) {
-    const { imgSrc } = useCurrentIcon();
-
-    return {
-      imgSrc,
-    };
-  },
-};
+const store = useStore();
+const imgSrc = computed(
+  () =>
+    (IconsWeather[store.state.selectedCity.currentWeatherType]?.src ??
+      console.log('IconsWeatherUnknown')) ||
+    IconsWeather['03d'].src
+);
 </script>
 
 <style>

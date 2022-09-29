@@ -2,7 +2,7 @@ import { IconsWeather, MILLISECONDS_PER_HOUR } from '@/utils/constants';
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
-export default function useFetchWeather(firstUpperCase) {
+export default function useFetchWeather() {
   const store = useStore();
   const responseTime = ref(0);
   const forecast = ref([]);
@@ -139,6 +139,10 @@ export default function useFetchWeather(firstUpperCase) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const firstUpperCase = (str) => {
+    return str[0].toUpperCase() + str.slice(1);
   };
 
   onMounted(fetchWeather);
