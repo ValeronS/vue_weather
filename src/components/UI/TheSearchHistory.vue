@@ -16,7 +16,7 @@
 
 <script setup>
 import TheSearchHistoryItem from '@/components/UI/TheSearchHistoryItem.vue';
-import useSelectSearchItem from '@/hooks/useSelectSearchItem';
+import useSearchLocation from '@/hooks/useSearchLocation';
 import { toRefs } from 'vue';
 
 const props = defineProps({
@@ -26,7 +26,7 @@ const props = defineProps({
   },
 });
 const { searchHistory } = toRefs(props);
-const { selectItem, clearSearchHistory } = useSelectSearchItem();
+const { selectItem, clearSearchHistory } = useSearchLocation();
 </script>
 
 <style>

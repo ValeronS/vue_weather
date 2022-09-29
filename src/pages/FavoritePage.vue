@@ -62,7 +62,7 @@ import TheSearchForm from '@/components/UI/TheSearchForm.vue';
 import TheSearchList from '@/components/UI/TheSearchList.vue';
 import TheFavoriteList from '@/components/UI/TheFavoriteList.vue';
 import TheSearchHistory from '@/components/UI/TheSearchHistory.vue';
-import useSelectSearchItem from '@/hooks/useSelectSearchItem';
+import useSearchLocation from '@/hooks/useSearchLocation';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import useGeolocation from '@/hooks/useGeolocation';
 
@@ -74,7 +74,7 @@ export default {
     TheSearchHistory,
   },
   setup(props) {
-    const { historyItem, selectItem } = useSelectSearchItem();
+    const { historyItem, selectItem } = useSearchLocation();
     const { cancelRemoveCity } = useFavoriteLocation();
     const { getLocation } = useGeolocation();
 
