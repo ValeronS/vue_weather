@@ -19,7 +19,6 @@
 </template>
 
 <script setup>
-import useGetDate from '@/hooks/useGetDate';
 import useForecastRender from '@/hooks/useForecastRender';
 import { toRefs } from 'vue';
 
@@ -30,8 +29,8 @@ const props = defineProps({
   },
 });
 const { forecast } = toRefs(props);
-const { day, month } = useGetDate();
-const { tempMin, tempMax, temp, time, imgSrc } = useForecastRender(forecast);
+const { tempMin, tempMax, temp, time, imgSrc, day, month } =
+  useForecastRender(forecast);
 </script>
 
 <style>
