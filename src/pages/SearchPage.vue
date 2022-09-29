@@ -72,7 +72,7 @@ export default {
     const { historyItem, selectItem } = useSelectSearchItem();
     const { cancelRemoveCity } = useFavoriteLocation();
     const { getLocation } = useGeolocation();
-    const { location } = useSearchLocation();
+    const { location, suggestions, searchLocation } = useSearchLocation();
     const { inputPlaceholder, isSearchInputFocused, changeFocus, dismiss } =
       useChangeFocus(location);
 
@@ -85,8 +85,9 @@ export default {
       isSearchInputFocused,
       changeFocus,
       location,
+      suggestions,
+      searchLocation,
       dismiss,
-      ...suggestionsApi(),
     };
   },
 };

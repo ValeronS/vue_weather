@@ -1,44 +1,22 @@
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import axios from 'axios';
+import suggestionsApi from '@/services/suggestionsApi';
 
 export default function useSearchLocation() {
-  // const store = useStore();
-  // const token = '2a5003ab085c07782a03a08c8ec8b7fad6a5d9fc';
+  const store = useStore();
   const location = ref('');
-  // const suggestions = ref([]);
+  const suggestions = ref([]);
 
-  const searchLocation = async () => {
-    // try {
-    //   const response = await axios.post(
-    //     'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address',
-    //     {
-    //       query: location.value,
-    //       locations: [{ country: '*' }],
-    //       from_bound: { value: 'city' },
-    //       to_bound: { value: 'settlement' },
-    //     },
-    //     {
-    //       mode: 'cors',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         Accept: 'application/json',
-    //         Authorization: 'Token ' + token,
-    //       },
-    //     }
-    //   );
-    //   suggestions.value = response.data.suggestions;
-    //   store.commit('searchCity/setSuggestions', response.data.suggestions);
-    //   // console.log(suggestions.value);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const searchLocation = async (location) => {
+    const response = await suggestionsApi.getSuggestion(location);
+    suggestions.value = response.data.suggestions;
+    store.commit('searchCity/setSuggestions', suggestions.value);
+    console.log(response.data.suggestions);
   };
 
   return {
-    // token,
     location,
-    // suggestions,
-    // searchLocation,
+    suggestions,
+    searchLocation,
   };
 }
