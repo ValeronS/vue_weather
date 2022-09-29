@@ -2,10 +2,10 @@ import { IconsWeather } from '@/utils/constants';
 import axios from 'axios';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import weatherService from '@/services/weather/index';
 
 export default function useFetchCityWeather(firstUpperCase) {
   const store = useStore();
-  const apiKey = 'a722624eaa524af8342f7a194cffad4d';
   const imgSrc = ref('');
   const currentWeatherType = ref('');
   const temperature = ref(0);
@@ -15,8 +15,9 @@ export default function useFetchCityWeather(firstUpperCase) {
 
   const fetchCityWeather = async (favoriteCity) => {
     try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${favoriteCity.latitude}&lon=${favoriteCity.longitude}&cnt=8&appid=${apiKey}&units=metric&lang=ru`
+      const response = await store.dispatch(
+        'selectedCity/fetchWeather',
+        favoriteCity
       );
       const forecast = response.data?.list ?? 0;
       localStorage.setItem(
