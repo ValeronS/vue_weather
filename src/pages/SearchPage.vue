@@ -54,7 +54,6 @@ import TheSearchForm from '@/components/UI/TheSearchForm.vue';
 import TheSearchList from '@/components/UI/TheSearchList.vue';
 import TheFavoriteList from '@/components/UI/TheFavoriteList.vue';
 import TheSearchHistory from '@/components/UI/TheSearchHistory.vue';
-import useSelectSearchItem from '@/hooks/useSelectSearchItem';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import useGeolocation from '@/hooks/useGeolocation';
 import useChangeFocus from '@/hooks/useChangeFocus';
@@ -68,10 +67,10 @@ export default {
     TheSearchHistory,
   },
   setup(props) {
-    const { historyItem, selectItem } = useSelectSearchItem();
     const { cancelRemoveCity } = useFavoriteLocation();
     const { getLocation } = useGeolocation();
-    const { location, suggestions, searchLocation } = useSearchLocation();
+    const { historyItem, selectItem, location, suggestions, searchLocation } =
+      useSearchLocation();
     const { inputPlaceholder, isSearchInputFocused, changeFocus, dismiss } =
       useChangeFocus(location);
 
