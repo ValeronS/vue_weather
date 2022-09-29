@@ -1,3 +1,5 @@
+import apiWeather from '@/services/weather/index';
+
 export const selectedCityModule = {
   state: () => ({
     isLoading: false,
@@ -47,6 +49,11 @@ export const selectedCityModule = {
     },
     setHumidity(state, humidity) {
       state.currentHumidity = humidity;
+    },
+  },
+  actions: {
+    fetchWeather({ commit, state }, city) {
+      return apiWeather.getWeather(city.latitude, city.longitude);
     },
   },
   namespaced: true,

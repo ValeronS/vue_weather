@@ -1,3 +1,5 @@
+import suggestionsApi from '@/services/suggestions/index';
+
 export const searchCityModule = {
   state: () => ({
     isSearchInputFocused: false,
@@ -23,6 +25,11 @@ export const searchCityModule = {
     },
     setSearchHistoryEmpty(state) {
       state.searchHistory = {};
+    },
+  },
+  actions: {
+    fetchSuggestions({ state }, location) {
+      return suggestionsApi.getSuggestion(location);
     },
   },
   namespaced: true,

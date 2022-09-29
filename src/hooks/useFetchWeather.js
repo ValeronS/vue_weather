@@ -2,34 +2,29 @@ import { MILLISECONDS_PER_HOUR } from '@/utils/constants';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import apiWeather from '@/services/weather/index';
 
 export function useFetchWeather(firstUpperCase) {
   const store = useStore();
-  const latitude = ref('');
-  const longitude = ref('');
   const apiKey = 'a722624eaa524af8342f7a194cffad4d';
   const responseTime = ref(0);
   const forecast = ref([]);
   const isLoading = ref(false);
 
   const fetchWeather = async () => {
-    latitude.value = store.state.selectedCity.chosenCity.latitude;
-    longitude.value = store.state.selectedCity.chosenCity.longitude;
     responseTime.value =
       store.state.selectedCity.chosenCity.weatherResponseTime;
-    console.log(longitude.value);
     if (
-      latitude.value &&
+      store.state.selectedCity.chosenCity.latitude &&
       (responseTime.value === 0 ||
         responseTime.value > responseTime.value + MILLISECONDS_PER_HOUR)
     ) {
       try {
         store.commit('selectedCity/setLoading', true);
-        const response = await apiWeather.getWeather(
-          latitude.value,
-          longitude.value
+        const response = await store.dispatch(
+          'selectedCity/fetchWeather',
+          store.state.selectedCity.chosenCity
         );
+
         forecast.value = response.data?.list ?? 0;
         console.log(response);
         store.commit('selectedCity/setWeatherResponse', response.data.list);
