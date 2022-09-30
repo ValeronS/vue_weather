@@ -2,7 +2,7 @@ import suggestionsService from '@/services/suggestions/index';
 
 export const searchCityModule = {
   state: () => ({
-    isSearchInputFocused: false,
+    isSearchInputFocused: true,
     suggestions: [],
     searchHistory: JSON.parse(localStorage.getItem('searchHistory')) || {},
   }),
