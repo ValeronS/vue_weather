@@ -30,6 +30,10 @@ export default function useSearchLocation() {
       );
       store.commit('selectedCity/setLatitude', event.data.geo_lat);
       store.commit('selectedCity/setLongitude', event.data.geo_lon);
+      localStorage.setItem(
+        'chosenCity',
+        JSON.stringify(store.state.selectedCity.chosenCity)
+      );
 
       historyItem.name =
         event.data.city ||
@@ -44,22 +48,16 @@ export default function useSearchLocation() {
         JSON.stringify(store.state.searchCity.searchHistory)
       );
 
-      localStorage.chosenLocation =
-        event.data.city ||
-        event.data.city_with_type ||
-        event.data.settlement ||
-        event.value;
-      localStorage.latitude = event.data.geo_lat;
-      localStorage.longitude = event.data.geo_lon;
       store.commit('searchCity/setEmptySuggestions');
       store.commit('searchCity/setSearchInputFocused', false);
     } else if (event.name) {
       store.commit('selectedCity/setChosenLocation', event.name);
       store.commit('selectedCity/setLatitude', event.latitude);
       store.commit('selectedCity/setLongitude', event.longitude);
-      localStorage.chosenLocation = event.name;
-      localStorage.latitude = event.latitude;
-      localStorage.longitude = event.longitude;
+      localStorage.setItem(
+        'chosenCity',
+        JSON.stringify(store.state.selectedCity.chosenCity)
+      );
       store.commit('searchCity/setSearchInputFocused', false);
     } else {
       console.log('event error');
@@ -71,7 +69,7 @@ export default function useSearchLocation() {
     localStorage.removeItem('searchHistory', '');
   };
 
-  const isSearchInputFocused = ref(true);
+  const isSearchInputFocused = ref(false);
 
   const changeFocus = (event) => {
     // console.log(event.target);

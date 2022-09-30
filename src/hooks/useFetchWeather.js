@@ -27,14 +27,6 @@ export default function useFetchWeather() {
         store.commit('selectedCity/setWeatherResponse', response.data.list);
         store.commit('selectedCity/setWeatherResponseTime', Date.now());
 
-        if (store.state.selectedCity.chosenCity.name === '') {
-          store.commit(
-            'selectedCity/setChosenLocation',
-            response.data.city.name
-          );
-          localStorage.chosenLocation = response.data.city.name;
-        }
-
         if (forecast.value[0]?.main?.temp?.toFixed() > 0) {
           store.commit(
             'selectedCity/setCurrentTemperature',

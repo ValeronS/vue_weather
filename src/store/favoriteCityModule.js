@@ -1,6 +1,7 @@
 export const favoriteCityModule = {
   state: () => ({
-    favoriteLocations: {},
+    favoriteLocations:
+      JSON.parse(localStorage.getItem('favoriteLocations')) || {},
     deletedFavoriteCity: {},
     isCityFavorite: false,
     showModal: false,

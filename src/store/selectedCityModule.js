@@ -3,7 +3,7 @@ import weatherService from '@/services/weather/index';
 export const selectedCityModule = {
   state: () => ({
     isLoading: false,
-    chosenCity: {
+    chosenCity: JSON.parse(localStorage.getItem('chosenCity')) || {
       name: 'Город не определен',
       latitude: 0,
       longitude: 0,
