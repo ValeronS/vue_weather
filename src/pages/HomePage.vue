@@ -4,7 +4,7 @@
     <div class="cloud_2"></div>
     <the-chosen-location />
 
-    <the-current-forecast />
+    <the-current-forecast :forecast="forecast" />
 
     <the-forecast :forecast="forecast" />
 
@@ -30,7 +30,7 @@ import useFetchWeather from '@/hooks/useFetchWeather';
 import TheCurrentForecast from '@/components/TheCurrentForecast.vue';
 import TheForecast from '@/components/TheForecats.vue';
 
-const { forecast, fetchWeather } = useFetchWeather();
+const { forecast } = useFetchWeather();
 </script>
 
 <style>

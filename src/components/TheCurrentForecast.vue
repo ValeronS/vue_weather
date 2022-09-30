@@ -1,46 +1,51 @@
 <template>
   <div class="forecast">
     <div class="forecast__current">
-      <img :src="imgSrc" />
+      <img :src="currentImgSrc" />
 
       <h1 class="forecast__current-temperature">
-        {{ $store.state.selectedCity.currentTemperature }}
+        {{ currentTemperature || '-' }}
       </h1>
 
       <h2 class="forecast__current-description">
-        {{ $store.state.selectedCity.currentDescription }}
+        {{ currentDescription || '-' }}
       </h2>
     </div>
 
-    <div
-      v-if="$store.state.selectedCity.currentWind"
-      class="forecast__conditions"
-    >
+    <div v-if="forecast.length" class="forecast__conditions">
       <div class="wind">
         <img src="@/assets/img/windy.png" alt="" />
-        {{ $store.state.selectedCity.currentWind }}
+        {{ currentWind }}
       </div>
 
       <div class="humidity">
         <img src="@/assets/img/hum.png" alt="" />
-        {{ $store.state.selectedCity.currentHumidity }}
+        {{ currentHumidity }}
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { IconsWeather } from '@/utils/constants';
-import { computed } from 'vue';
-import { useStore } from 'vuex';
+import useForecastRender from '@/hooks/useForecastRender';
+import { toRefs } from 'vue';
 
-const store = useStore();
-const imgSrc = computed(
-  () =>
-    (IconsWeather[store.state.selectedCity.currentWeatherType]?.src ??
-      console.log('IconsWeatherUnknown')) ||
-    IconsWeather['03d'].src
-);
+const props = defineProps({
+  forecast: {
+    type: Array,
+    required: true,
+  },
+});
+
+const { forecast } = toRefs(props);
+const {
+  currentImgSrc,
+  currentTemperature,
+  currentDescription,
+  currentWeatherType,
+  currentWind,
+  currentHumidity,
+} = useForecastRender(forecast);
 </script>
 
 <style>

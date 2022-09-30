@@ -1,4 +1,4 @@
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default function useSearchLocation() {
@@ -6,7 +6,7 @@ export default function useSearchLocation() {
   const location = ref('');
   const suggestions = ref([]);
   const selectedItem = ref();
-  const historyItem = { name: '', latitude: 0, longitude: 0 };
+  const historyItem = ref(store.state.searchCity.searchHistory);
 
   const searchLocation = async (location) => {
     const response = await store.dispatch(
@@ -20,6 +20,7 @@ export default function useSearchLocation() {
 
   const selectItem = (event) => {
     // console.log(event);
+    // event.data - data from suggestionsService
     if (event.data) {
       store.commit(
         'selectedCity/setChosenLocation',
@@ -30,30 +31,28 @@ export default function useSearchLocation() {
       );
       store.commit('selectedCity/setLatitude', event.data.geo_lat);
       store.commit('selectedCity/setLongitude', event.data.geo_lon);
+      store.commit('selectedCity/setWeatherResponse', {});
+      store.commit('selectedCity/setWeatherResponseTime', 0);
       localStorage.setItem(
         'chosenCity',
         JSON.stringify(store.state.selectedCity.chosenCity)
       );
 
-      historyItem.name =
-        event.data.city ||
-        event.data.city_with_type ||
-        event.data.settlement ||
-        event.value;
-      historyItem.latitude = event.data.geo_lat;
-      historyItem.longitude = event.data.geo_lon;
-      store.commit('searchCity/setHistoryItem', historyItem);
-      localStorage.setItem(
-        'searchHistory',
-        JSON.stringify(store.state.searchCity.searchHistory)
-      );
-
       store.commit('searchCity/setEmptySuggestions');
       store.commit('searchCity/setSearchInputFocused', false);
+
+      // event.name - from searchHistory
     } else if (event.name) {
+      console.log('event', event);
       store.commit('selectedCity/setChosenLocation', event.name);
       store.commit('selectedCity/setLatitude', event.latitude);
       store.commit('selectedCity/setLongitude', event.longitude);
+      store.commit('selectedCity/setWeatherResponse', event.weatherResponse);
+      store.commit(
+        'selectedCity/setWeatherResponseTime',
+        event.weatherResponseTime
+      );
+
       localStorage.setItem(
         'chosenCity',
         JSON.stringify(store.state.selectedCity.chosenCity)

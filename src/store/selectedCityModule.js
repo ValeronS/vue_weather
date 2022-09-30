@@ -10,11 +10,6 @@ export const selectedCityModule = {
       weatherResponse: [],
       weatherResponseTime: 0,
     },
-    currentTemperature: '-',
-    currentDescription: '-',
-    currentWind: '',
-    currentHumidity: '',
-    currentWeatherType: '',
   }),
   mutations: {
     setLoading(state, bool) {
@@ -29,26 +24,11 @@ export const selectedCityModule = {
     setLongitude(state, longitude) {
       state.chosenCity.longitude = longitude;
     },
-    setWeatherResponseTime(state, response) {
-      state.chosenCity.weatherResponseTime = response;
+    setWeatherResponseTime(state, responseTime) {
+      state.chosenCity.weatherResponseTime = responseTime;
     },
     setWeatherResponse(state, response) {
       state.chosenCity.weatherResponse = response;
-    },
-    setCurrentTemperature(state, temperature) {
-      state.currentTemperature = temperature;
-    },
-    setCurrentDescription(state, description) {
-      state.currentDescription = description;
-    },
-    setCurrentWeatherType(state, code) {
-      state.currentWeatherType = code;
-    },
-    setWind(state, wind) {
-      state.currentWind = wind;
-    },
-    setHumidity(state, humidity) {
-      state.currentHumidity = humidity;
     },
   },
   actions: {
