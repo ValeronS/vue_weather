@@ -30,7 +30,6 @@ export default function useFavoriteLocation() {
         store.commit('favoriteCity/setCityFavorite', false);
         fillStar();
       }
-      console.log('localStorage');
       localStorage.setItem(
         'favoriteLocations',
         JSON.stringify(store.state.favoriteCity.favoriteLocations)
@@ -43,13 +42,10 @@ export default function useFavoriteLocation() {
       store.state.favoriteCity.favoriteLocations
     ).length;
     favoriteLocations.value = store.state.favoriteCity.favoriteLocations;
-    console.log('city', city);
     for (let i = 0; i < favoriteLocationsLength.value; i++) {
       let obj = Object.values(favoriteLocations.value)[i];
       objKey.value = Object.keys(favoriteLocations.value)[i];
       if (obj?.name === city) {
-        console.log('objKey.value', objKey.value);
-        console.log('obj?.name !== city', true);
         return true;
       }
     }
@@ -59,7 +55,6 @@ export default function useFavoriteLocation() {
   const removeCity = (favoriteCity) => {
     favoriteLocations.value = store.state.favoriteCity.favoriteLocations;
     chosenLocation.value = store.state.selectedCity.chosenCity.name;
-    console.log('removeCity');
 
     if (checkFavoriteCity(favoriteCity.name)) {
       delete favoriteLocations.value[objKey.value];
@@ -71,7 +66,6 @@ export default function useFavoriteLocation() {
       if (chosenLocation.value === favoriteCity.name) {
         store.commit('favoriteCity/setCityFavorite', false);
       }
-      console.log('localStorage2');
       localStorage.setItem(
         'favoriteLocations',
         JSON.stringify(store.state.favoriteCity.favoriteLocations)
@@ -86,7 +80,6 @@ export default function useFavoriteLocation() {
         store.state.favoriteCity.deletedFavoriteCity
       );
 
-      console.log('localStorage3');
       localStorage.setItem(
         'favoriteLocations',
         JSON.stringify(store.state.favoriteCity.favoriteLocations)
@@ -96,7 +89,6 @@ export default function useFavoriteLocation() {
   };
 
   const showModal = () => {
-    console.log('showModal');
     store.commit('favoriteCity/setShowModal', true);
     setTimeout(() => {
       store.commit('favoriteCity/setShowModal', false);

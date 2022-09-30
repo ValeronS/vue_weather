@@ -19,7 +19,6 @@ export default function useGeolocation(fetchWeather) {
 
       const succsess = async (pos) => {
         coords.value = pos.coords;
-        console.log(coords.value);
         store.commit('selectedCity/setLatitude', pos.coords.latitude);
         store.commit('selectedCity/setLongitude', pos.coords.longitude);
         store.commit('selectedCity/setChosenLocation', '');

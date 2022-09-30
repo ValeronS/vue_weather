@@ -15,11 +15,9 @@ export default function useSearchLocation() {
     );
     suggestions.value = response.data.suggestions;
     store.commit('searchCity/setSuggestions', suggestions.value);
-    console.log(response.data.suggestions);
   };
 
   const selectItem = (event) => {
-    // console.log(event);
     // event.data - data from suggestionsService
     if (event.data) {
       store.commit(
@@ -40,10 +38,8 @@ export default function useSearchLocation() {
 
       store.commit('searchCity/setEmptySuggestions');
       store.commit('searchCity/setSearchInputFocused', false);
-
-      // event.name - from searchHistory
     } else if (event.name) {
-      console.log('event', event);
+      // event.name - from searchHistory
       store.commit('selectedCity/setChosenLocation', event.name);
       store.commit('selectedCity/setLatitude', event.latitude);
       store.commit('selectedCity/setLongitude', event.longitude);
@@ -71,7 +67,6 @@ export default function useSearchLocation() {
   const isSearchInputFocused = ref(false);
 
   const changeFocus = (event) => {
-    // console.log(event.target);
     if (event.target.tagName === 'INPUT') {
       store.commit('searchCity/setSearchInputFocused', true);
       isSearchInputFocused.value = true;

@@ -3,9 +3,9 @@
     class="history-item__container"
     @click="$emit('selectedHistoryItem', historyItem), $router.push('/')"
   >
-    <div class="history-item" :historyItem="fetchCityWeather(historyItem)">
+    <div class="history-item" :historyItem="fetchWeather(historyItem)">
       <div class="history-item__city">
-        <img :src="imgSrc" alt="" />
+        <img :src="currentImgSrc" alt="" />
         <h3>{{ historyItem.name }}</h3>
       </div>
       <p class="text">{{ tempMax + ' / ' + tempMin + '°' }}</p>
@@ -17,6 +17,7 @@
 <script setup>
 import { toRefs } from 'vue';
 import useFetchWeather from '@/hooks/useFetchWeather';
+import useForecastRender from '@/hooks/useForecastRender';
 
 const props = defineProps({
   historyItem: {
@@ -26,7 +27,8 @@ const props = defineProps({
 });
 
 const { historyItem } = toRefs(props);
-const { imgSrc, tempMin, tempMax, fetchCityWeather } = useFetchWeather();
+const { forecast, fetchWeather } = useFetchWeather();
+const { currentImgSrc, tempMin, tempMax } = useForecastRender(forecast);
 </script>
 
 <style>
