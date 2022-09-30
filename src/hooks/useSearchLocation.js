@@ -64,20 +64,15 @@ export default function useSearchLocation() {
     localStorage.removeItem('searchHistory', '');
   };
 
-  const isSearchInputFocused = ref(false);
-
   const changeFocus = (event) => {
     if (event.target.tagName === 'INPUT') {
       store.commit('searchCity/setSearchInputFocused', true);
-      isSearchInputFocused.value = true;
     } else if (event.target.tagName === 'IMG') {
       store.commit('searchCity/setSearchInputFocused', false);
-      isSearchInputFocused.value = false;
       location.value = '';
       store.commit('searchCity/setSuggestions', []);
     } else {
       store.commit('searchCity/setSearchInputFocused', false);
-      isSearchInputFocused.value = false;
     }
   };
 
@@ -89,7 +84,6 @@ export default function useSearchLocation() {
     historyItem,
     selectItem,
     clearSearchHistory,
-    isSearchInputFocused,
     changeFocus,
   };
 }
