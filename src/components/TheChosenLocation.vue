@@ -20,7 +20,6 @@
 <script setup>
 import useChosenLocation from '@/hooks/useChosenLocation';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
-import { useFillStar } from '@/hooks/useFillStar';
 import { watch, toRefs } from 'vue';
 
 // const props = defineProps({
@@ -32,9 +31,7 @@ import { watch, toRefs } from 'vue';
 // const { chosenLocation } = toRefs(props);
 
 const { chosenLocation } = useChosenLocation();
-const { isStarFilled, fillStar } = useFillStar();
-const { favoriteLocation, addToFavorite, showModal } =
-  useFavoriteLocation(fillStar);
+const { favoriteLocation, addToFavorite, showModal } = useFavoriteLocation();
 
 // watch(
 //   () => chosenLocation,
