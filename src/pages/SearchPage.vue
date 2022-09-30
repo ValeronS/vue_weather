@@ -19,7 +19,9 @@
 
     <the-search-history
       v-if="
-        !location && Object.keys($store.state.searchCity.searchHistory).length
+        !location &&
+        Object.keys($store.state.searchCity.searchHistory).length &&
+        !$store.state.searchCity.isSearchInputFocused
       "
       :searchHistory="$store.state.searchCity.searchHistory"
       class="the-search-history"
@@ -56,7 +58,6 @@ import TheFavoriteList from '@/components/UI/TheFavoriteList.vue';
 import TheSearchHistory from '@/components/UI/TheSearchHistory.vue';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
 import useGeolocation from '@/hooks/useGeolocation';
-import useChangeFocus from '@/hooks/useChangeFocus';
 import useSearchLocation from '@/hooks/useSearchLocation';
 
 export default {
@@ -69,23 +70,26 @@ export default {
   setup(props) {
     const { cancelRemoveCity } = useFavoriteLocation();
     const { getLocation } = useGeolocation();
-    const { historyItem, selectItem, location, suggestions, searchLocation } =
-      useSearchLocation();
-    const { inputPlaceholder, isSearchInputFocused, changeFocus, dismiss } =
-      useChangeFocus(location);
+    const {
+      historyItem,
+      selectItem,
+      location,
+      suggestions,
+      searchLocation,
+      isSearchInputFocused,
+      changeFocus,
+    } = useSearchLocation();
 
     return {
       historyItem,
       selectItem,
       cancelRemoveCity,
       getLocation,
-      inputPlaceholder,
       isSearchInputFocused,
       changeFocus,
       location,
       suggestions,
       searchLocation,
-      dismiss,
     };
   },
 };

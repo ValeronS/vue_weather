@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default function useSearchLocation() {
@@ -71,6 +71,24 @@ export default function useSearchLocation() {
     localStorage.removeItem('searchHistory', '');
   };
 
+  const isSearchInputFocused = ref(true);
+
+  const changeFocus = (event) => {
+    // console.log(event.target);
+    if (event.target.tagName === 'INPUT') {
+      store.commit('searchCity/setSearchInputFocused', true);
+      isSearchInputFocused.value = true;
+    } else if (event.target.tagName === 'IMG') {
+      store.commit('searchCity/setSearchInputFocused', false);
+      isSearchInputFocused.value = false;
+      location.value = '';
+      store.commit('searchCity/setSuggestions', []);
+    } else {
+      store.commit('searchCity/setSearchInputFocused', false);
+      isSearchInputFocused.value = false;
+    }
+  };
+
   return {
     location,
     suggestions,
@@ -79,5 +97,7 @@ export default function useSearchLocation() {
     historyItem,
     selectItem,
     clearSearchHistory,
+    isSearchInputFocused,
+    changeFocus,
   };
 }

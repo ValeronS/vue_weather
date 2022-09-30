@@ -74,12 +74,11 @@ export default {
     TheSearchHistory,
   },
   setup(props) {
-    const { historyItem, selectItem } = useSearchLocation();
+    const { selectItem } = useSearchLocation();
     const { cancelRemoveCity } = useFavoriteLocation();
     const { getLocation } = useGeolocation();
 
     return {
-      historyItem,
       selectItem,
       cancelRemoveCity,
       getLocation,
