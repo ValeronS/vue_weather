@@ -46,7 +46,6 @@ export default function useFavoriteLocation() {
     console.log('city', city);
     for (let i = 0; i < favoriteLocationsLength.value; i++) {
       let obj = Object.values(favoriteLocations.value)[i];
-      console.log('obj.name', obj?.name);
       objKey.value = Object.keys(favoriteLocations.value)[i];
       if (obj?.name === city) {
         console.log('objKey.value', objKey.value);
@@ -110,13 +109,11 @@ export default function useFavoriteLocation() {
     favoriteLocationsLength.value = Object.keys(
       favoriteLocations.value
     ).length;
-    console.log('length', favoriteLocationsLength.value);
 
     if (favoriteLocationsLength.value) {
       let obj = [];
       for (let i = 0; i < favoriteLocationsLength.value; i++) {
         obj = Object.values(favoriteLocations.value)[i];
-        console.log('obj', obj?.name);
         if (obj?.name === chosenLocation.value) {
           store.commit('favoriteCity/setCityFavorite', true);
           return;

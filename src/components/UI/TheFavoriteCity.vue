@@ -5,16 +5,16 @@
   >
     <div class="favorite-city">
       <div class="favorite-city__img">
-        <img :src="imgSrc" alt="" />
+        <img :src="currentImgSrc" alt="" />
       </div>
 
       <div
-        :favoriteCity="fetchCityWeather(favoriteCity)"
+        :favoriteCity="fetchWeather(favoriteCity)"
         class="favorite-city__description"
       >
         <h2>{{ favoriteCity.name }}</h2>
-        <p>{{ description }}</p>
-        <h2>{{ temperature }}</h2>
+        <p>{{ currentDescription }}</p>
+        <h2>{{ currentTemperature }}</h2>
       </div>
 
       <img
@@ -34,6 +34,7 @@
 <script>
 import useFetchWeather from '@/hooks/useFetchWeather';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
+import useForecastRender from '@/hooks/useForecastRender';
 
 export default {
   name: 'the-favorite-city',
@@ -44,15 +45,16 @@ export default {
     },
   },
   setup(props) {
-    const { imgSrc, temperature, description, fetchCityWeather } =
-      useFetchWeather();
+    const { forecast, fetchWeather } = useFetchWeather();
+    const { currentImgSrc, currentTemperature, currentDescription } =
+      useForecastRender(forecast);
     const { removeCity } = useFavoriteLocation();
 
     return {
-      imgSrc,
-      temperature,
-      description,
-      fetchCityWeather,
+      fetchWeather,
+      currentImgSrc,
+      currentTemperature,
+      currentDescription,
       removeCity,
     };
   },
