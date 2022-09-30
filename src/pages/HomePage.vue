@@ -88,6 +88,7 @@ const { forecast, fetchWeather } = useFetchWeather();
   background: var(--accent-dark-color);
   width: 100%;
   height: 100vh;
+  overflow: hidden;
 }
 
 .btn-position {

@@ -20,8 +20,7 @@
       <the-search-history
         v-if="
           !location &&
-          Object.keys($store.state.searchCity.searchHistory).length &&
-          !$store.state.searchCity.isSearchInputFocused
+          Object.keys($store.state.searchCity.searchHistory).length
         "
         :searchHistory="$store.state.searchCity.searchHistory"
         class="the-search-history"
@@ -37,8 +36,8 @@
     <transition name="fade">
       <p
         v-if="
-          $store.state.searchCity.isSearchInputFocused &&
-          !$store.state.searchCity.suggestions.length
+          !location &&
+          !Object.keys($store.state.searchCity.searchHistory).length
         "
         class="empty-list text"
       >
@@ -77,7 +76,6 @@ export default {
       location,
       suggestions,
       searchLocation,
-      isSearchInputFocused,
       changeFocus,
     } = useSearchLocation();
 
@@ -86,7 +84,6 @@ export default {
       selectItem,
       cancelRemoveCity,
       getLocation,
-      isSearchInputFocused,
       changeFocus,
       location,
       suggestions,

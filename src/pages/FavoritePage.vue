@@ -31,19 +31,6 @@
       </p>
     </transition>
 
-    <transition name="fade">
-      <p
-        v-if="
-          $store.state.searchCity.isSearchInputFocused &&
-          !$store.state.searchCity.suggestions.length &&
-          !Object.keys($store.state.favoriteCity.favoriteLocations).length
-        "
-        class="empty-list text"
-      >
-        Введите название города
-      </p>
-    </transition>
-
     <div v-if="$store.state.selectedCity.isLoading" class="spinner">
       <img src="@/assets/img/circles-loader.png" alt="" class="spinner-img" />
     </div>
