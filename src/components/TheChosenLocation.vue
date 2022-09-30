@@ -18,25 +18,16 @@
 </template>
 
 <script setup>
-import useChosenLocation from '@/hooks/useChosenLocation';
 import useFavoriteLocation from '@/hooks/useFavoriteLocation';
-import { watch, toRefs } from 'vue';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 
-// const props = defineProps({
-//   chosenLocation: {
-//     type: String,
-//     required: true,
-//   },
-// });
-// const { chosenLocation } = toRefs(props);
+const store = useStore();
+const chosenLocation = computed(() => {
+  return store.state.selectedCity.chosenCity.name;
+});
 
-const { chosenLocation } = useChosenLocation();
 const { favoriteLocation, addToFavorite, showModal } = useFavoriteLocation();
-
-// watch(
-//   () => chosenLocation,
-//   async () => fillStar
-// );
 </script>
 
 <style>

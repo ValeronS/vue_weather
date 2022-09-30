@@ -1,4 +1,4 @@
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default function useFavoriteLocation() {
@@ -6,7 +6,6 @@ export default function useFavoriteLocation() {
   const favoriteLocations = ref({});
   const favoriteLocationsLength = ref(0);
   const chosenLocation = ref('');
-  const deletedFavoriteCity = ref({});
   const favoriteLocation = ref({});
   const objKey = ref(0);
 
