@@ -6,14 +6,11 @@ export default function useFetchWeather() {
   const store = useStore();
   const responseTime = ref(0);
   const forecast = ref([]);
-  const historyItem = ref({});
 
-  const fetchWeather = async () => {
-    responseTime.value =
-      store.state.selectedCity.chosenCity.weatherResponseTime;
-    console.log('responseTime.value', responseTime.value);
+  const fetchWeather = async (city) => {
+    responseTime.value = city.weatherResponseTime;
     if (
-      store.state.selectedCity.chosenCity.latitude &&
+      city.latitude &&
       (responseTime.value === 0 ||
         responseTime.value > responseTime.value + MILLISECONDS_PER_HOUR)
     ) {
@@ -21,16 +18,19 @@ export default function useFetchWeather() {
         store.commit('selectedCity/setLoading', true);
         const response = await store.dispatch(
           'selectedCity/fetchWeather',
-          store.state.selectedCity.chosenCity
+          city
         );
         store.commit('selectedCity/setWeatherResponse', response.data.list);
         store.commit('selectedCity/setWeatherResponseTime', Date.now());
-        historyItem.value = { ...store.state.selectedCity.chosenCity };
-        store.commit('searchCity/setHistoryItem', historyItem.value);
-        localStorage.setItem(
-          'searchHistory',
-          JSON.stringify(store.state.searchCity.searchHistory)
-        );
+        if (!isCityInHistory(city)) {
+          console.log('isCityInHistory');
+          store.commit('searchCity/setHistoryItem', { ...city });
+          localStorage.setItem(
+            'searchHistory',
+            JSON.stringify(store.state.searchCity.searchHistory)
+          );
+        }
+
         forecast.value = response.data?.list ?? 0;
         console.log(response);
       } catch (error) {
@@ -39,9 +39,25 @@ export default function useFetchWeather() {
         store.commit('selectedCity/setLoading', false);
       }
     } else {
-      forecast.value = store.state.selectedCity.chosenCity.weatherResponse;
-      console.log('Нет данных для выполнения запроса');
+      forecast.value = city.weatherResponse;
     }
+  };
+
+  const isCityInHistory = (city) => {
+    let historyLength = Object.keys(
+      store.state.searchCity.searchHistory
+    ).length;
+    for (let i = 0; i < historyLength; i++) {
+      let obj = Object.values(store.state.searchCity.searchHistory)[i];
+      if (obj?.name === city.name) {
+        console.log(
+          'store.state.searchCity.searchHistory',
+          store.state.searchCity.searchHistory
+        );
+        return true;
+      }
+    }
+    return false;
   };
 
   const imgSrc = ref('');
@@ -111,8 +127,6 @@ export default function useFetchWeather() {
   const firstUpperCase = (str) => {
     return str[0].toUpperCase() + str.slice(1);
   };
-
-  onMounted(fetchWeather);
 
   return {
     forecast,

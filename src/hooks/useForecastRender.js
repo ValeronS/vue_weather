@@ -10,13 +10,10 @@ export default function useForecastRender(forecast) {
   };
 
   const currentImgSrc = computed(() => {
-    if (forecast.value.length) {
-      return (
-        (IconsWeather[forecast.value?.[0]?.weather[0].icon]?.src ??
-          console.log('IconsWeatherUnknown')) ||
-        IconsWeather['03d'].src
-      );
-    }
+    return (
+      IconsWeather[forecast.value?.[0]?.weather[0].icon]?.src ||
+      IconsWeather['03d'].src
+    );
   });
 
   const currentTemperature = computed(() => {
