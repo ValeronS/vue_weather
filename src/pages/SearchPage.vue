@@ -6,7 +6,6 @@
         @input="searchLocation(location)"
         type="text"
         placeholder="Поиск города"
-        autofocus
         :class="{
           text: true,
           input__search: true,
@@ -17,15 +16,17 @@
       />
     </the-search-form>
 
-    <the-search-history
-      v-if="
-        !location &&
-        Object.keys($store.state.searchCity.searchHistory).length &&
-        !$store.state.searchCity.isSearchInputFocused
-      "
-      :searchHistory="$store.state.searchCity.searchHistory"
-      class="the-search-history"
-    />
+    <transition name="fade">
+      <the-search-history
+        v-if="
+          !location &&
+          Object.keys($store.state.searchCity.searchHistory).length &&
+          !$store.state.searchCity.isSearchInputFocused
+        "
+        :searchHistory="$store.state.searchCity.searchHistory"
+        class="the-search-history"
+      />
+    </transition>
 
     <the-search-list
       :suggestions="$store.state.searchCity.suggestions"

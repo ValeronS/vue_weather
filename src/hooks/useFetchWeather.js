@@ -6,10 +6,12 @@ export default function useFetchWeather() {
   const store = useStore();
   const responseTime = ref(0);
   const forecast = ref([]);
+  const historyItem = ref({});
 
   const fetchWeather = async () => {
     responseTime.value =
       store.state.selectedCity.chosenCity.weatherResponseTime;
+    console.log('responseTime.value', responseTime.value);
     if (
       store.state.selectedCity.chosenCity.latitude &&
       (responseTime.value === 0 ||
@@ -21,51 +23,16 @@ export default function useFetchWeather() {
           'selectedCity/fetchWeather',
           store.state.selectedCity.chosenCity
         );
-
-        forecast.value = response.data?.list ?? 0;
-        console.log(response);
         store.commit('selectedCity/setWeatherResponse', response.data.list);
         store.commit('selectedCity/setWeatherResponseTime', Date.now());
-
-        if (store.state.selectedCity.chosenCity.name === '') {
-          store.commit(
-            'selectedCity/setChosenLocation',
-            response.data.city.name
-          );
-          localStorage.chosenLocation = response.data.city.name;
-        }
-
-        if (forecast.value[0]?.main?.temp?.toFixed() > 0) {
-          store.commit(
-            'selectedCity/setCurrentTemperature',
-            '+' + forecast.value[0].main.temp.toFixed() ?? 0
-          );
-        } else {
-          store.commit(
-            'selectedCity/setCurrentTemperature',
-            forecast.value[0].main.temp.toFixed()
-          );
-        }
-
-        store.commit(
-          'selectedCity/setCurrentDescription',
-          firstUpperCase(forecast.value[0].weather[0]?.description ?? 0)
+        historyItem.value = { ...store.state.selectedCity.chosenCity };
+        store.commit('searchCity/setHistoryItem', historyItem.value);
+        localStorage.setItem(
+          'searchHistory',
+          JSON.stringify(store.state.searchCity.searchHistory)
         );
-
-        store.commit(
-          'selectedCity/setCurrentWeatherType',
-          forecast.value[0].weather[0].icon ?? 0
-        );
-
-        store.commit(
-          'selectedCity/setWind',
-          (forecast.value[0].wind?.speed * 3.6).toFixed() + ' км/ч'
-        );
-
-        store.commit(
-          'selectedCity/setHumidity',
-          forecast.value[0].main.humidity + '%'
-        );
+        forecast.value = response.data?.list ?? 0;
+        console.log(response);
       } catch (error) {
         console.log(error);
       } finally {

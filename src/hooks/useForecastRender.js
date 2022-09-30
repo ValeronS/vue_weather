@@ -5,8 +5,55 @@ import { useStore } from 'vuex';
 export default function useForecastRender(forecast) {
   const store = useStore();
 
+  const firstUpperCase = (str) => {
+    return str[0]?.toUpperCase() + str.slice(1);
+  };
+
+  const currentImgSrc = computed(() => {
+    if (forecast.value.length) {
+      return (
+        (IconsWeather[forecast.value?.[0]?.weather[0].icon]?.src ??
+          console.log('IconsWeatherUnknown')) ||
+        IconsWeather['03d'].src
+      );
+    }
+  });
+
+  const currentTemperature = computed(() => {
+    if (forecast.value.length) {
+      if (forecast.value[0]?.main?.temp?.toFixed() > 0) {
+        return '+' + forecast.value[0]?.main.temp.toFixed() ?? 0;
+      } else {
+        return forecast.value[0]?.main.temp.toFixed();
+      }
+    }
+  });
+
+  const currentDescription = computed(() => {
+    if (forecast.value.length) {
+      return firstUpperCase(forecast.value[0]?.weather[0]?.description ?? 0);
+    }
+  });
+
+  const currentWeatherType = computed(() => {
+    if (forecast.value.length) {
+      return forecast.value[0]?.weather[0].icon ?? 0;
+    }
+  });
+
+  const currentWind = computed(() => {
+    if (forecast.value.length) {
+      return (forecast.value[0]?.wind?.speed * 3.6).toFixed() + ' км/ч';
+    }
+  });
+
+  const currentHumidity = computed(() => {
+    if (forecast.value.length) {
+      return forecast.value[0]?.main.humidity + '%';
+    }
+  });
+
   const tempMin = computed(() => {
-    console.log(forecast.value);
     if (forecast.value.length) {
       let min = forecast.value?.[0]?.main.temp;
       for (let i = 1; i < forecast.value.length; i++) {
@@ -105,6 +152,12 @@ export default function useForecastRender(forecast) {
   }
 
   return {
+    currentImgSrc,
+    currentTemperature,
+    currentDescription,
+    currentWeatherType,
+    currentWind,
+    currentHumidity,
     tempMin,
     tempMax,
     temp,

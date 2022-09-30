@@ -16,10 +16,6 @@ export const searchCityModule = {
     setEmptySuggestions(state) {
       state.suggestions = [];
     },
-    // не используется?
-    setChosenSuggestion(state, suggestion) {
-      state.suggestions[0] = suggestion;
-    },
     setHistoryItem(state, historyItem) {
       state.searchHistory[Date.now()] = historyItem;
     },

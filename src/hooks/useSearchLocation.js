@@ -1,4 +1,4 @@
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default function useSearchLocation() {
@@ -6,7 +6,7 @@ export default function useSearchLocation() {
   const location = ref('');
   const suggestions = ref([]);
   const selectedItem = ref();
-  const historyItem = { name: '', latitude: 0, longitude: 0 };
+  const historyItem = ref(store.state.searchCity.searchHistory);
 
   const searchLocation = async (location) => {
     const response = await store.dispatch(
@@ -20,6 +20,7 @@ export default function useSearchLocation() {
 
   const selectItem = (event) => {
     // console.log(event);
+    // event.data - data from suggestionsService
     if (event.data) {
       store.commit(
         'selectedCity/setChosenLocation',
@@ -30,36 +31,32 @@ export default function useSearchLocation() {
       );
       store.commit('selectedCity/setLatitude', event.data.geo_lat);
       store.commit('selectedCity/setLongitude', event.data.geo_lon);
-
-      historyItem.name =
-        event.data.city ||
-        event.data.city_with_type ||
-        event.data.settlement ||
-        event.value;
-      historyItem.latitude = event.data.geo_lat;
-      historyItem.longitude = event.data.geo_lon;
-      store.commit('searchCity/setHistoryItem', historyItem);
+      store.commit('selectedCity/setWeatherResponse', {});
+      store.commit('selectedCity/setWeatherResponseTime', 0);
       localStorage.setItem(
-        'searchHistory',
-        JSON.stringify(store.state.searchCity.searchHistory)
+        'chosenCity',
+        JSON.stringify(store.state.selectedCity.chosenCity)
       );
 
-      localStorage.chosenLocation =
-        event.data.city ||
-        event.data.city_with_type ||
-        event.data.settlement ||
-        event.value;
-      localStorage.latitude = event.data.geo_lat;
-      localStorage.longitude = event.data.geo_lon;
       store.commit('searchCity/setEmptySuggestions');
       store.commit('searchCity/setSearchInputFocused', false);
+
+      // event.name - from searchHistory
     } else if (event.name) {
+      console.log('event', event);
       store.commit('selectedCity/setChosenLocation', event.name);
       store.commit('selectedCity/setLatitude', event.latitude);
       store.commit('selectedCity/setLongitude', event.longitude);
-      localStorage.chosenLocation = event.name;
-      localStorage.latitude = event.latitude;
-      localStorage.longitude = event.longitude;
+      store.commit('selectedCity/setWeatherResponse', event.weatherResponse);
+      store.commit(
+        'selectedCity/setWeatherResponseTime',
+        event.weatherResponseTime
+      );
+
+      localStorage.setItem(
+        'chosenCity',
+        JSON.stringify(store.state.selectedCity.chosenCity)
+      );
       store.commit('searchCity/setSearchInputFocused', false);
     } else {
       console.log('event error');
@@ -71,7 +68,7 @@ export default function useSearchLocation() {
     localStorage.removeItem('searchHistory', '');
   };
 
-  const isSearchInputFocused = ref(true);
+  const isSearchInputFocused = ref(false);
 
   const changeFocus = (event) => {
     // console.log(event.target);
